@@ -7,7 +7,7 @@ export default function Home() {
       <div className='pixelate fixed w-screen h-[100dvh]'>
         <LogoAnimation />
       </div>
-      <main className={`select-none fixed pointer-events-none h-[100dvh] justify-between py-40 sm:py-24 w-full flex flex-col items-center lowercase text-xl tracking-widest`}>
+      <main className={`select-none fixed h-[100dvh] justify-between py-40 sm:py-24 w-full flex flex-col items-center lowercase text-xl tracking-widest`}>
           <p>mock videography market</p>
           <p>by malachi valle</p>
       </main>

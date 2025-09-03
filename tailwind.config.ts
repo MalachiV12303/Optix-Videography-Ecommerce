@@ -24,28 +24,7 @@ const config: Config = {
 
   },
   plugins: [
-    nextui({
-    defaultTheme: 'darker',
-    themes: {
-      'darker': {
-        extend: "dark",
-        colors: {
-          background: "#050505",
-          foreground: "#EDEDED",
-          primary: "#EDEDED",
-          secondary: "#141414",
-        }
-      },
-      'lighter': {
-        extend: "light",
-        colors: {
-          background: "#FEF8DD",
-          foreground: "#181818",
-          primary: "#1f1f1f",
-          secondary: "#0377fc",
-        }
-      }
-    },
-  })],
+    
+  ],
 };
 export default config;

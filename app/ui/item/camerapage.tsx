@@ -18,11 +18,11 @@ export function CameraPage({ cam, image }: { cam: Camera, image: ListBlobResultB
     }
    
     return (
-        <section className='flex min-h-[100dvh] mx-auto max-w-[1200px] items-center px-4 sm:px-12 xl:px-0'>
+        <section className='flex min-h-dvh mx-auto max-w-[1200px] items-center px-4 sm:px-12 xl:px-0'>
             <div className='pt-[80px] pb-12 lg:pt-0 sm:pb-0 flex flex-col md:flex-row gap-4 lg:gap-12 items-center w-full'>
                 <div className='flex flex-col gap-4' id='leftPanel'>
                     <BackButton />
-                    <div className='flex w-full lg:w-[300px] xl:w-[400px] border-1 bg-white border-foreground aspect-square items-center justify-center'>
+                    <div className='flex w-full lg:w-[300px] xl:w-[400px] border bg-white border-foreground aspect-square items-center justify-center'>
                         {image ?
                             <Image
                                 key={cam.id}
@@ -44,7 +44,7 @@ export function CameraPage({ cam, image }: { cam: Camera, image: ListBlobResultB
                         <Button size='sm' onPress={() => {
                             addItem(cam);
                             setIsOpen(!isOpen);
-                        }} className='text-sm text-nowrap border-1 border-foreground bg-transparent text-foreground'>add to cart</Button>
+                        }} className='text-sm text-nowrap border border-foreground bg-transparent text-foreground'>add to cart</Button>
                     </div>
                 </div>
                 <div id='rightPanel' className='flex-1 flex flex-col gap-8 items-center '>

@@ -4,6 +4,18 @@ import { useCart } from 'react-use-cart'
 import { CartItem } from './cartitem'
 import { Badge, Button, Link, Popover, PopoverContent, PopoverTrigger, Tooltip } from '@nextui-org/react'
 
+interface SVGProps {
+    className?: string;
+    width: number;
+    height: number;
+};
+
+const CartIcon: React.FC<SVGProps> = ({ width, height, className }) => (
+    <svg className={className} width={width} height={height} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="3 2 18 20">
+        <path d="M9 11V6C9 4.34315 10.3431 3 12 3C13.6569 3 15 4.34315 15 6V10.9673M10.4 21H13.6C15.8402 21 16.9603 21 17.816 20.564C18.5686 20.1805 19.1805 19.5686 19.564 18.816C20 17.9603 20 16.8402 20 14.6V12.2C20 11.0799 20 10.5198 19.782 10.092C19.5903 9.71569 19.2843 9.40973 18.908 9.21799C18.4802 9 17.9201 9 16.8 9H7.2C6.0799 9 5.51984 9 5.09202 9.21799C4.71569 9.40973 4.40973 9.71569 4.21799 10.092C4 10.5198 4 11.0799 4 12.2V14.6C4 16.8402 4 17.9603 4.43597 18.816C4.81947 19.5686 5.43139 20.1805 6.18404 20.564C7.03968 21 8.15979 21 10.4 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+);
+
 export function Cart() {
     const { items, emptyCart, isEmpty, cartTotal, totalItems } = useCart()
     const [totalQuantity, setTotalQuantity] = useState(0)
@@ -13,19 +25,19 @@ export function Cart() {
 
     return (
         <Popover placement={'bottom-end'} shouldBlockScroll={true} classNames={{
-            trigger: ['bg-background text-foreground', 'min-w-0 px-4 rounded-full h-7'],
-            content: ['border-1 border-foreground bg-background text-foreground text-lg lg:text-sm px-0 py-0', 'flex flex-row', 'h-[60dvh] w-[80dvw] sm:w-[60dvw] xl:w-[30dvw]'],
+            trigger: ['bg-background text-foreground', 'min-w-0 rounded-full p-2'],
+            content: ['border border-foreground bg-background text-foreground text-lg lg:text-sm px-0 py-0', 'flex flex-row', 'h-[60dvh] w-[80dvw] sm:w-[60dvw] xl:w-[30dvw]'],
         }}>
-            <Badge isInvisible={isEmpty} content={totalQuantity} className='text-sm min-w-6 tracking-tight bg-foreground text-background pr-[1px] pl-[1px] sm:pl-0 pt-[1px]'>
+            <Badge isInvisible={isEmpty} content={totalQuantity} className='text-sm min-w-6 tracking-tight bg-foreground text-background pr-px pl-px sm:pl-0 pt-px'>
                 <PopoverTrigger>
-                    <Button>
-                        cart
-                    </Button>
+                    <div className="flex items-center justify-center">
+                        <CartIcon width={30} height={30} className="text-foreground"/>
+                    </div>
                 </PopoverTrigger>
             </Badge>
             <PopoverContent>
-                <div id='cartPanel' className='h-full border-foreground flex flex-col w-[100%] items-center justify-start'>
-                    <div id='cartItems' className='mt-2 sm:mt-4 px-2 flex flex-col divide-y-1 divide-foreground border-foreground items-start w-full gap-3 overflow-y-auto no-scrollbar flex-1 select-none'>
+                <div id='cartPanel' className='h-full border-foreground flex flex-col w-full items-center justify-start'>
+                    <div id='cartItems' className='mt-2 sm:mt-4 px-2 flex flex-col divide-y divide-foreground border-foreground items-start w-full gap-3 overflow-y-auto no-scrollbar flex-1 select-none'>
                         {!isEmpty ? items.map((it, index) => (
                             <CartItem key={index} item={it} className={'px-2 py-4'} />
                         )) :
@@ -43,7 +55,7 @@ export function Cart() {
                     </div>
                 </div>
 
-                <div id='cartButtons' className='border-l-1 border-foreground text-background h-full flex flex-col gap-2'>
+                <div id='cartButtons' className='border-l border-foreground text-background h-full flex flex-col gap-2'>
                     {/* <Tooltip
                         content='close'
                         classNames={{

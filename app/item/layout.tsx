@@ -1,4 +1,4 @@
-import PageBackground from "../ui/pagebackground"
+import PageBackground from "../ui/BackgroundDrei"
 
 export default function Layout({
   children,
@@ -8,7 +8,7 @@ export default function Layout({
 
   return (
     <>
-      <main className='w-full max-h-[100dvh] h-[100dvh] mx-auto'>
+      <main className='w-full max-h-dvh h-dvh mx-auto'>
         {children}
         <div className="fixed -z-30 right-0 bottom-0 w-full h-full">
           <PageBackground />

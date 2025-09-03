@@ -15,7 +15,7 @@ export default function Page() {
         <section className='relative max-w-[1500px] flex md:flex-row flex-col mx-auto md:py-12 gap-8 px-4 pb-12'>
             <div className='relative md:hidden'>{isClient ? <CheckoutCart /> : <Spinner />}</div>
             <div className='md:w-2/3 sm:overflow-auto no-scrollbar'>
-                <p className='py-4 px-4 text-2xl border-b-1'>Delivery</p>
+                <p className='py-4 px-4 text-2xl border-b'>Delivery</p>
                 <form className='grid grid-cols-2 gap-y-4 gap-x-4 py-8 px-4'>
                     <label className='flex flex-col col-span-2'><span>your email </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='your.email@outlook.com' type='text' /></label>
                     <label className='flex flex-col'><span>first name </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='Gordon' type='text' /></label>
@@ -28,7 +28,7 @@ export default function Page() {
                     <label className='flex flex-col'><span>state / province </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='Insomnia' type='text' /></label>
                     <label className='flex flex-col'><span>zip / postal </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='D9333' type='text' /></label>
                 </form>
-                <p className='py-4 px-4 text-2xl border-b-1'>Payment</p>
+                <p className='py-4 px-4 text-2xl border-b'>Payment</p>
                 <form className='grid grid-cols-2 gap-y-4 gap-x-4 py-8 px-4'>
                     <label className='flex flex-col col-span-2'><span>Card Number </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='1818-0907-4837-6003' type='text' /></label>
                     <label className='flex flex-col'><span>CVV </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='222' type='text' /></label>

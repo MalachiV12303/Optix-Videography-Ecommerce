@@ -15,7 +15,7 @@ export function PriceSlider() {
             <Slider
                 aria-label="price"
                 showTooltip={true}
-                tooltipProps={{ color: "primary", className: "text-background rounded" }}
+                tooltipProps={{ color: "primary", className: "text-background rounded-sm" }}
                 renderThumb={(props) => (
                     <div
                       {...props}

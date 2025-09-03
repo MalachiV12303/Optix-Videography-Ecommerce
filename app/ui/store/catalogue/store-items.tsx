@@ -15,7 +15,7 @@ export function StoreItem({ item, image }: { item: Camera | Lense, image: ListBl
     const formattedValue = formatCurrency(item.price ?? 0)
     const { addItem } = useCart()
     const { theme } = useTheme()
-    const [themeColor, setThemeColor] = useState('')
+    const [, setThemeColor] = useState('')
 
     useEffect(() => {
         setThemeColor(theme ? theme : '')
@@ -31,13 +31,11 @@ export function StoreItem({ item, image }: { item: Camera | Lense, image: ListBl
     //camera on store page
     function Camera(item: Camera) {
         return (
-            <motion.div
-                transition={transition}
-                whileHover={{ scale: 1.05 }}
-                className={clsx('text-sm shadow-lg relative text-foreground bg-background border-b-1 border-foreground flex flex-col px-4 py-2 items-center max-w-full h-full', { 'shadow-white/10': themeColor === 'darker' })}>
+            <div
+                className={'text-sm drop-shadow-sm hover:drop-shadow-primary drop-shadow-foreground relative text-foreground bg-background border-b border-foreground flex flex-col px-4 py-2 items-center max-w-full h-full'}>
                 <Link href={`/item?${params}`}
                     className='flex flex-col h-full'>
-                    <div id='image' className='aspect-square px-4 py-4 border-b-1 border-foreground flex justify-center items-center'>
+                    <div id='image' className='aspect-square px-4 py-4 border-b border-foreground flex justify-center items-center'>
                         {image ?
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
@@ -79,7 +77,7 @@ export function StoreItem({ item, image }: { item: Camera | Lense, image: ListBl
                         </Button>
                     </motion.div>
                 </div>
-            </motion.div>
+            </div>
         )
     }
     //lense on store page
@@ -87,13 +85,11 @@ export function StoreItem({ item, image }: { item: Camera | Lense, image: ListBl
         params.set('category', 'len')
         return (
             <>
-                <motion.div
-                    transition={transition}
-                    whileHover={{ scale: 1.05 }}
-                    className={clsx('text-sm shadow-md relative text-foreground bg-background border-b-1 border-foreground flex flex-col px-4 py-2 items-center max-w-full h-full', { 'shadow-white/10': theme === 'dark' })}>
+                <div
+                    className={clsx('text-sm shadow-md relative text-foreground bg-background border-b border-foreground flex flex-col px-4 py-2 items-center max-w-full h-full', { 'shadow-white/10': theme === 'dark' })}>
                     <Link href={`/item?${params}`}
                         className='flex flex-col h-full'>
-                        <div id='image' className='aspect-square max-w-full px-4 py-4 border-b-1 border-foreground flex justify-center items-center'>
+                        <div id='image' className='aspect-square max-w-full px-4 py-4 border-b border-foreground flex justify-center items-center'>
                             {image ?
                                 // eslint-disable-next-line @next/next/no-img-element
                                 <img
@@ -132,7 +128,7 @@ export function StoreItem({ item, image }: { item: Camera | Lense, image: ListBl
                             </Button>
                         </motion.div>
                     </div>
-                </motion.div>
+                </div>
             </>
         )
     }

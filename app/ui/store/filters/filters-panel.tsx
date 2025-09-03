@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useRef } from 'react'
+import React from 'react'
 import { Filters } from './filters'
 import { FilterChips } from './filters-chips'
-import { motion, useScroll, useSpring } from 'motion/react'
+import { motion } from 'motion/react'
 import { Button, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react'
 
 export default function FiltersPanel({
@@ -15,24 +15,12 @@ export default function FiltersPanel({
   type: string,
   contentClassname?: string,
 }) {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({
-    container: ref,
-  })
-  const scaleY = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
 
   return type === 'desktop'
     ? (<>
-      <div ref={ref} className="lowercase no-scrollbar overflow-x-hidden py-2">
-        <Filters it={itemtype} />
-      </div>
+      <Filters it={itemtype} />
       <motion.div
-        className="absolute top-0 right-0 w-[1px] h-full bg-foreground origin-top"
-        style={{ scaleY }} />
+        className="absolute top-0 right-0 w-px h-full bg-foreground origin-top" />
     </>
     ) : (
       <Popover
@@ -68,7 +56,7 @@ export default function FiltersPanel({
 
         placement="bottom-end"
         classNames={{
-          content: "bg-background border-1 border-foreground mt-4 py-4",
+          content: "bg-background border border-foreground mt-4 py-4",
           trigger: "h-6 bg-foreground text-background",
         }}>
         <PopoverTrigger >
@@ -79,7 +67,7 @@ export default function FiltersPanel({
           </Button>
         </PopoverTrigger>
         <PopoverContent className={`${contentClassname} relative max-h-[75dvh]`}>
-          <div ref={ref} className="text-xl w-full lowercase scrollbar overflow-x-hidden">
+          <div className="text-xl w-full lowercase scrollbar overflow-x-hidden">
             <Filters it={itemtype} />
           </div>
           <div className='overflow-y-hidden w-full py-4 overflow-auto no-scrollbar'>

@@ -14,7 +14,7 @@ export function Filters({ it }: { it: string }) {
 function CameraFilters() {
     const [{ type, brand, res, shutter, mgp }] = useFilters()
     return (
-        <Accordion showDivider={false} defaultExpandedKeys={['price', 'type', 'brand', 'res', 'shutter', 'megapixels']} fullWidth itemClasses={{ content: 'py-4 px-4', title: 'text-background', indicator: 'text-background', trigger: 'my-1 bg-foreground text-background px-4'}} isCompact={true} selectionMode="multiple">
+        <Accordion showDivider={false} defaultExpandedKeys={['price', 'type', 'brand', 'res', 'shutter', 'megapixels']} className="px-0" fullWidth itemClasses={{ content: 'py-4 px-4', title: 'text-background', indicator: 'text-background', trigger: 'mb-1 bg-foreground text-background px-4 rounded-bl-md font-mono uppercase text-lg tracking-wide'}} isCompact={true} selectionMode="multiple">
             <AccordionItem key="price" aria-label="price" title={'price'}>
                 <PriceSlider />
             </AccordionItem>
@@ -40,7 +40,7 @@ function CameraFilters() {
 function LenseFilters() {
     const [{ type, brand, minfl, maxfl, maxap, mount }] = useFilters()
     return (
-        <Accordion showDivider={false} defaultExpandedKeys={['price', "type", "brand", "maxap", "minfl", "maxfl", "mount"]} className='px-2' fullWidth itemClasses={{ content: 'py-4 px-4', title: 'text-background', indicator: 'text-background', trigger: 'my-1 bg-foreground text-background px-4'}} isCompact={true} selectionMode="multiple">
+        <Accordion showDivider={false} defaultExpandedKeys={['price', "type", "brand", "maxap", "minfl", "maxfl", "mount"]} className="px-0" fullWidth itemClasses={{ content: 'py-4 px-4', title: 'text-background', indicator: 'text-background', trigger: 'my-1 bg-foreground text-background px-4'}} isCompact={true} selectionMode="multiple">
             <AccordionItem key="price" aria-label="price" title="price">
                 <PriceSlider />
             </AccordionItem>
@@ -69,7 +69,7 @@ function LenseFilters() {
 function AerialFilters() {
     const [{ type, brand }] = useFilters()
     return (
-        <Accordion showDivider={false} className='px-2' fullWidth itemClasses={{ content: 'py-4 px-4', title: 'text-background', indicator: 'text-background', trigger: 'my-1 bg-foreground text-background px-4'}} isCompact={true} selectionMode="multiple">
+        <Accordion showDivider={false} className="px-0" fullWidth itemClasses={{ content: 'py-4 px-4', title: 'text-background', indicator: 'text-background', trigger: 'my-1 bg-foreground text-background px-4'}} isCompact={true} selectionMode="multiple">
             <AccordionItem key="price" aria-label="price" title="price">
                 <PriceSlider />
             </AccordionItem>
@@ -97,7 +97,7 @@ function FilterSet({ filters, param, p, text, textClassname, containerClassname 
             {filters?.map((fil) => (
                 <Checkbox 
                 classNames={{
-                    wrapper: 'before:rounded-none before:border-foreground before:border-1 after:bg-transparent overflow-visible',
+                    wrapper: 'before:rounded-none before:border-foreground before:border after:bg-transparent overflow-visible',
                 }}
                 className='min-w-full text-foreground' key={fil} value={fil}>{fil}<span className={`${textClassname}`}>{text}</span></Checkbox>
             ))}

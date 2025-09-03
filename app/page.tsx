@@ -1,15 +1,18 @@
-import LogoAnimation from './ui/logoanimation'
+import LandingDrei from './ui/LandingDrei'
+import Store from './ui/Store'
 
-export default function Home() {
+export default function Home({
+  searchParams,
+}: {
+  searchParams: Record<string, string | string[] | undefined>;
+}) {
   return (
     <>
-      {/* <div className='fixed flex w-screen h-full justify-center'><div className='h-full w-[1px] bg-white'></div></div> */}
-      <div className='pixelate fixed w-screen h-[100dvh]'>
-        <LogoAnimation />
-      </div>
-      <main className={`select-none fixed h-[100dvh] justify-between py-40 sm:py-24 w-full flex flex-col items-center lowercase text-xl tracking-widest`}>
-          <p>mock videography market</p>
-          <p>by malachi valle</p>
+      {/* Center Line */}
+      {/* <div className='fixed flex w-screen h-full justify-center'><div className='h-full w-px bg-white'></div></div> */}
+      <LandingDrei />
+      <main>
+        <Store searchParams={searchParams} />
       </main>
     </>
   )

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useFilters } from '@/app/lib/searchParams'
 import { filtermap } from '@/app/lib/utils'
-import { PriceSlider } from './priceslider'
+import { PriceSlider } from './PriceSlider'
 import { Accordion, AccordionItem, Checkbox, CheckboxGroup } from '@nextui-org/react'
 
 export function Filters({ it }: { it: string }) {

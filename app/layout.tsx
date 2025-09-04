@@ -1,9 +1,9 @@
-import './globals.css'
-import type { Metadata } from 'next'
-import { Providers } from './providers'
-import Navigation from './ui/Navigation'
-import BackgroundDrei from './ui/BackgroundDrei'
-import { Gilda_Display, Manrope } from 'next/font/google'
+import './globals.css';
+import type { Metadata } from 'next';
+import { Providers } from './providers';
+import Navigation from './ui/Navigation';
+import BackgroundDrei from './ui/BackgroundDrei';
+import { Gilda_Display, Manrope } from 'next/font/google';
 
 const sans = Manrope({
   variable: "--font-manrope",

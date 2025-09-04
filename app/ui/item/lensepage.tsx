@@ -1,13 +1,12 @@
-'use client'
-
-import BackButton from './backbutton'
-import Image from 'next/image'
-import React from 'react'
-import { useCart } from 'react-use-cart'
-import { Accordion, AccordionItem, Button } from '@nextui-org/react'
-import { notFound } from 'next/navigation'
-import { ListBlobResultBlob } from '@vercel/blob'
-import { Lense } from '@/app/lib/db/schema'
+"use client";
+import BackButton from './BackButton';
+import Image from 'next/image';
+import React from 'react';
+import { useCart } from 'react-use-cart';
+import { Accordion, AccordionItem, Button } from '@nextui-org/react';
+import { notFound } from 'next/navigation';
+import { ListBlobResultBlob } from '@vercel/blob';
+import { Lense } from '@/app/lib/db/schema';
 
 export function LensePage({ len, image }: { len: Lense, image: ListBlobResultBlob | null }) {
     const { addItem } = useCart()

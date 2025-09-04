@@ -1,7 +1,7 @@
-import Link from 'next/link'
-import { Item, useCart } from 'react-use-cart'
-import { formatCurrency, getItemCat } from './lib/utils'
-import { Button } from '@nextui-org/react'
+import Link from 'next/link';
+import { Item, useCart } from 'react-use-cart';
+import { formatCurrency, getItemCat } from './lib/utils';
+import { Button } from '@nextui-org/react';
 
 export function CartItem({ item, className }: { item: Item, className: string }) {
     const { updateItemQuantity } = useCart()

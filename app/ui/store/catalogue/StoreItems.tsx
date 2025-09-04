@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { useCart } from 'react-use-cart'
-import { Button } from '@nextui-org/react'
-import { Camera, Lense } from '@/app/lib/db/schema'
-import { formatCurrency, isCamera, isLense, transition } from '@/app/lib/utils'
-import { motion } from 'motion/react'
-import { ListBlobResultBlob } from '@vercel/blob'
-import { useTheme } from 'next-themes'
-import clsx from 'clsx'
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useCart } from 'react-use-cart';
+import { Button } from '@nextui-org/react';
+import { Camera, Lense } from '@/app/lib/db/schema';
+import { formatCurrency, isCamera, isLense, transition } from '@/app/lib/utils';
+import { motion } from 'motion/react';
+import { ListBlobResultBlob } from '@vercel/blob';
+import { useTheme } from 'next-themes';
+import clsx from 'clsx';
 
 export function StoreItem({ item, image }: { item: Camera | Lense, image: ListBlobResultBlob | null }) {
     const params = new URLSearchParams()

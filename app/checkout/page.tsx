@@ -1,8 +1,7 @@
-'use client'
-
-import React, { useEffect, useState } from 'react'
-import { CheckoutCart } from '../ui/checkout/checkoutcart'
-import { Button, Spinner } from '@nextui-org/react'
+"use client";
+import React, { useEffect, useState } from 'react';
+import { Button, Spinner } from '@nextui-org/react';
+import { CheckoutCart } from '../ui/checkout/CheckoutCart';
 
 export default function Page() {
     //this is to render cart information without ssr errors

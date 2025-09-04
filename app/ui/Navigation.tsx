@@ -1,9 +1,9 @@
 "use client";
 import Link from 'next/link';
-import { Cart } from '../cart';
 import { cinzel } from './fonts';
 import ThemeToggle from './ThemeToggle';
 import Searchbar from './Searchbar';
+import { Cart } from '../Cart';
 
 export default function Navigation() {
     return (

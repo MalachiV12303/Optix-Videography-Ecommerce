@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useFilters } from "@/app/lib/searchParams";
 import { Slider } from "@nextui-org/slider"
 import { useDebouncedCallback } from "use-debounce";

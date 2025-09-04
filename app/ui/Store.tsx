@@ -1,10 +1,10 @@
-import FiltersPanel from "./store/filters/filters-panel";
+import FiltersPanel from "./store/filters/FiltersPanel";
 import { searchParamsCache } from "@/app/lib/searchParams";
 import { fetchCameras, fetchLenses } from "../lib/db/queries";
-import { ItemsPanel } from "./store/catalogue/items-panel";
-import { FilterChips } from "./store/filters/filters-chips";
+import { ItemsPanel } from "./store/catalogue/ItemsPanel";
+import { FilterChips } from "./store/filters/FilterChips";
 import { getAllImages } from "../lib/utils";
-import StoreButton from "./store/storebutton";
+import StoreButton from "./store/StoreButton";
 
 type PageProps = {
   searchParams: Record<string, string | string[] | undefined>;

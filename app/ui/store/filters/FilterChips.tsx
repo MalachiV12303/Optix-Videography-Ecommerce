@@ -1,10 +1,9 @@
-'use client'
-
-import { useRef } from 'react'
-import { useQueryState } from 'nuqs'
-import { motion } from 'motion/react'
-import { Chip } from '@nextui-org/react'
-import { searchParams, useFilters } from '@/app/lib/searchParams'
+"use client";
+import { useRef } from 'react';
+import { useQueryState } from 'nuqs';
+import { motion } from 'motion/react';
+import { Chip } from '@nextui-org/react';
+import { searchParams, useFilters } from '@/app/lib/searchParams';
 
 export function FilterChips({sz}:{sz? : 'sm'| 'md'| 'lg' }) {
     const [{ type, brand, res, shutter, mgp, maxap, minfl, maxfl }, setFilters] = useFilters();

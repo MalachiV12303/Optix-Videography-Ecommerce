@@ -1,5 +1,5 @@
-import LandingDrei from './ui/LandingDrei'
-import Store from './ui/Store'
+import LandingDrei from './ui/LandingDrei';
+import Store from './ui/Store';
 
 export default function Home({
   searchParams,

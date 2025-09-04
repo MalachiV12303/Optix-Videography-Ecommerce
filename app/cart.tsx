@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { formatCurrency } from './lib/utils'
-import { useCart } from 'react-use-cart'
-import { CartItem } from './cartitem'
-import { Badge, Button, Link, Popover, PopoverContent, PopoverTrigger, Tooltip } from '@nextui-org/react'
+import React, { useEffect, useState } from 'react';
+import { formatCurrency } from './lib/utils';
+import { useCart } from 'react-use-cart';
+import { CartItem } from './CartItem';
+import { Badge, Button, Link, Popover, PopoverContent, PopoverTrigger, Tooltip } from '@nextui-org/react';
 
 interface SVGProps {
     className?: string;

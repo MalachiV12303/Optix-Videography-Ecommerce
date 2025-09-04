@@ -30,7 +30,7 @@ export default function StoreButton({
         <button
             className="flex items-center justify-center relative min-h-16 flex-1 transition hover:scale-[1.02] duration-300 ease-in-out hover:grayscale-0 lg:grayscale border border-foreground"
             onClick={() => {
-                setFilters(null);
+                setFilters({});
                 setCategory(category);
                 scrollToSection("storeContent");
             }}

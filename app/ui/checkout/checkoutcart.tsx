@@ -1,9 +1,8 @@
-'use client'
-
-import React, { useEffect, useState } from 'react'
-import { useCart } from 'react-use-cart'
-import { CartItem } from '@/app/cartitem'
-import { formatCurrency } from '@/app/lib/utils'
+"use client";
+import React, { useEffect, useState } from 'react';
+import { useCart } from 'react-use-cart';
+import { CartItem } from '@/app/CartItem';
+import { formatCurrency } from '@/app/lib/utils';
 
 export function CheckoutCart() {
     const { cartTotal, items, isEmpty, totalItems } = useCart()

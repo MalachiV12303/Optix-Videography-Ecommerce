@@ -1,7 +1,6 @@
-'use client'
-
+"use client";
 import { Camera, Lense } from '@/app/lib/db/schema'
-import { StoreItem } from '@/app/ui/store/catalogue/store-items'
+import { StoreItem } from '@/app/ui/store/catalogue/StoreItems'
 import { ListBlobResultBlob } from '@vercel/blob'
 
 export function ItemsPanel({ items, images }: { items: Camera[] | Lense[], images: ListBlobResultBlob[]}) {

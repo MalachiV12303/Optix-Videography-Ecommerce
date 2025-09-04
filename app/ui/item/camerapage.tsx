@@ -1,14 +1,13 @@
-'use client'
-
-import BackButton from './backbutton'
-import Image from 'next/image'
-import React from 'react'
-import { useCart } from 'react-use-cart'
-import { Camera } from '@/app/lib/db/schema'
-import { notFound } from 'next/navigation'
-import { ListBlobResultBlob } from '@vercel/blob'
-import { Accordion, AccordionItem, Button } from '@nextui-org/react'
-import Link from 'next/link'
+"use client";
+import BackButton from './BackButton';
+import Image from 'next/image';
+import React from 'react';
+import { useCart } from 'react-use-cart';
+import { Camera } from '@/app/lib/db/schema';
+import { notFound } from 'next/navigation';
+import { ListBlobResultBlob } from '@vercel/blob';
+import { Accordion, AccordionItem, Button } from '@nextui-org/react';
+import Link from 'next/link';
 
 export function CameraPage({ cam, image }: { cam: Camera, image: ListBlobResultBlob | null }) {
     const { addItem } = useCart()

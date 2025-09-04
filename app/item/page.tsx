@@ -1,12 +1,12 @@
 import React from 'react';
 import { list } from '@vercel/blob';
 import { CameraPage } from '@/app/ui/item/CameraPage';
-import { searchParamsCache } from '../lib/searchParams';
+import { searchParamsCache } from '@lib/searchParams';
 import { SearchParams } from 'nuqs/server';
-import { fetchCameras, fetchLenses } from '../lib/db/queries';
-import { LensePage } from '@/app/ui/item/LensePage';
-import { Camera, Lense } from '../lib/db/schema';
-import { isCamera, isLense } from '../lib/utils';
+import { fetchCameras, fetchLenses } from '@lib/db/queries';
+import { LensePage } from '@ui/item/LensePage';
+import { Camera, Lense } from '@lib/db/schema';
+import { isCamera, isLense } from '@lib/utils';
 
 type PageProps = {
     searchParams: Promise<SearchParams>

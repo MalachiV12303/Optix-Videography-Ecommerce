@@ -1,7 +1,7 @@
 "use client";
 import React from 'react'
-import { Filters } from './Filters'
-import { FilterChips } from './FilterChips'
+import { Filters } from '@ui/store/filters/Filters'
+import { FilterChips } from '@ui/store/filters/FilterChips'
 import { motion } from 'motion/react'
 import { Button, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react'
 

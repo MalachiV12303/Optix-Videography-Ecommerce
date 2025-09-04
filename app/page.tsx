@@ -1,7 +1,12 @@
-import LandingDrei from './ui/LandingDrei';
-import Store from './ui/Store';
+import LandingDrei from '@ui/LandingDrei';
+import { Store } from '@ui/Store';
 
-export default function Home({
+// console.log("----index/page.tsx----\n");
+// console.log("LandingDrei:", LandingDrei);
+// console.log("Store:", Store);
+// console.log("\n\n");
+
+export default function App({
   searchParams,
 }: {
   searchParams: Record<string, string | string[] | undefined>;

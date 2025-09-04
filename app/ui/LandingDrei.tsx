@@ -1,9 +1,9 @@
 "use client";
-import * as THREE from 'three'
-import { Canvas } from '@react-three/fiber'
-import React, { Suspense, useEffect, useRef, useState } from 'react'
-import { useFrame, ThreeElements, useThree } from '@react-three/fiber'
-import { Center, Text3D } from '@react-three/drei'
+import * as THREE from 'three';
+import { Canvas } from '@react-three/fiber';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
+import { useFrame, ThreeElements, useThree } from '@react-three/fiber';
+import { Center, Text3D } from '@react-three/drei';
 import MousePanGroup from './MousePanGroup';
 
 export default function LandingDrei() {

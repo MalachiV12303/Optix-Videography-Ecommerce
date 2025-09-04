@@ -1,5 +1,4 @@
-'use client'
-
+"use client";
 import styles from '@/app/ui/animations.module.css';
 import Marquee from "react-fast-marquee";
 

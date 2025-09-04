@@ -10,7 +10,7 @@ type PageProps = {
   searchParams: Record<string, string | string[] | undefined>;
 };
 
-export default async function Store({ searchParams }: PageProps) {
+export async function Store({ searchParams }: PageProps) {
   const { category } = searchParamsCache.parse(searchParams);
   async function fetchItems(type: string) {
     switch (type) {

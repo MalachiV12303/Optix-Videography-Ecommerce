@@ -20,7 +20,10 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@ui/*": ["./app/ui/*"],
+      "@lib/*": ["./app/lib/*"],
+
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/anim.js", "app/lib/checkout.js", "app/test/anim.js", "app/lib/myJavascript.js", "app/lib/myJavascript.js"],

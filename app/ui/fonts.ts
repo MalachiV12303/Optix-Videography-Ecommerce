@@ -24,3 +24,4 @@ export const gilda = Gilda_Display({
   weight: ['400'],
   subsets: ['latin'],
 });
+

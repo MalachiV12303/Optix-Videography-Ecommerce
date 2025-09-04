@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:vercel": "cross-env CI=true pnpm build",
     "start": "next start",
     "lint": "next lint"
   },

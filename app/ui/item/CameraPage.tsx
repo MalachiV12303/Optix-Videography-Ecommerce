@@ -17,11 +17,11 @@ export function CameraPage({ cam, image }: { cam: Camera, image: ListBlobResultB
     }
    
     return (
-        <section className='flex min-h-dvh mx-auto max-w-[1200px] items-center px-4 sm:px-12 xl:px-0'>
-            <div className='pt-[80px] pb-12 lg:pt-0 sm:pb-0 flex flex-col md:flex-row gap-4 lg:gap-12 items-center w-full'>
-                <div className='flex flex-col gap-4' id='leftPanel'>
+        <section>
+            <div className="flex flex-col lg:flex-row gap-8">
+                <div className="flex flex-col gap-4">
                     <BackButton />
-                    <div className='flex w-full lg:w-[300px] xl:w-[400px] border bg-white border-foreground aspect-square items-center justify-center'>
+                    <div className='flex w-full lg:w-[300px] xl:w-[400px] border bg-white/80 border-foreground aspect-square items-center justify-center'>
                         {image ?
                             <Image
                                 key={cam.id}
@@ -46,14 +46,15 @@ export function CameraPage({ cam, image }: { cam: Camera, image: ListBlobResultB
                         }} className='text-sm text-nowrap border border-foreground bg-transparent text-foreground'>add to cart</Button>
                     </div>
                 </div>
-                <div id='rightPanel' className='flex-1 flex flex-col gap-8 items-center '>
+
+                <div className="flex-1 flex flex-col gap-8 items-center">
                     <div className='flex flex-col gap-2 text-nowrap w-full items-center md:items-start'>
                         <div className='text-3xl flex items-center gap-2 bg-foreground text-background px-4 py-2'>{cam.name} - {cam.brand}</div>
                         <div className='text-xl ml-4 flex gap-2 lowercase'>
                             {cam.megapixels} megapixel {cam.type} camera
                         </div>
                     </div>
-                    <Accordion defaultExpandedKeys={['description']} selectionMode={'multiple'} className='px-0' itemClasses={{ content: 'py-4 px-4 bg-background bg-opacity-80', title: 'text-background', indicator: 'text-background', trigger: 'mt-1 bg-foreground text-background px-4'}} isCompact>
+                    <Accordion defaultExpandedKeys={['description','details','compat']} selectionMode={'multiple'} className='px-0' itemClasses={{ content: "py-4 px-4", title: "text-lg", indicator: 'text-background', trigger: "cursor-pointer px-4 border-b-1 border-foreground"}} fullWidth isCompact>
                         <AccordionItem key='description' aria-label='description' title='description'>
                             <p className='text-sm'>{cam.description}</p>
                         </AccordionItem>

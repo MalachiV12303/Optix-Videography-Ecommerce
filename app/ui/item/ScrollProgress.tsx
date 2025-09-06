@@ -10,7 +10,7 @@ export function ScrollProgress(){
         restDelta: 0.001
       })
     return (
-        <div className='pointer-events-none fixed bottom-0 flex w-full justify-center'>
+        <div className='fixed bottom-0 flex w-full justify-center'>
             <Suspense>
                 <div className='absolute right-0 w-[175px] h-[175px] flex items-center justify-center'></div>
             </Suspense>

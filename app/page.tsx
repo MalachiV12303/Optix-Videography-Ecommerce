@@ -1,5 +1,6 @@
 import LandingDrei from '@ui/LandingDrei';
 import { Store } from '@ui/Store';
+import Footer from '@ui/Footer';
 
 // console.log("----index/page.tsx----\n");
 // console.log("LandingDrei:", LandingDrei);
@@ -16,9 +17,10 @@ export default function App({
       {/* Center Line */}
       {/* <div className='fixed flex w-screen h-full justify-center'><div className='h-full w-px bg-white'></div></div> */}
       <LandingDrei />
-      <main>
+      <main className="container">
         <Store searchParams={searchParams} />
       </main>
+      <Footer />
     </>
   )
 }

@@ -30,6 +30,8 @@ export default function BackgroundDrei() {
         height: '100vh',
         width: '100vw',
         background: 'transparent',
+        pointerEvents: "none",
+        zIndex: -5,
       }}>
       <Suspense fallback={null}>
         <Sparkles count={150} color={foregroundColor} size={2} scale={10} />

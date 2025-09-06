@@ -26,40 +26,34 @@ export async function Store({ searchParams }: PageProps) {
   const count = items.length;
 
   return (
-    <div className="container">
+    <div className="w-full min-h-screen mb-24">
       <section className="w-full flex flex-col sm:flex-row py-12 gap-4 lg:gap-8">
         <StoreButton buttonText="cameras" category="cam" imgSrc="/cameraButton.jpg" />
-        <StoreButton buttonText="lenses" category="len" imgSrc="/lenseButton.jpg"/>
-        <StoreButton buttonText="aerial" category="aer" imgSrc="/droneButton.jpg"/>
+        <StoreButton buttonText="lenses" category="len" imgSrc="/lenseButton.jpg" />
+        <StoreButton buttonText="aerial" category="aer" imgSrc="/droneButton.jpg" />
       </section>
 
-      <section
-        id="storeContent"
-        className="scroll-mt-24 min-h-[90dvh] relative w-full flex flex-col mx-auto scrollbar items-center"
-      >
-        <div
-          id="topLayer"
-          className="bg-background sticky sm:relative top-0 w-full flex gap-4 py-2 px-4 justify-between border-b border-foreground"
-        >
-          <p className="text-nowrap text-xl">
-            {count === 0 ? "0 found..." : `${count} items found`}
-          </p>
-          <div className="hidden md:flex w-full overflow-auto no-scrollbar">
-            <FilterChips sz="sm" />
+      <section id="storeContent" className="scroll-mt-24">
+        <div className="h-full grid grid-cols-5">
+          <div className="col-span-5 lg:col-span-1 flex items-center border-b-1 border-foreground pl-4">
+            <span className="text-xl py-2 text-nowrap">
+              {count === 0 ? "0 found..." : `${count} items found`}
+            </span>
+            <div className="ml-auto flex lg:hidden items-center">
+              <FiltersPanel contentClassname="w-[65dvw]" itemtype={category} type="mobile" />
+            </div>
           </div>
-          <div className="flex md:hidden items-center">
-            <FiltersPanel contentClassname="w-[65dvw]" itemtype={category} type="mobile" />
+          <div className="hidden lg:block col-span-4 border-b-1 border-foreground py-2 pl-4">
+            <div className="flex h-full items-center">
+              <FilterChips sz="md" />
+            </div>
           </div>
-        </div>
-
-        <div
-          id="filtersAndItems"
-          className="w-full h-fit relative sm:flex-none overflow-auto no-scrollbar flex flex-row"
-        >
-          <div className="relative hidden md:inline-block w-1/3 md:w-1/4 h-fit">
-            <FiltersPanel itemtype={category} type="desktop" />
+          <div className="col-span-1 h-min border-r-1 border-foreground lg:block hidden">
+              <FiltersPanel itemtype={category} type="desktop" />
           </div>
-          <ItemsPanel items={items} images={await getAllImages()} />
+          <div className="col-span-5 lg:col-span-4">
+              <ItemsPanel items={items} images={await getAllImages()} />
+          </div>
         </div>
       </section>
     </div>

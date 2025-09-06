@@ -12,7 +12,7 @@ export function ItemsPanel({ items, images }: { items: Camera[] | Lense[], image
     return matchingImageBlobs.length > 0 ? matchingImageBlobs[0] : null
   }
   return (
-    <ul className="group/list w-full grid grid-cols-2 md:grid-cols-1 md:px-4 py-6 gap-y-4 gap-x-2">
+    <ul className="group/list w-full grid grid-cols-2 md:grid-cols-1 lg:pl-4 py-4 gap-y-4 gap-x-2">
       {items && items.length !== 0 ? items.map((item) => {
         return (
           <li key={item.id}>

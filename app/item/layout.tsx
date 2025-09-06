@@ -5,7 +5,7 @@ export default function Layout({
 }) {
   return (
     <>
-      <main className='w-full max-h-dvh h-dvh mx-auto'>
+      <main className="container min-h-screen flex flex-col justify-center">
         {children}
       </main>
     </>

@@ -30,7 +30,7 @@ export default function LandingDrei() {
         top: 0,
         left: 0,
         height: '100vh',
-        width: '100vw',
+        width: '100%',
         background: 'transparent',
       }}>
       <Suspense fallback={null} >

@@ -39,7 +39,7 @@ export default function Cart() {
             <Badge isInvisible={isEmpty} content={totalQuantity} className='text-sm min-w-6 tracking-tight bg-foreground text-background pr-px pl-px sm:pl-0 pt-px'>
                 <PopoverTrigger>
                     <div className="flex items-center justify-center">
-                        <CartIcon width={30} height={30} className="text-foreground"/>
+                        <CartIcon width={25} height={25} className="text-foreground"/>
                     </div>
                 </PopoverTrigger>
             </Badge>

@@ -5,8 +5,8 @@
 :root {
   --background: #050505;
   --foreground: #EDEDED;
-  --foreground-muted: #4e4e4e;
-  --primary: #00fff2;
+  --foreground-muted: rgb(173, 173, 173);
+  --primary: #212bb3;
   --secondary: #141414;
 }
 

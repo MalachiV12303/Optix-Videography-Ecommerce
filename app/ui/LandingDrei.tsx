@@ -34,7 +34,7 @@ export default function LandingDrei() {
         background: 'transparent',
       }}>
       <Suspense fallback={null} >
-        <MousePanGroup intensity={0.08}>
+        <MousePanGroup intensity={0.15}>
           <ambientLight intensity={Math.PI} />
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI * 4} />
           <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />

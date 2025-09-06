@@ -13,19 +13,20 @@ export function ItemsPanel({ items, images }: { items: Camera[] | Lense[], image
   }
   return (
     <>
-      <div className="sm:px-8 py-8 w-full sm:h-min no-scrollbar relative grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-y-12 gap-x-4 sm:gap-x-12 bg-transparent place-items-center">
+      <ul className="group/list w-full grid grid-cols-2 sm:grid-cols-1 sm:px-4 py-6 gap-y-4 gap-x-2">
         {items && items.length !==0 ? items.map((item) => {
           return (
-            <StoreItem key={item.id} item={item} image={findImage(item.id)} />
+            <li key={item.id}>
+              <StoreItem item={item} image={findImage(item.id)} />
+            </li>
           )
         }) :
-          <div className="mt-12 text-lg col-span-2 lg:col-span-3 2xl:col-span-4 flex">
+          <li className="mt-12 text-lg col-span-2 lg:col-span-3 2xl:col-span-4 flex">
             <p> no items found...</p>
-          </div>
+          </li>
         }
-        <div className='w-full h-px col-span-2 lg:col-span-3 2xl:col-span-4 bg-foreground' />
-        
-      </div>
+        {/* <div className='w-full h-px col-span-2 lg:col-span-3 2xl:col-span-4 bg-blue-500' /> */}
+      </ul>
       {/* <motion.div
         className="absolute top-0 right-0 w-px h-full bg-foreground origin-top "
         style={{ scaleY }} /> */}

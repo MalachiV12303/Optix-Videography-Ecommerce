@@ -11,10 +11,12 @@ export function Filters({ it }: { it: string }) {
         <div>no filters found</div>;
 }
 
+const accordionClassNames = { content: 'py-4 px-4', indicator: 'text-foreground', trigger: 'px-4 font-sans uppercase text-lg tracking-wide border-b-1 border-foreground'};
+
 function CameraFilters() {
     const [{ type, brand, res, shutter, mgp }] = useFilters()
     return (
-        <Accordion showDivider={false} defaultExpandedKeys={['price', 'type', 'brand', 'res', 'shutter', 'megapixels']} className="px-0" fullWidth itemClasses={{ content: 'py-4 px-4', title: 'text-background', indicator: 'text-background', trigger: 'mb-1 bg-foreground text-background px-4 rounded-bl-md font-sans font-semibold uppercase text-lg tracking-wide'}} isCompact={true} selectionMode="multiple">
+        <Accordion className="px-0" itemClasses={accordionClassNames} selectionMode="multiple" showDivider={false} fullWidth isCompact={true} defaultExpandedKeys={['price', 'type', 'brand', 'res', 'shutter', 'megapixels']} >
             <AccordionItem key="price" aria-label="price" title={'price'}>
                 <PriceSlider />
             </AccordionItem>
@@ -40,7 +42,7 @@ function CameraFilters() {
 function LenseFilters() {
     const [{ type, brand, minfl, maxfl, maxap, mount }] = useFilters()
     return (
-        <Accordion showDivider={false} defaultExpandedKeys={['price', "type", "brand", "maxap", "minfl", "maxfl", "mount"]} className="px-0" fullWidth itemClasses={{ content: 'py-4 px-4', title: 'text-background', indicator: 'text-background', trigger: 'my-1 bg-foreground text-background px-4'}} isCompact={true} selectionMode="multiple">
+        <Accordion className="px-0" itemClasses={accordionClassNames} selectionMode="multiple" showDivider={false} fullWidth isCompact={true} defaultExpandedKeys={['price', "type", "brand", "maxap", "minfl", "maxfl", "mount"]} >
             <AccordionItem key="price" aria-label="price" title="price">
                 <PriceSlider />
             </AccordionItem>
@@ -97,7 +99,7 @@ function FilterSet({ filters, param, p, text, textClassname, containerClassname 
             {filters?.map((fil) => (
                 <Checkbox 
                 classNames={{
-                    wrapper: 'before:rounded-none before:border-foreground before:border after:bg-transparent overflow-visible',
+                    wrapper: 'mt-[3px] before:rounded-none before:border-foreground before:border before:rounded-sm after:bg-transparent overflow-visible',
                 }}
                 className='min-w-full text-foreground' key={fil} value={fil}>{fil}<span className={`${textClassname}`}>{text}</span></Checkbox>
             ))}

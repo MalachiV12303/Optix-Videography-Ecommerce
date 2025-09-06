@@ -42,7 +42,7 @@ export default function ThemeToggle() {
       onClick={nextTheme}
       className="rounded-full p-2"
     >
-      <LightIcon width={30} height={30} className="text-foreground"/>
+      <LightIcon width={25} height={25} className="text-foreground"/>
     </button>
   );
 }

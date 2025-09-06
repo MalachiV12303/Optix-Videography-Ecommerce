@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useCart } from 'react-use-cart';
 import { Camera, Lense } from '@/app/lib/db/schema';
-import { formatCurrency, isCamera, isLense } from '@/app/lib/utils';
+import { formatCurrency, isCamera } from '@/app/lib/utils';
 import { ListBlobResultBlob } from '@vercel/blob';
 
 export function Item({ item, image }: { item: Camera | Lense, image: ListBlobResultBlob | null }) {
@@ -12,7 +12,7 @@ export function Item({ item, image }: { item: Camera | Lense, image: ListBlobRes
     params.set("id", item.id.toString())
 
     return (
-        <div className="px-6 py-8 md:py-4 group lg:group-hover/list:opacity-70 lg:hover:!opacity-100 transition-all relative border-1 border-foreground-muted rounded-md flex flex-col md:flex-row max-w-full min-h-72 h-full md:h-auto">
+        <div className="px-6 py-8 md:py-4 group bg-background/40 lg:group-hover/list:opacity-70 lg:hover:!opacity-100 transition-all relative border-1 border-foreground-muted rounded-md flex flex-col md:flex-row max-w-full min-h-72 h-full md:h-auto">
             <Link href={`/item?${params}`} className="flex-1 aspect-square relative w-auto h-full">
                 {image ?
                     // eslint-disable-next-line @next/next/no-img-element
@@ -24,7 +24,7 @@ export function Item({ item, image }: { item: Camera | Lense, image: ListBlobRes
                     </div>
                 }
             </Link>
-            <div className="flex-3 sm:px-4">
+            <div className="flex-2 lg:flex-3 mt-4 md:mt-0 md:px-4">
                 <Link href={`/item?${params}`} className="block font-semibold text-lg sm:text-2xl hover:underline">{item.brand} {item.name} {item.type === 'DSLR' ? "Digital Camera" : "Mirrorless Camera"}</Link>
                 <span className="hidden sm:block text-sm text-foreground-muted">ID: {item.id}</span>
                 {isCamera(item) && (
@@ -32,7 +32,7 @@ export function Item({ item, image }: { item: Camera | Lense, image: ListBlobRes
                 )}
             </div>
             <div className="flex-1 flex flex-col items-center justify-center gap-4 mt-8 md:mt-0">
-                <span className="text-2xl lg:text-4xl">${formattedValue}</span>
+                <span className="text-2xl lg:text-3xl">${formattedValue}</span>
                 <button className="px-4 py-2 bg-primary text-foreground rounded-full hover:bg-foreground hover:text-background transition" onClick={() => (addItem(item))}>
                     Add To Cart
                 </button>

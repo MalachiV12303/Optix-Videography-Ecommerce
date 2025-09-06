@@ -11,6 +11,7 @@ import {
     PopoverTrigger, 
     Tooltip
 } from '@nextui-org/react';
+import CartItem from './CartItem';
 
 interface SVGProps {
     className?: string;
@@ -47,8 +48,7 @@ export default function Cart() {
                 <div id='cartPanel' className='h-full border-foreground flex flex-col w-full items-center justify-start'>
                     <div id='cartItems' className='mt-2 sm:mt-4 px-2 flex flex-col divide-y divide-foreground border-foreground items-start w-full gap-3 overflow-y-auto no-scrollbar flex-1 select-none'>
                         {!isEmpty ? items.map((it, index) => (
-                            <div key={index} className={'px-2 py-4'} />
-                            // <CartItem key={index} item={it} className={'px-2 py-4'} />
+                            <CartItem key={index} item={it} className={'px-2 py-4'} />
                         )) :
                             <div className='w-full flex h-full my-auto gap-2 items-center justify-center'>
                                 <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1} stroke='currentColor' className='size-4'>

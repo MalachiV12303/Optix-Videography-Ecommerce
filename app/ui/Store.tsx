@@ -27,7 +27,7 @@ export async function Store({ searchParams }: PageProps) {
 
   return (
     <div className="container">
-      <section className="w-full flex flex-col sm:flex-row py-12 gap-8">
+      <section className="w-full flex flex-col sm:flex-row py-12 gap-4 lg:gap-8">
         <StoreButton buttonText="cameras" category="cam" imgSrc="/cameraButton.jpg" />
         <StoreButton buttonText="lenses" category="len" imgSrc="/lenseButton.jpg"/>
         <StoreButton buttonText="aerial" category="aer" imgSrc="/droneButton.jpg"/>

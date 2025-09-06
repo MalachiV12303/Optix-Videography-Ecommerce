@@ -44,10 +44,10 @@ export async function Store({ searchParams }: PageProps) {
           <p className="text-nowrap text-xl">
             {count === 0 ? "0 found..." : `${count} items found`}
           </p>
-          <div className="hidden sm:flex w-full overflow-auto no-scrollbar">
+          <div className="hidden md:flex w-full overflow-auto no-scrollbar">
             <FilterChips sz="sm" />
           </div>
-          <div className="flex sm:hidden items-center">
+          <div className="flex md:hidden items-center">
             <FiltersPanel contentClassname="w-[65dvw]" itemtype={category} type="mobile" />
           </div>
         </div>
@@ -56,7 +56,7 @@ export async function Store({ searchParams }: PageProps) {
           id="filtersAndItems"
           className="w-full h-fit relative sm:flex-none overflow-auto no-scrollbar flex flex-row"
         >
-          <div className="relative hidden sm:inline-block w-1/3 md:w-1/4 h-fit">
+          <div className="relative hidden md:inline-block w-1/3 md:w-1/4 h-fit">
             <FiltersPanel itemtype={category} type="desktop" />
           </div>
           <ItemsPanel items={items} images={await getAllImages()} />

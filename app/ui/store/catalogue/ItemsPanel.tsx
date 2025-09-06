@@ -1,6 +1,6 @@
 "use client";
 import { Camera, Lense } from '@/app/lib/db/schema'
-import { StoreItem } from '@/app/ui/store/catalogue/StoreItems'
+import { Item } from '@/app/ui/store/catalogue/Item'
 import { ListBlobResultBlob } from '@vercel/blob'
 
 export function ItemsPanel({ items, images }: { items: Camera[] | Lense[], images: ListBlobResultBlob[]}) {
@@ -13,11 +13,11 @@ export function ItemsPanel({ items, images }: { items: Camera[] | Lense[], image
   }
   return (
     <>
-      <ul className="group/list w-full grid grid-cols-2 sm:grid-cols-1 sm:px-4 py-6 gap-y-4 gap-x-2">
+      <ul className="group/list w-full grid grid-cols-2 md:grid-cols-1 md:px-4 py-6 gap-y-4 gap-x-2">
         {items && items.length !==0 ? items.map((item) => {
           return (
             <li key={item.id}>
-              <StoreItem item={item} image={findImage(item.id)} />
+              <Item item={item} image={findImage(item.id)} />
             </li>
           )
         }) :

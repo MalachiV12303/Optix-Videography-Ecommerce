@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <div className="container flex text-sm justify-between border-t-1 border-foreground h-24 pt-1">
-        <a href="malachidev.com" target="_blank" rel="noreferrer noopener" className="text-foreground-muted hover:text-primary transition-colors">malachidev.com</a>
+        <a href="https://www.malachidev.com" target="_blank" rel="noreferrer noopener" className="text-foreground-muted hover:text-primary transition-colors">malachidev.com</a>
         <span>mock website, <span className="font-semibold">no purchases possible</span></span>
     </div>
   );

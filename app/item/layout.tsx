@@ -5,7 +5,7 @@ export default function Layout({
 }) {
   return (
     <>
-      <main className="container min-h-screen flex flex-col justify-center">
+      <main className="itemContainer min-h-screen flex flex-col">
         {children}
       </main>
     </>

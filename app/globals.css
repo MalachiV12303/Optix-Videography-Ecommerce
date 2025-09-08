@@ -3,7 +3,7 @@
 @source '../node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}';
 
 :root {
-  --background: #050505;
+  --background: #0e0e0e;
   --foreground: #EDEDED;
   --foreground-muted: rgb(173, 173, 173);
   --primary: #212bb3;

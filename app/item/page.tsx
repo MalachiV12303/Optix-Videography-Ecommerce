@@ -46,7 +46,7 @@ export default async function Page({ searchParams }: PageProps) {
         else if (isLense(item))
             return <LensePage len={item} image={findImage(item.id)} />
         else
-            return <div>unknown item error</div>;
+            return <div className="h-screen bg-pink-400">unknown item error</div>;
     }
 
     return (

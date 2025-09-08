@@ -1,3 +1,5 @@
+import Footer from "../ui/Footer"
+
 export default function Layout({
   children,
 }: {
@@ -5,9 +7,10 @@ export default function Layout({
 }) {
   return (
     <>
-      <main className="itemContainer min-h-screen flex flex-col">
+      <main className="itemContainer flex flex-col">
         {children}
       </main>
+      <Footer />
     </>
   )
 } 

@@ -1,9 +1,9 @@
 "use client";
-import { Camera, Lense } from '@/app/lib/db/schema'
+import { Aerial, Camera, Lense } from '@/app/lib/db/schema'
 import { Item } from '@/app/ui/store/catalogue/Item'
 import { ListBlobResultBlob } from '@vercel/blob'
 
-export function ItemsPanel({ items, images }: { items: Camera[] | Lense[], images: ListBlobResultBlob[] }) {
+export function ItemsPanel({ items, images }: { items: Camera[] | Lense[] | Aerial[] , images: ListBlobResultBlob[] }) {
   function findImage(searchTerm: string) {
     const matchingImageBlobs = images.filter(blob =>
       blob.pathname.includes(searchTerm)

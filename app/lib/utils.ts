@@ -1,5 +1,5 @@
 import { Item } from 'react-use-cart';
-import { Camera, Lense } from './db/schema';
+import { Aerial, Camera, Lense } from './db/schema';
 import { list } from '@vercel/blob';
 
 export const formatCurrency = (amount: number) => {
@@ -34,7 +34,7 @@ export const filtermap = new Map([
   ['lensetypes', ['Telephoto Zoom', 'Telephoto Prime', 'Standard Prime', 'Standard Zoom', 'Wide Angle Prime']],
   ['lensebrands', ['Canon', 'Nikon', 'Sony', 'Panasonic', 'Sigma', 'Tamron']],
 
-  ['aerialtypes', ['Indoor', 'Outdoor', 'Both']],
+  ['aerialtypes', ['App-Controlled', 'Remote Control']],
   ['aerialbrands', ['DJI', 'Snaptain', 'Contixo']],
 
   ['resolutions', ['1080', '2160', '6144']],
@@ -53,5 +53,9 @@ export function isCamera(obj: any): obj is Camera {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isLense(obj: any): obj is Lense {
   return obj && typeof obj === 'object' && 'minfl' in obj
+};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isAerial(obj: any): obj is Aerial {
+  return obj && typeof obj === 'object' && 'altitude' in obj
 };
 

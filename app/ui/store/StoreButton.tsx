@@ -28,7 +28,7 @@ export default function StoreButton({
 
     return (
         <button
-            className="flex items-center justify-center relative min-h-16 flex-1 transition duration-300 ease-in-out hover:grayscale-0 lg:grayscale rounded-md overflow-hidden"
+            className="cursor-pointer flex items-center justify-center relative min-h-16 flex-1 transition duration-300 ease-in-out hover:grayscale-0 lg:grayscale rounded-md overflow-hidden"
             onClick={() => {
                 setFilters({});
                 setCategory(category);

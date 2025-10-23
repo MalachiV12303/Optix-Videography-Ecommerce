@@ -1,0 +1,167 @@
+{
+  "id": "ebaeed2b-be09-4f52-86de-a126013c6cf7",
+  "prevId": "49e81b78-2d43-499a-8572-ff988ce17d75",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.cameras": {
+      "name": "cameras",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "char(8)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "brand": {
+          "name": "brand",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price": {
+          "name": "price",
+          "type": "numeric(19, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "shutter": {
+          "name": "shutter",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "res": {
+          "name": "res",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "megapixels": {
+          "name": "megapixels",
+          "type": "numeric(3, 1)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0'"
+        },
+        "storage": {
+          "name": "storage",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mount": {
+          "name": "mount",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.lenses": {
+      "name": "lenses",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "char(8)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "brand": {
+          "name": "brand",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price": {
+          "name": "price",
+          "type": "numeric(19, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "maxap": {
+          "name": "maxap",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "minfl": {
+          "name": "minfl",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "maxfl": {
+          "name": "maxfl",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mount": {
+          "name": "mount",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

@@ -38,6 +38,9 @@ export const searchParams = {
   maxfl: parseAsArrayOf(parseAsString).withDefault([]),
   maxap: parseAsArrayOf(parseAsString).withDefault([]),
   mount: parseAsArrayOf(parseAsString).withDefault([]),
+  time: parseAsArrayOf(parseAsString).withDefault([]),
+  distance: parseAsArrayOf(parseAsString).withDefault([]),
+  altitude: parseAsArrayOf(parseAsString).withDefault([]),
 }
 
 
@@ -57,8 +60,9 @@ export const searchParamsCache = createSearchParamsCache({
   maxfl: parseAsArrayOf(parseAsString).withDefault([]),
   maxap: parseAsArrayOf(parseAsString).withDefault([]),
   mount: parseAsArrayOf(parseAsString).withDefault([]),
-
-
+  time: parseAsArrayOf(parseAsString).withDefault([]),
+  distance: parseAsArrayOf(parseAsString).withDefault([]),
+  altitude: parseAsArrayOf(parseAsString).withDefault([]),
 })
 
 
@@ -74,8 +78,10 @@ export function useFilters() {
     minfl: searchParams.shutter.withOptions({shallow:false}),
     maxfl: searchParams.mgp.withOptions({shallow:false}),
     maxap: searchParams.maxap.withOptions({shallow:false}),
-    mount: searchParams.maxap.withOptions({shallow:false}),
-
+    mount: searchParams.mount.withOptions({shallow:false}),
+    time: searchParams.time.withOptions({shallow:false}),
+    distance: searchParams.distance.withOptions({shallow:false}),
+    altitude: searchParams.altitude.withOptions({shallow:false}),
   })
 }
 

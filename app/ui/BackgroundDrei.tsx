@@ -5,7 +5,7 @@ import { Sparkles } from '@react-three/drei'
 
 export default function BackgroundDrei() {
   const [foregroundColor, setForegroundColor] = useState<string>(getCssVar("--foreground"));
-  const [primaryColor, setPrimaryColor] = useState<string>(getCssVar("--primary"));
+  const [, setPrimaryColor] = useState<string>(getCssVar("--primary"));
 
   // Sync color with theme (CSS vars)
   useEffect(() => {
@@ -34,8 +34,8 @@ export default function BackgroundDrei() {
         zIndex: -5,
       }}>
       <Suspense fallback={null}>
-        <Sparkles count={150} color={foregroundColor} size={2} scale={10} />
-        <Sparkles count={75} color={primaryColor} size={1} scale={10} />
+        <Sparkles count={75} color={foregroundColor} size={2} scale={10} />
+        {/* <Sparkles count={75} color={primaryColor} size={1} scale={10} /> */}
       </Suspense>
     </Canvas>
   )

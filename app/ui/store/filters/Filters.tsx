@@ -8,7 +8,7 @@ export function Filters({ it }: { it: string }) {
     return it === 'cam' ? <CameraFilters /> :
         it === 'len' ? <LenseFilters /> :
             it === 'aer' ? <AerialFilters /> :
-                <div>no filters found</div>;
+                <></>;
 }
 
 const accordionClassNames = { content: 'py-4 px-4', indicator: 'text-foreground', trigger: "w-full flex items-center justify-between cursor-pointer px-4 font-sans uppercase text-lg tracking-wide border-b-1 border-foreground", };
@@ -71,15 +71,15 @@ function LenseFilters() {
 function AerialFilters() {
     const [{ type, brand }] = useFilters()
     return (
-        <Accordion showDivider={false} className="px-0" fullWidth itemClasses={{ content: 'py-4 px-4', title: 'text-background', indicator: 'text-background', trigger: 'my-1 bg-foreground text-background px-4' }} isCompact={true} selectionMode="multiple">
+        <Accordion className="px-0" itemClasses={accordionClassNames} selectionMode="multiple" showDivider={false} fullWidth isCompact={true} defaultExpandedKeys={['price', "type", "brand"]} >
             <AccordionItem key="price" aria-label="price" title="price">
                 <PriceSlider />
             </AccordionItem>
-            <AccordionItem key="type" aria-label="type" title="type">
+            <AccordionItem key="type" aria-label="type" title={'type ' + (type.length != 0 ? type.length : '')}>
                 <FilterSet filters={filtermap.get('aerialtypes')} param={type} p={'type'} />
             </AccordionItem>
-            <AccordionItem key="brand" aria-label="brand" title="brand">
-                <FilterSet filters={filtermap.get('aerialbrands')} param={brand} p={'brand'} />
+            <AccordionItem key="brand" aria-label="brand" title={'brand ' + (brand.length != 0 ? brand.length : '')}>
+                <FilterSet containerClassname={'grid grid-cols-2 overflow-hidden'} filters={filtermap.get('aerialbrands')} param={brand} p={'brand'} />
             </AccordionItem>
         </Accordion>
     )

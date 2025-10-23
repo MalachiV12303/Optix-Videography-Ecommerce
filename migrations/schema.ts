@@ -28,3 +28,16 @@ export const cameras = pgTable("cameras", {
 	storage: text().array().notNull(),
 	mount: text().array().notNull(),
 });
+
+export const aerial = pgTable("aerial", {
+	id: char({ length: 8 }).primaryKey().notNull(),
+	name: varchar({ length: 255 }).notNull(),
+	brand: varchar({ length: 20 }).notNull(),
+	price: numeric({ precision: 19, scale:  2 }).notNull(),
+	description: text(),
+	time: varchar({ length: 20 }).notNull(),
+	res: integer().default(0).notNull(),
+	distance: varchar({ length: 20 }).notNull(),
+	altitude: varchar({ length: 20 }).notNull(),
+	type: text().array(),
+});

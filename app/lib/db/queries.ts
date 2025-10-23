@@ -1,6 +1,6 @@
 import { db } from './drizzle';
 import { eq, and, between, inArray, ilike, or, arrayOverlaps } from 'drizzle-orm';
-import { cameras, lenses } from './schema';
+import { aerial, cameras, lenses } from './schema';
 import { searchParamsCache } from '../searchParams';
 import { SliderValue } from '@nextui-org/slider';
 
@@ -17,14 +17,16 @@ const typeFilter = (itemtype: string, types: string[]) => {
   if (types.length === 0)
     return undefined
   return itemtype === 'cam' ? inArray(cameras.type, types) :
-          itemtype === 'len' ? inArray(lenses.type, types) : undefined
+          itemtype === 'len' ? inArray(lenses.type, types) :
+              itemtype === 'aer' ? arrayOverlaps(aerial.type, types) : undefined
 }
 
 const brandFilter = (itemtype: string, brands: string[]) => {
   if (brands.length === 0)
         return undefined
   return itemtype === 'cam' ? inArray(cameras.brand, brands) :
-          itemtype === 'len' ? inArray(lenses.brand, brands) : undefined
+          itemtype === 'len' ? inArray(lenses.brand, brands) : 
+              itemtype === 'aer' ? inArray(aerial.brand, brands) : undefined
 }
 
 const searchFilter = (itemtype: string, search: string) => {
@@ -37,7 +39,8 @@ const resFilter = (itemtype: string, res: string[]) => {
   if (res.length === 0)
         return undefined
   //using .map because i was having issue using parseAsInt in searchParamsCache, values were null and number[] had no length
-  return itemtype === 'cam' ? inArray(cameras.res, res.map((val)=>parseInt(val))) : undefined
+  return itemtype === 'cam' ? inArray(cameras.res, res.map((val)=>parseInt(val))) : 
+            itemtype === 'aer' ? inArray(aerial.res, res.map((val)=>parseInt(val))) : undefined
 }
 
 const shutterFilter = (itemtype: string, shutters: string[]) => {
@@ -161,6 +164,35 @@ export async function fetchLenses() {
   return fetchedLenses;
 }
 
+export async function fetchAerial() {
+  const { type, brand, price, category } = searchParamsCache.all();
+  const filters = [
+     brandFilter(category, brand),
+     typeFilter(category, type),
+     priceFilter(category, price) ,
+     //add more filters here
+   ].filter(Boolean);
+
+  const whereClause = filters.length > 0 ? and(...filters) : undefined;
+  const fetchedAerial = await db
+    .select({
+      id: aerial.id,
+      name: aerial.name,
+      type: aerial.type,
+      brand: aerial.brand,
+      price: aerial.price,
+      time: aerial.time,
+      res: aerial.res,
+      distance: aerial.distance,
+      altitude: aerial.altitude,
+      description: aerial.description,
+    })
+    .from(aerial)
+    .where(whereClause)
+    .orderBy(aerial.id);
+  return fetchedAerial;
+}
+
 export async function fetchCameraById(id: string) {
   const result = await db
     .select({
@@ -175,12 +207,10 @@ export async function fetchCameraById(id: string) {
       mount: cameras.mount,
       shutter: cameras.shutter,
       description: cameras.description,
-      
     })
     .from(cameras)
     .where(eq(cameras.id, id))
     .limit(1);
-
   return result[0];
 }
 
@@ -199,6 +229,26 @@ export async function fetchLenseById(id: string) {
     })
     .from(lenses)
     .where(eq(lenses.id, id))
+    .limit(1);
+  return result[0];
+}
+
+export async function fetchAerialById(id: string) {
+  const result = await db
+    .select({
+      id: aerial.id,
+      name: aerial.name,
+      type: aerial.type,
+      brand: aerial.brand,
+      price: aerial.price,
+      time: aerial.time,
+      res: aerial.res,
+      distance: aerial.distance,
+      altitude: aerial.altitude,
+      description: aerial.description,
+    })
+    .from(aerial)
+    .where(eq(aerial.id, id))
     .limit(1);
   return result[0];
 }

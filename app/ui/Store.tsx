@@ -1,6 +1,6 @@
 import FiltersPanel from "./store/filters/FiltersPanel";
 import { searchParamsCache } from "@/app/lib/searchParams";
-import { fetchCameras, fetchLenses } from "../lib/db/queries";
+import { fetchCameras, fetchLenses, fetchAerial } from "../lib/db/queries";
 import { ItemsPanel } from "./store/catalogue/ItemsPanel";
 import { FilterChips } from "./store/filters/FilterChips";
 import { getAllImages } from "../lib/utils";
@@ -18,6 +18,8 @@ export async function Store({ searchParams }: PageProps) {
         return fetchCameras();
       case "len":
         return fetchLenses();
+      case "aer":
+        return fetchAerial();
       default:
         return [];
     }

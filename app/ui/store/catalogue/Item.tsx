@@ -1,19 +1,19 @@
 import React from 'react';
 import Link from 'next/link';
 import { useCart } from 'react-use-cart';
-import { Camera, Lense } from '@/app/lib/db/schema';
-import { formatCurrency, isCamera } from '@/app/lib/utils';
+import { Aerial, Camera, Lense } from '@/app/lib/db/schema';
+import { formatCurrency, isCamera, isLense } from '@/app/lib/utils';
 import { ListBlobResultBlob } from '@vercel/blob';
 import Image from 'next/image';
 
-export function Item({ item, image }: { item: Camera | Lense, image: ListBlobResultBlob | null }) {
+export function Item({ item, image }: { item: Camera | Lense | Aerial, image: ListBlobResultBlob | null }) {
     const params = new URLSearchParams()
     const formattedValue = formatCurrency(item.price ?? 0)
     const { addItem } = useCart()
     params.set("id", item.id.toString())
 
     return (
-        <div className="px-6 py-8 md:py-4 group bg-background/40 lg:group-hover/list:opacity-70 lg:hover:!opacity-100 transition-all relative border-1 border-foreground-muted rounded-md flex flex-col md:flex-row max-w-full min-h-72 h-full md:h-auto">
+        <div className="px-6 py-8 group bg-background/40 lg:group-hover/list:opacity-70 lg:hover:!opacity-100 transition-all relative border-1 border-foreground-muted rounded-md flex flex-col md:flex-row max-w-full min-h-72 h-full md:h-auto">
             <Link href={`/item?${params}`} className="flex-1 aspect-square relative w-auto h-full">
                 {image ?
                     // eslint-disable-next-line @next/next/no-img-element
@@ -30,10 +30,10 @@ export function Item({ item, image }: { item: Camera | Lense, image: ListBlobRes
                 }
             </Link>
             <div className="flex-2 lg:flex-3 mt-4 md:mt-0 md:px-4">
-                <Link href={`/item?${params}`} className="block font-semibold text-lg sm:text-2xl hover:underline">{item.brand} {item.name} {item.type === 'DSLR' ? "Digital Camera" : "Mirrorless Camera"}</Link>
+                <Link href={`/item?${params}`} className="block font-semibold text-lg sm:text-2xl hover:underline">{item.brand} {item.name} {isCamera(item) ? (item.type === 'DSLR' ? "Digital Camera" : "Mirrorless Camera") : null}</Link>
                 <span className="hidden sm:block text-sm text-foreground-muted">ID: {item.id}</span>
-                {isCamera(item) && (
-                    <span className="hidden md:block text-sm flex-1 mt-4">{item.description}</span>
+                {!isLense(item) && (
+                    <span className="hidden md:block text-base flex-1 mt-4">{item.description}</span>
                 )}
             </div>
             <div className="flex-1 flex flex-col items-center justify-center gap-4 mt-8 md:mt-0">

@@ -1,37 +1,45 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BulbIcon } from "./SvgLibrary";
 
-const themes = ["light", "dark"] as const;
-type Theme = (typeof themes)[number];
+type Theme = "light" | "dark";
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>("dark");
 
+  // read theme on mount
   useEffect(() => {
     const saved = localStorage.getItem("theme") as Theme | null;
-    if (saved && themes.includes(saved)) {
-      setTheme(saved);
-      document.documentElement.setAttribute("data-theme", saved);
-    }
+    const resolvedTheme: Theme =
+      saved === "light" || saved === "dark" ? saved : "dark";
+
+    setTheme(resolvedTheme);
+    document.documentElement.classList.toggle("dark", resolvedTheme === "dark");
   }, []);
 
+  // apply theme changes
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.classList.toggle("dark", theme === "dark");
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const nextTheme = () => {
-    const i = themes.indexOf(theme);
-    setTheme(themes[(i + 1) % themes.length]);
+  const toggleTheme = () => {
+    setTheme(prev => (prev === "dark" ? "light" : "dark"));
   };
 
   return (
     <button
-      onClick={nextTheme}
-      className="rounded-full p-2"
+      onClick={toggleTheme}
+      aria-label="Toggle theme"
+      className="
+        rounded-full
+        p-2
+        transition-colors
+        bg-foreground
+        text-background
+      "
     >
-      <BulbIcon width={25} height={25} className="text-foreground"/>
+      <BulbIcon width={25} height={25} />
     </button>
   );
-}
+};

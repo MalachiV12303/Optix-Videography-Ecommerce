@@ -6,4 +6,3 @@ if (!process.env.POSTGRES_URL) {
 }
 
 export const db = drizzle(sql);
-

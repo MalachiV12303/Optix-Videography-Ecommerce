@@ -1,4 +1,4 @@
-import Footer from "../ui/Footer"
+import Footer from "../ui/Footer";
 
 export default function Layout({
   children,
@@ -13,4 +13,4 @@ export default function Layout({
       <Footer />
     </>
   )
-} 
+};

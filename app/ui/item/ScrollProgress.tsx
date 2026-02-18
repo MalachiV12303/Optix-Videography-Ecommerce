@@ -1,5 +1,5 @@
-"use client"
-import { motion, useScroll, useSpring } from 'motion/react';
+"use client";
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { Suspense } from 'react';
 
 export function ScrollProgress(){
@@ -26,4 +26,4 @@ export function ScrollProgress(){
             </svg>
         </div>
     )
-}
+};

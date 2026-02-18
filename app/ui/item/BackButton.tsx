@@ -1,7 +1,6 @@
-'use client'
-
-import { Button } from '@nextui-org/react'
-import { useRouter } from 'next/navigation'
+"use client";
+import { Button } from '@heroui/react';
+import { useRouter } from 'next/navigation';
 
 export default function BackButton() {
   const router = useRouter();
@@ -13,4 +12,4 @@ export default function BackButton() {
       </svg>
     </Button>
   )
-}
+};

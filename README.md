@@ -9,4 +9,4 @@ https://gleamstore.vercel.app
 - DrizzleORM  
 - Typescript  
 - Three.js  
-- motion/react  
+- framer-motion  

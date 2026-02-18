@@ -25,11 +25,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    //global font size, not sure if tailwind is the best way to apply this
-    <html lang="en" className="scroll-smooth">
-      <body className={`${sans.variable} ${mono.variable} antialiased text-foreground bg-background transition-colors`}>
+    <html lang="en" className={`${sans.variable} ${mono.variable} scroll-smooth`}>
+      <body className="antialiased transition-colors pt-20 sm:pt-24 ">
         <ClientShell>{children}</ClientShell>
       </body>
     </html>
   )
-}
+};

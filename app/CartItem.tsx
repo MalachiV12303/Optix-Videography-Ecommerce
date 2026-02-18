@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Item, useCart } from 'react-use-cart';
 import { formatCurrency, getItemCat } from './lib/utils';
-import { Button } from '@nextui-org/react';
+import { Button } from '@heroui/react';
 
 export default function CartItem({ item, className }: { item: Item, className: string }) {
     const { updateItemQuantity } = useCart()
@@ -29,8 +29,7 @@ export default function CartItem({ item, className }: { item: Item, className: s
                     <span className='font-bold text-end'>  {item.quantity ? formatCurrency(item.price * item.quantity) : formatCurrency(item.price)}</span>
                     <span>{item.quantity} in cart</span>
                 </div>
-
             </div>
         </div>
     )
-}
+};

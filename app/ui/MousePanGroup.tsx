@@ -1,14 +1,11 @@
-// MousePanGroup.tsx
 import React, { useRef } from "react";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 
 type Props = {
-  /** How far the scene will pan relative to viewport size (0 = no pan). */
   intensity?: number;
-  /** Lerp smoothing factor (0..1). Larger = snappier, smaller = smoother. */
+  /** smoothing factor (0..1). larger = snappier, smaller = smoother. */
   damping?: number;
-  /** Children to apply the panning effect to. */
   children?: React.ReactNode;
 };
 
@@ -32,7 +29,6 @@ export const MousePanGroup: React.FC<Props> = ({
     // world-space offset relative to viewport size
     const offsetX = mx * (viewport.width / 2) * intensity;
     const offsetY = my * (viewport.height / 2) * intensity;
-
     targetPos.current.set(offsetX, offsetY, 0);
 
     // smooth lerp

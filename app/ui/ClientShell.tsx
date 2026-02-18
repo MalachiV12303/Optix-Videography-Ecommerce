@@ -5,15 +5,19 @@ import { NuqsAdapter } from "nuqs/adapters/next";
 import dynamic from "next/dynamic";
 import BackgroundDrei from "./BackgroundDrei";
 
-// Dynamically import NextUIProvider client-only
-const NextUIProvider = dynamic(
-  () => import("@nextui-org/react").then(mod => mod.NextUIProvider),
+const HeroUIProvider = dynamic(
+  () => import("@heroui/react").then(mod => mod.HeroUIProvider),
   { ssr: false }
 );
 
 export default function ClientShell({ children }: { children: React.ReactNode }) {
+  // console.log("----providers.tsx----\n");
+  // console.log("HeroUIProvider:", HeroUIProvider);
+  // console.log("NuqsAdapter:", NuqsAdapter);
+  // console.log("CartProvider:", CartProvider);
+  // console.log("\n\n");
   return (
-    <NextUIProvider>
+    <HeroUIProvider>
         <CartProvider>
           <NuqsAdapter>
             <BackgroundDrei />
@@ -21,6 +25,6 @@ export default function ClientShell({ children }: { children: React.ReactNode })
             {children}
           </NuqsAdapter>
         </CartProvider>
-    </NextUIProvider>
+    </HeroUIProvider>
   );
-}
+};

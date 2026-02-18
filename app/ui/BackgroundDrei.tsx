@@ -1,21 +1,18 @@
 "use client";
 import { Canvas } from '@react-three/fiber'
-import React, { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { Sparkles } from '@react-three/drei'
 
 export default function BackgroundDrei() {
   const [foregroundColor, setForegroundColor] = useState<string>(getCssVar("--foreground"));
   const [, setPrimaryColor] = useState<string>(getCssVar("--primary"));
 
-  // Sync color with theme (CSS vars)
   useEffect(() => {
     const updateTheme = () => {
       setForegroundColor(getCssVar("--foreground"))
       setPrimaryColor(getCssVar("--primary"))
     };
-    // Initial color
     updateTheme();
-    // Watch for theme changes
     const observer = onThemeChange(updateTheme);
     return () => observer.disconnect();
   }, []);
@@ -41,17 +38,23 @@ export default function BackgroundDrei() {
   )
 }
 
-// Utility: read CSS variable
 function getCssVar(name: string): string {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
 
-// Utility: watch for theme change (data-theme on <html>)
 function onThemeChange(callback: () => void) {
-  const observer = new MutationObserver(() => callback());
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.attributeName === "class") {
+        callback();
+      }
+    }
+  });
+
   observer.observe(document.documentElement, {
     attributes: true,
-    attributeFilter: ["data-theme"],
+    attributeFilter: ["class"],
   });
+
   return observer;
-}
+};

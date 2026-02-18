@@ -1,16 +1,16 @@
 "use client";
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { formatCurrency } from '@lib/utils';
 import { useCart } from 'react-use-cart';
-import { 
-    Badge, 
-    Button, 
-    Popover, 
-    PopoverContent, 
-    PopoverTrigger, 
+import {
+    Badge,
+    Button,
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
     Tooltip
-} from '@nextui-org/react';
+} from '@heroui/react';
 import CartItem from './CartItem';
 import { CartIcon } from './ui/SvgLibrary';
 
@@ -28,8 +28,8 @@ export default function Cart() {
         }}>
             <Badge isInvisible={isEmpty} content={totalQuantity} className='text-sm min-w-6 tracking-tight bg-foreground text-background pr-px pl-px sm:pl-0 pt-px'>
                 <PopoverTrigger>
-                    <div className="flex items-center justify-center">
-                        <CartIcon width={25} height={25} className="text-foreground"/>
+                    <div className="flex items-center justify-center bg-foreground text-background">
+                        <CartIcon width={25} height={25} />
                     </div>
                 </PopoverTrigger>
             </Badge>

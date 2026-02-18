@@ -1,19 +1,18 @@
 "use client";
-import { NextUIProvider } from "@nextui-org/react";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { HeroUIProvider } from "@heroui/react";
 import { NuqsAdapter } from "nuqs/adapters/next";
-import { CartProvider } from 'react-use-cart'
-
-console.log("----providers.tsx----\n");
-console.log("NextUIProvider:", NextUIProvider);
-console.log("NextThemesProvider:", NextThemesProvider);
-console.log("NuqsAdapter:", NuqsAdapter);
-console.log("CartProvider:", CartProvider);
-console.log("\n\n");
+import { CartProvider } from "react-use-cart";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
+    // console.log("----providers.tsx----\n");
+    // console.log("HeroUIProvider:", HeroUIProvider);
+    // console.log("NextThemesProvider:", NextThemesProvider);
+    // console.log("NuqsAdapter:", NuqsAdapter);
+    // console.log("CartProvider:", CartProvider);
+    // console.log("\n\n");
     return (
-        <NextUIProvider>
+        <HeroUIProvider>
             <NextThemesProvider>
                 <CartProvider>
                     <NuqsAdapter>
@@ -21,6 +20,6 @@ export default function Providers({ children }: { children: React.ReactNode }) {
                     </NuqsAdapter>
                 </CartProvider>
             </NextThemesProvider>
-        </NextUIProvider>
+        </HeroUIProvider>
     )
-}
+};

@@ -1,58 +1,38 @@
-import React from 'react';
-import { list } from '@vercel/blob';
-import { CameraPage } from '@/app/ui/item/CameraPage';
-import { searchParamsCache } from '@lib/searchParams';
-import { SearchParams } from 'nuqs/server';
-import { fetchCameras, fetchLenses } from '@lib/db/queries';
-import { LensePage } from '@ui/item/LensePage';
-import { Camera, Lense } from '@lib/db/schema';
-import { isCamera, isLense } from '@lib/utils';
+import { list } from "@vercel/blob";
+import { searchParamsCache } from "@lib/searchParams";
+import { fetchCameraById, fetchLenseById } from "@lib/db/queries";
+import { CameraPage } from "@ui/item/CameraPage";
+import { LensePage } from "@ui/item/LensePage";
 
 type PageProps = {
-    searchParams: Promise<SearchParams>
-}
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
 
 export default async function Page({ searchParams }: PageProps) {
-    const id = searchParamsCache.parse(await searchParams).id;
-    const category = searchParamsCache.parse(await searchParams).category;
-    const [items] = await fetchItems(category)
-    async function allImages() {
-        const blobs = await list();
-        return blobs
-    }
-    const images = await allImages()
-    function findImage(searchTerm: string) {
-        const matchingImageBlobs = images.blobs.filter(blob =>
-            blob.pathname.includes(searchTerm)
-        )
-        return matchingImageBlobs.length > 0 ? matchingImageBlobs[0] : null
-    }
+  // initializes the nuqs cache for the request
+  const normalized = searchParamsCache.parse(await searchParams);
+  const { id, category } = normalized;
+  console.log("category is", category);
 
-    const matchingIdItem = items.find((i) => i.id === id)
-    function fetchItems(type: string) {
-        switch (type) {
-            case 'cam':
-                return Promise.all([fetchCameras()])
-            case 'len':
-                return Promise.all([fetchLenses()])
-            default:
-                return []
-        }
-    }
+  if (!id || !category) {
+    return <div className="h-screen">Invalid item</div>;
+  }
 
-    async function displayItem(item: Camera | Lense) {
-        if (isCamera(item))
-            return <CameraPage cam={item} image={findImage(item.id)} />
-        else if (isLense(item))
-            return <LensePage len={item} image={findImage(item.id)} />
-        else
-            return <div className="h-screen bg-pink-400">unknown item error</div>;
-    }
+  const blobs = await list();
+  const findImage = (itemId: string) =>
+    blobs.blobs.find((b) => b.pathname.includes(itemId)) ?? null;
 
-    return (
-        <>
-            {matchingIdItem ? displayItem(matchingIdItem) : undefined}
-        </>
-    )
-}
-
+  if (category === "cam") {
+    const cam = await fetchCameraById(id);
+    console.log("cam is " + cam)
+    if (!cam) return <div className="h-screen flex items-center justify-center">Camera Not found</div>;
+    return <CameraPage cam={cam} image={findImage(cam.id)} />;
+  }
+  else if (category === "len") {
+    console.log("id is " + id);
+    const len = await fetchLenseById(id);
+    if (!len) return <div className="h-screen flex items-center justify-center">Lens Not found</div>;
+    return <LensePage len={len} image={findImage(len.id)} />;
+  }
+  return <div className="h-screen">Unsupported item</div>;
+};

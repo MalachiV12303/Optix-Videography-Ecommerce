@@ -1,5 +1,4 @@
 "use client";
-import React from 'react';
 import clsx from 'clsx';
 import { useQueryState } from 'nuqs';
 import { searchParams, useFilters } from '@/app/lib/searchParams';
@@ -35,4 +34,4 @@ export function CategorySwitch(){
             ))}
         </div>
     )
-}
+};

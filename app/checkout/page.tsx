@@ -1,10 +1,10 @@
 "use client";
-import React, { useEffect, useState } from 'react';
-import { Button, Spinner } from '@nextui-org/react';
+import { useEffect, useState } from 'react';
+import { Button, Spinner } from '@heroui/react';
 import { CheckoutCart } from '@ui/checkout/CheckoutCart';
 
 export default function Page() {
-    //this is to render cart information without ssr errors
+    //render cart information without ssr errors
     const [isClient, setIsClient] = useState(false)
     const [visible, setVisible] = useState(false)
     useEffect(() => {
@@ -50,4 +50,4 @@ export default function Page() {
             <div className='hidden md:inline-block min-h-[80dvh] md:w-1/3'>{isClient ? <CheckoutCart /> : <Spinner />}</div>
         </section>
     )
-}
+};

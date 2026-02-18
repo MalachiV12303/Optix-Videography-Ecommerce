@@ -1,46 +1,55 @@
 "use client";
-import React from "react";
+import Image from "next/image";
 import { useQueryState } from "nuqs";
 import { searchParams, useFilters } from "../../lib/searchParams";
-import Image from "next/image";
 
 export default function StoreButton({
-    buttonText,
-    category,
-    imgSrc,
+  buttonText,
+  category,
+  imgSrc,
 }: {
-    buttonText: string;
-    category: string;
-    imgSrc: string;
+  buttonText: string;
+  category: string;
+  imgSrc: string;
 }) {
-    const [, setCategory] = useQueryState(
-        "category",
-        searchParams.category.withOptions({
-            shallow: false,
-        })
-    );
-    const [, setFilters] = useFilters();
+  const [, setCategory] = useQueryState(
+    "category",
+    searchParams.category.withOptions({ shallow: false })
+  );
+  const [, setFilters] = useFilters();
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
 
-    const scrollToSection = (id: string) => {
-        const element = document.getElementById(id);
-        element?.scrollIntoView({ behavior: "smooth" });
-    };
-
-    return (
-        <button
-            className="cursor-pointer flex items-center justify-center relative min-h-16 flex-1 transition duration-300 ease-in-out hover:grayscale-0 lg:grayscale rounded-md overflow-hidden"
-            onClick={() => {
-                setFilters({});
-                setCategory(category);
-                scrollToSection("storeContent");
-            }}
-        >
-            <Image alt={buttonText} src={imgSrc} className="object-cover" fill />
-            {/* Overlay (optional, for readability) */}
-            <div className="absolute inset-0 bg-black/30" />
-            <p className="font-mono font-bold uppercase text-3xl relative z-10 flex items-center justify-center text-white">
-                {buttonText}
-            </p>
-        </button>
-    );
-}
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        setFilters({});
+        setCategory(category);
+        scrollToSection("storeContent");
+      }}
+      className="
+        relative w-full flex-1 overflow-hidden rounded-md
+        transition duration-300 ease-in-out
+        lg:grayscale hover:grayscale-0
+        aspect-[6/1]
+        md:aspect-[16/5]
+        lg:aspect-[6/1]
+      "
+    >
+      <Image
+        src={imgSrc}
+        alt={buttonText}
+        fill
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        className="object-cover"
+        priority={false}
+      />
+      <div className="absolute inset-0 bg-black/30" />
+      <span className="relative z-10 flex h-full w-full items-center justify-center font-mono text-2xl sm:text-3xl font-bold uppercase text-white">
+        {buttonText}
+      </span>
+    </button>
+  );
+};

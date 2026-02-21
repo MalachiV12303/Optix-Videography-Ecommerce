@@ -33,7 +33,7 @@ export default function Navigation() {
                 <div className="flex items-center gap-4">
                     <Searchbar />
                     <Cart />
-                    <span className="">
+                    <span className="hidden">
                         <ThemeToggle />
                     </span>
                 </div>

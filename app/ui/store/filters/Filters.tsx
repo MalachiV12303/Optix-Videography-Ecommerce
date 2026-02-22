@@ -1,7 +1,7 @@
 "use client";
 import { useFilters } from "@/app/lib/searchParams";
 import { filtermap } from "@/app/lib/utils";
-import { PriceSlider } from "./PriceSlider";
+import PriceSlider from "./PriceSlider";
 import {
   Accordion,
   AccordionItem,
@@ -43,7 +43,7 @@ function CameraFilters() {
       ]}
     >
       <AccordionItem key="price" title="price">
-        <PriceSlider />
+        <PriceSlider min={0} max={2500} />
       </AccordionItem>
 
       <AccordionItem
@@ -119,7 +119,7 @@ function LenseFilters() {
       ]}
     >
       <AccordionItem key="price" title="price">
-        <PriceSlider />
+        <PriceSlider min={0} max={2500}/>
       </AccordionItem>
 
       <AccordionItem key="type" title={`type ${type.length || ""}`}>
@@ -191,7 +191,7 @@ function AerialFilters() {
       ]}
     >
       <AccordionItem key="price" title="price">
-        <PriceSlider />
+        <PriceSlider min={0} max={2500}/>
       </AccordionItem>
 
       <AccordionItem key="type" title={`type ${type.length || ""}`}>

@@ -1,87 +1,119 @@
 "use client";
-import { useFilters } from "@/app/lib/searchParams";
-import { useDebouncedCallback } from "use-debounce";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const MIN = 0;
-const MAX = 3000;
-const STEP = 50;
+type PriceSliderProps = {
+  min: number;
+  max: number;
+};
+const MIN_GAP = 400;
 
-export function PriceSlider() {
-  const [{ price }, setFilters] = useFilters();
-  const [minVal, setMinVal] = useState(price[0]);
-  const [maxVal, setMaxVal] = useState(price[1]);
-  const [activeThumb, setActiveThumb] = useState<"min" | "max" | null>(null);
+export default function PriceSlider({ min, max }: PriceSliderProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const trackRef = useRef<HTMLDivElement>(null);
-  const updatePrice = useDebouncedCallback((min: number, max: number) => {
-    setFilters({ price: [min, max] });
-  }, 200);
+  const priceParam = searchParams.get("price");
+  let paramMin = min;
+  let paramMax = max;
+  
+  if (priceParam) {
+    const [pMin, pMax] = priceParam.split(",").map(Number);
+    if (!isNaN(pMin)) paramMin = pMin;
+    if (!isNaN(pMax)) paramMax = pMax;
+  }
+  const [value, setValue] = useState<[number, number]>([
+    paramMin,
+    paramMax,
+  ]);
 
-  useEffect(() => {
-    setMinVal(price[0]);
-    setMaxVal(price[1]);
-  }, [price]);
-
-  const minPercent = ((minVal - MIN) / (MAX - MIN)) * 100;
-  const maxPercent = ((maxVal - MIN) / (MAX - MIN)) * 100;
-  const handlePointerMove = (e: PointerEvent) => {
-    if (!trackRef.current || !activeThumb) return;
-
-    const rect = trackRef.current.getBoundingClientRect();
-    const clientX = e.clientX; // PointerEvent always has clientX
-    let percent = ((clientX - rect.left) / rect.width) * 100;
-    let value = Math.round(((percent / 100) * (MAX - MIN) + MIN) / STEP) * STEP;
-    value = Math.min(Math.max(value, MIN), MAX);
-
-    if (activeThumb === "min") {
-      const newMin = Math.min(value, maxVal - STEP);
-      setMinVal(newMin);
-      updatePrice(newMin, maxVal);
-    } else if (activeThumb === "max") {
-      const newMax = Math.max(value, minVal + STEP);
-      setMaxVal(newMax);
-      updatePrice(minVal, newMax);
-    }
+  const [activeThumb, setActiveThumb] = useState<"min" | "max" | null>(null);
+  const percent = (val: number) => ((val - min) / (max - min)) * 100;
+  const updateURL = (newValue: [number, number]) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(
+      "price",
+      `${Math.round(newValue[0])},${Math.round(newValue[1])}`
+    );
+    router.replace(`?${params.toString()}`, { scroll: false });
   };
 
-  const handlePointerUp = () => setActiveThumb(null);
+  const updateValue = (clientX: number) => {
+    if (!trackRef.current || !activeThumb) return;
+    const rect = trackRef.current.getBoundingClientRect();
+    const ratio = (clientX - rect.left) / rect.width;
+    let newValue = min + ratio * (max - min);
+    newValue = Math.round(newValue / 50) * 50; // snap to 50
+    newValue = Math.min(max, Math.max(min, newValue));
+
+    let updated: [number, number];
+
+    if (activeThumb === "min") {
+      const clamped = Math.min(newValue, value[1] - MIN_GAP);
+      updated = [clamped, value[1]];
+    } else {
+      const clamped = Math.max(newValue, value[0] + MIN_GAP);
+      updated = [value[0], clamped];
+    }
+    setValue(updated);
+  };
+
   useEffect(() => {
-    if (typeof window === "undefined") return; // ensure client-side only
-    window.addEventListener("pointermove", handlePointerMove);
-    window.addEventListener("pointerup", handlePointerUp);
+    const handlePointerMove = (e: PointerEvent) => {
+      updateValue(e.clientX);
+    };
+
+    const handlePointerUp = () => {
+      setActiveThumb(null);
+      updateURL(value);
+    };
+
+    if (activeThumb) {
+      window.addEventListener("pointermove", handlePointerMove);
+      window.addEventListener("pointerup", handlePointerUp);
+    }
+
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("pointerup", handlePointerUp);
     };
-  });
+  }, [activeThumb, value]);
 
   return (
-    <div className="max-w-md px-4 mt-4 select-none">
-      <div className="flex justify-between text-sm mb-2">
-        <span>${minVal}</span>
-        <span>${maxVal}</span>
+    <div className="w-full py-6 px-4">
+      <div className="relative mb-6">
+        <div
+          className="absolute -top-3 -translate-x-1/2 text-sm font-medium text-white"
+          style={{ left: `${percent(value[0])}%` }}
+        >
+          ${Math.round(value[0])}
+        </div>
+        <div
+          className="absolute -top-3 -translate-x-1/2 text-sm font-medium text-white"
+          style={{ left: `${percent(value[1])}%` }}
+        >
+          ${Math.round(value[1])}
+        </div>
       </div>
 
-      <div ref={trackRef} className="relative h-6">
-        <div className="absolute top-1/2 -translate-y-1/2 w-full h-1 bg-muted rounded-full" />
+      <div ref={trackRef} className="relative h-1">
         <div
-          className="absolute top-1/2 -translate-y-1/2 h-1 bg-foreground rounded-full"
+          className="absolute h-1 rounded-full bg-white"
           style={{
-            left: `${minPercent}%`,
-            width: `${maxPercent - minPercent}%`,
+            left: `${percent(value[0])}%`,
+            width: `${percent(value[1]) - percent(value[0])}%`,
           }}
         />
         <div
-          className="absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-foreground rounded-full cursor-pointer shadow transition-transform hover:scale-110 z-10"
-          style={{ left: `${minPercent}%`, transform: "translate(-50%, -50%)" }}
+          className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-white shadow-md"
+          style={{ left: `${percent(value[0])}%` }}
           onPointerDown={() => setActiveThumb("min")}
         />
         <div
-          className="absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-foreground rounded-full cursor-pointer shadow transition-transform hover:scale-110 z-10"
-          style={{ left: `${maxPercent}%`, transform: "translate(-50%, -50%)" }}
+          className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-white shadow-md"
+          style={{ left: `${percent(value[1])}%` }}
           onPointerDown={() => setActiveThumb("max")}
         />
       </div>
     </div>
-  );
+  )
 };

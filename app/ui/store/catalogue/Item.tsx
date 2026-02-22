@@ -27,7 +27,6 @@ export function Item({
 
   return (
     <div className="group relative h-full flex flex-col md:flex-row gap-6 px-6 py-8 border-b border-foreground-muted bg-background/40 transition">
-      {/* Image column */}
       <Link
         href={`/item?${params}`}
         className="relative w-full md:w-64 aspect-square shrink-0"
@@ -60,7 +59,6 @@ export function Item({
           </div>
         )}
       </Link>
-      {/* Details */}
       <div className="flex-1">
         <Link
           href={`/item?${params}`}
@@ -73,18 +71,17 @@ export function Item({
               : "Mirrorless Camera"
             : null}
         </Link>
-
+        
         <span className="hidden sm:block text-sm text-foreground-muted">
           ID: {item.id}
         </span>
-
+        
         {!isLense(item) && (
           <p className="hidden md:block mt-4 text-base">
             {item.description}
           </p>
         )}
       </div>
-      {/* Price / CTA */}
       <div className="flex flex-col items-center justify-center gap-4">
         <span className="text-2xl lg:text-3xl">${formattedValue}</span>
 

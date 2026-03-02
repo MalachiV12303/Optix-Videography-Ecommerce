@@ -1,10 +1,10 @@
+import StoreButton from "./store/StoreButton";
+import FiltersPanel from "./store/filters/FiltersPanel";
 import { searchParamsCache } from "@/app/lib/searchParams";
 import { fetchCameras, fetchLenses, fetchAerial } from "../lib/db/queries";
 import { ItemsPanel } from "./store/catalogue/ItemsPanel";
 import { FilterChips } from "./store/filters/FilterChips";
 import { getAllImages } from "../lib/utils";
-import StoreButton from "./store/StoreButton";
-import FiltersPanel from "./store/filters/FiltersPanel";
 import { normalizeStoreFilters } from "../lib/filters/normalize";
 
 type PageProps = {
@@ -33,14 +33,13 @@ export async function Store({ searchParams }: PageProps) {
         <StoreButton buttonText="aerial" category="aer" imgSrc="/droneButton.jpg" />
       </section>
 
-      <section id="storeContent" className="scroll-mt-24">
-        <div className="h-full grid grid-cols-5">
-          <div className="col-span-5 lg:col-span-1 flex items-center border-b border-foreground pl-4 py-2
+      <section id="storeContent">
+        <div className="h-full grid grid-cols-9">
+          <div className="col-span-9 lg:col-span-2 flex items-center border-b border-foreground pl-4 py-2
                 sticky top-20 z-40 bg-background lg:static">
             <span className="text-xl py-2 text-nowrap">
               {count === 0 ? "0 found..." : `${count} items found`}
             </span>
-
             <div className="ml-auto flex lg:hidden items-center">
               <FiltersPanel
                 contentClassname="w-[65dvw]"
@@ -50,15 +49,15 @@ export async function Store({ searchParams }: PageProps) {
             </div>
           </div>
 
-          <div className="hidden lg:block col-span-4 border-b border-foreground py-2 pl-4">
+          <div className="hidden lg:block col-span-7 border-b border-foreground py-2 pl-4">
             <div className="flex h-full items-center">
               <FilterChips sz="md" />
             </div>
           </div>
-          <div className="col-span-1 h-min border-r border-foreground lg:block hidden">
+          <div className="col-span-1 lg:col-span-2 h-min border-r border-foreground lg:block hidden">
             <FiltersPanel itemtype={filters.category} type="desktop" />
           </div>
-          <div className="col-span-5 lg:col-span-4">
+          <div className="col-span-9 lg:col-span-7">
             <ItemsPanel items={items} images={await getAllImages()} />
           </div>
         </div>

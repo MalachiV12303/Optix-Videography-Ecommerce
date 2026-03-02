@@ -82,13 +82,13 @@ export default function PriceSlider({ min, max }: PriceSliderProps) {
     <div className="w-full py-6 px-4">
       <div className="relative mb-6">
         <div
-          className="absolute -top-3 -translate-x-1/2 text-sm font-medium text-white"
+          className="absolute -top-3 -translate-x-1/2 text-sm font-medium text-foreground"
           style={{ left: `${percent(value[0])}%` }}
         >
           ${Math.round(value[0])}
         </div>
         <div
-          className="absolute -top-3 -translate-x-1/2 text-sm font-medium text-white"
+          className="absolute -top-3 -translate-x-1/2 text-sm font-medium text-foreground"
           style={{ left: `${percent(value[1])}%` }}
         >
           ${Math.round(value[1])}
@@ -97,19 +97,19 @@ export default function PriceSlider({ min, max }: PriceSliderProps) {
 
       <div ref={trackRef} className="relative h-1">
         <div
-          className="absolute h-1 rounded-full bg-white"
+          className="absolute h-1 rounded-full bg-foreground"
           style={{
             left: `${percent(value[0])}%`,
             width: `${percent(value[1]) - percent(value[0])}%`,
           }}
         />
         <div
-          className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-white shadow-md"
+          className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-foreground shadow-md"
           style={{ left: `${percent(value[0])}%` }}
           onPointerDown={() => setActiveThumb("min")}
         />
         <div
-          className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-white shadow-md"
+          className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-foreground shadow-md"
           style={{ left: `${percent(value[1])}%` }}
           onPointerDown={() => setActiveThumb("max")}
         />

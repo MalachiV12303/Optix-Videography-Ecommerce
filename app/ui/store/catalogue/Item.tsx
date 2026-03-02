@@ -1,9 +1,11 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "react-use-cart";
 import { Camera, Lense, Aerial } from "@/app/lib/db/schema";
 import { formatCurrency, isCamera, isLense } from "@/app/lib/utils";
 import { ListBlobResultBlob } from "@vercel/blob";
+import { useAddToCartModal } from "@/app/context/AddToCartModalContext";
 
 export function Item({
   item,
@@ -19,11 +21,13 @@ export function Item({
   } else if (isLense(item)) {
     params.set("category", "len");
   } else {
-    params.set("category", "aer"); // if you support aerial
+    params.set("category", "aer");
   }
 
   const formattedValue = formatCurrency(item.price ?? 0);
-  const { addItem } = useCart();
+  const { addItem, getItem } = useCart();
+  const { open } = useAddToCartModal();
+  const isInCart = !!getItem(item.id);
 
   return (
     <div className="group relative h-full flex flex-col md:flex-row gap-6 px-6 py-8 border-b border-foreground-muted bg-background/40 transition">
@@ -42,20 +46,6 @@ export function Item({
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-foreground-muted">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1}
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Z"
-              />
-            </svg>
           </div>
         )}
       </Link>
@@ -71,27 +61,42 @@ export function Item({
               : "Mirrorless Camera"
             : null}
         </Link>
-        
         <span className="hidden sm:block text-sm text-foreground-muted">
           ID: {item.id}
         </span>
-        
         {!isLense(item) && (
           <p className="hidden md:block mt-4 text-base">
             {item.description}
           </p>
         )}
       </div>
-      <div className="flex flex-col items-center justify-center gap-4">
+      <div className="flex flex-col items-end justify-center gap-4">
         <span className="text-2xl lg:text-3xl">${formattedValue}</span>
-
-        <button
-          className="mt-8 sm:mt-0 px-4 py-2 rounded-full bg-primary text-foreground hover:bg-foreground hover:text-background transition"
-          onClick={() => addItem(item)}
-        >
-          Add To Cart
-        </button>
+        {isInCart ? (
+          <Link
+            href="/checkout"
+            className="text-lg mt-8 sm:mt-0 px-4 py-2 rounded-lg bg-foreground text-background transition-all duration-300 hover:shadow-[0_0_8px_theme(colors.foreground)]"
+          >
+            View Cart
+          </Link>
+        ) : (
+          <button
+            className="text-lg mt-8 sm:mt-0 px-4 py-2 rounded-lg bg-primary text-foreground transition-all duration-300 hover:shadow-[0_0_8px_theme(colors.primary)]"
+            onClick={() => {
+              addItem({
+                ...item,
+                imageUrl: image?.url ?? null,
+              });
+              open({
+                ...item,
+                imageUrl: image?.url ?? null,
+              });
+            }}
+          >
+            Add to Cart
+          </button>
+        )}
       </div>
     </div>
   );
-};
+}

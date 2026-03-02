@@ -4,6 +4,8 @@ import { CartProvider } from "react-use-cart";
 import { NuqsAdapter } from "nuqs/adapters/next";
 import dynamic from "next/dynamic";
 import BackgroundDrei from "./BackgroundDrei";
+import { AddToCartProvider } from "../context/AddToCartModalContext";
+import AddToCartModal from "../context/AddToCartModal";
 
 const HeroUIProvider = dynamic(
   () => import("@heroui/react").then(mod => mod.HeroUIProvider),
@@ -18,13 +20,16 @@ export default function ClientShell({ children }: { children: React.ReactNode })
   // console.log("\n\n");
   return (
     <HeroUIProvider>
-        <CartProvider>
-          <NuqsAdapter>
+      <CartProvider>
+        <NuqsAdapter>
+          <AddToCartProvider>
             <BackgroundDrei />
             <Navigation />
             {children}
-          </NuqsAdapter>
-        </CartProvider>
+            <AddToCartModal />
+          </AddToCartProvider>
+        </NuqsAdapter>
+      </CartProvider>
     </HeroUIProvider>
   );
 };

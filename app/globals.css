@@ -19,7 +19,7 @@
 .dark {
   --background: #060606;
   --foreground: #ededed;
-  --foreground-muted: rgb(173, 173, 173);
+  --foreground-muted: rgb(194, 194, 194);
   --primary: #cf1a1a;
   --secondary: #141414;
   --heroui-background: var(--background);

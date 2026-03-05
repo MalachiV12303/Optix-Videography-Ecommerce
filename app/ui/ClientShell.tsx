@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import BackgroundDrei from "./BackgroundDrei";
 import { AddToCartProvider } from "../context/AddToCartModalContext";
 import AddToCartModal from "../context/AddToCartModal";
+import ScrollToTop from "./ScrollToTop";
 
 const HeroUIProvider = dynamic(
   () => import("@heroui/react").then(mod => mod.HeroUIProvider),
@@ -25,6 +26,7 @@ export default function ClientShell({ children }: { children: React.ReactNode })
           <AddToCartProvider>
             <BackgroundDrei />
             <Navigation />
+            <ScrollToTop />
             {children}
             <AddToCartModal />
           </AddToCartProvider>

@@ -22,7 +22,7 @@ export function CheckoutCart() {
                 {!isEmpty ? items.map((it, index) => (
                     <CartItem key={index} item={it}></CartItem>
                 )) :
-                    <div className="h-48 w-full flex justify-center items-center col-span-3 sm:col-span-3 xl:col-span-3">empty cart</div>}
+                    <div className="h-48 w-full flex justify-center items-center col-span-3 sm:col-span-3 xl:col-span-3">no items in your cart...</div>}
             </div>
             <div className="px-4 py-2 text-xl w-full flex border-t border-foreground">
                 <span>subtotal:</span>

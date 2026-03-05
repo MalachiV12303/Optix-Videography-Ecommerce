@@ -84,6 +84,7 @@ export function Item({
         {isInCart ? (
           <div className="w-full text-background flex items-center mt-8 sm:mt-0">
             <Link
+              scroll
               href="/checkout"
               className="flex-1 text-center bg-primary hover:bg-primary-muted text-lg px-4 py-2 transition-all duration-300"
             >

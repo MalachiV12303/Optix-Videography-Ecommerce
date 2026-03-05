@@ -12,7 +12,7 @@ export function ItemsPanel({ items, images }: { items: Camera[] | Lense[] | Aeri
     return matchingImageBlobs.length > 0 ? matchingImageBlobs[0] : null
   }
   return (
-    <ul className="group/list w-full grid grid-cols-2 md:grid-cols-1 lg:pl-4 py-4 gap-y-4 gap-x-2">
+    <ul className="group/list w-full grid grid-cols-2 md:grid-cols-3 lg:pl-4 py-4 gap-y-4 gap-x-2">
       {items && items.length !== 0 ? items.map((item) => {
         return (
           <li key={item.id}>
@@ -21,7 +21,7 @@ export function ItemsPanel({ items, images }: { items: Camera[] | Lense[] | Aeri
         )
       }) :
         <li className="mt-12 text-lg col-span-2 lg:col-span-3 2xl:col-span-4 flex">
-          <p> no items found...</p>
+          <p> no items found... </p>
         </li>
       }
     </ul>

@@ -34,8 +34,7 @@ export function FilterChips({ sz = "sm" }: { sz?: Size }) {
     md: "text-sm px-3 py-1.5",
     lg: "text-base px-4 py-2",
   };
-  const chipBase ="group flex items-center gap-1 bg-primary text-foreground rounded-full cursor-pointer";
-
+  const chipBase ="group flex items-center gap-1 bg-primary hover:bg-primary-muted text-background cursor-pointer transtion-colors";
   return (
     <motion.div
       layout

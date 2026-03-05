@@ -6,6 +6,7 @@ import { Camera, Lense, Aerial } from "@/app/lib/db/schema";
 import { formatCurrency, isCamera, isLense } from "@/app/lib/utils";
 import { ListBlobResultBlob } from "@vercel/blob";
 import { useAddToCartModal } from "@/app/context/AddToCartModalContext";
+import { Plus } from "lucide-react";
 
 export function Item({
   item,
@@ -14,23 +15,34 @@ export function Item({
   item: Camera | Lense | Aerial;
   image: ListBlobResultBlob | null;
 }) {
+  const { open } = useAddToCartModal();
+  const { addItem, items } = useCart();
+  const isInCart = items.some(
+    (cartItem) => cartItem.originalId === item.id
+  );
+  const basePrice = item.price ?? 0;
+  const formattedValue = formatCurrency(basePrice);
   const params = new URLSearchParams();
   params.set("id", item.id.toString());
-  if (isCamera(item)) {
-    params.set("category", "cam");
-  } else if (isLense(item)) {
-    params.set("category", "len");
-  } else {
-    params.set("category", "aer");
-  }
 
-  const formattedValue = formatCurrency(item.price ?? 0);
-  const { addItem, getItem } = useCart();
-  const { open } = useAddToCartModal();
-  const isInCart = !!getItem(item.id);
+  const category = isCamera(item)
+    ? "cam"
+    : isLense(item)
+      ? "len"
+      : "aer";
+  params.set("category", category);
+
+  const cartItem = {
+    ...item,
+    id: `${item.id}-${Date.now()}-${Math.random()}`,
+    originalId: item.id,
+    protection: null,
+    protectionPrice: 0,
+    imageUrl: image?.url ?? null,
+  };
 
   return (
-    <div className="group relative h-full flex flex-col md:flex-row gap-6 px-6 py-8 border-b border-foreground-muted bg-background/40 transition">
+    <div className="group relative h-full flex flex-col gap-6 px-6 py-8 border-b border-foreground-muted bg-background/40 transition">
       <Link
         href={`/item?${params}`}
         className="relative w-full md:w-64 aspect-square shrink-0"
@@ -61,36 +73,39 @@ export function Item({
               : "Mirrorless Camera"
             : null}
         </Link>
-        <span className="hidden sm:block text-sm text-foreground-muted">
-          ID: {item.id}
-        </span>
-        {!isLense(item) && (
+        <p className="text-2xl mt-2">${formattedValue}</p>
+        {/* {!isLense(item) && (
           <p className="hidden md:block mt-4 text-base">
             {item.description}
           </p>
-        )}
+        )} */}
       </div>
-      <div className="flex flex-col items-end justify-center gap-4">
-        <span className="text-2xl lg:text-3xl">${formattedValue}</span>
+      <div className="flex flex-col items-start gap-4">
         {isInCart ? (
-          <Link
-            href="/checkout"
-            className="text-lg mt-8 sm:mt-0 px-4 py-2 rounded-lg bg-foreground text-background transition-all duration-300 hover:shadow-[0_0_8px_theme(colors.foreground)]"
-          >
-            View Cart
-          </Link>
+          <div className="w-full text-background flex items-center mt-8 sm:mt-0">
+            <Link
+              href="/checkout"
+              className="flex-1 text-center bg-primary hover:bg-primary-muted text-lg px-4 py-2 transition-all duration-300"
+            >
+              View in Cart
+            </Link>
+            <button
+              aria-label="Add another item"
+              className="bg-primary hover:bg-primary-muted border-l border-background text-background h-full w-10 flex items-center justify-center text-2xl font-semibold transition-all duration-300 active:scale-95"
+              onClick={() => {
+                addItem(cartItem);
+                open(cartItem);
+              }}
+            >
+              <Plus size={20} />
+            </button>
+          </div>
         ) : (
           <button
-            className="text-lg mt-8 sm:mt-0 px-4 py-2 rounded-lg bg-primary text-foreground transition-all duration-300 hover:shadow-[0_0_8px_theme(colors.primary)]"
+            className="w-full bg-primary hover:bg-primary-muted text-background text-lg mt-8 sm:mt-0 px-4 py-2 transition-all duration-300"
             onClick={() => {
-              addItem({
-                ...item,
-                imageUrl: image?.url ?? null,
-              });
-              open({
-                ...item,
-                imageUrl: image?.url ?? null,
-              });
+              addItem(cartItem);
+              open(cartItem);
             }}
           >
             Add to Cart
@@ -99,4 +114,4 @@ export function Item({
       </div>
     </div>
   );
-}
+};

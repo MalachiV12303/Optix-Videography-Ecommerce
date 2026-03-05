@@ -30,9 +30,7 @@ export default function StoreButton({
         scrollToSection("storeContent");
       }}
       className="
-        relative w-full flex-1 overflow-hidden rounded-md
-        transition duration-300 ease-in-out
-        lg:grayscale hover:grayscale-0
+        relative w-full flex-1 overflow-hidden
         aspect-[6/1]
         md:aspect-[16/5]
         lg:aspect-[6/1]

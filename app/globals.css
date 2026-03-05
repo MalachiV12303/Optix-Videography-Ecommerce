@@ -4,28 +4,32 @@
 
 :root {
   --background: #e8eff0;
+  --background-muted: #c9c9c9;
   --foreground: #181818;
   --foreground-muted: #757575;
-  --primary: #1acf99;
-  --secondary: #1f1f1f;
+
+  --primary: #1fb81f;
+  --primary-muted: #1a9e1a;
   --font-sans: var(--font-manrope);
   --font-mono: var(--font-gilda);
   --heroui-background: var(--background);
   --heroui-foreground: var(--foreground);
   --heroui-content1: var(--background);
-  --heroui-content2: var(--secondary);
+  --heroui-content2: var(--primary-muted);
 }
 
 .dark {
   --background: #060606;
+  --background-muted: #0a0a0a;
   --foreground: #ededed;
   --foreground-muted: rgb(194, 194, 194);
-  --primary: #cf1a1a;
-  --secondary: #141414;
+  
+  --primary: #dbcf26;
+  --primary-muted: #c9bd17;
   --heroui-background: var(--background);
   --heroui-foreground: var(--foreground);
   --heroui-content1: var(--background);
-  --heroui-content2: var(--secondary);
+  --heroui-content2: var(--primary-muted);
 }
 
 @layer base {
@@ -88,9 +92,9 @@
     padding-right: 1rem;
   }
 
-  @media (min-width: 1400px) {
+  @media (min-width: 1425px) {
     .container {
-      max-width: 1400px;
+      max-width: 1425px;
     }
   }
 

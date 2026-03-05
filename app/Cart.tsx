@@ -1,38 +1,51 @@
 "use client";
 import Link from "next/link";
+import CartItem from "./CartItem";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useCart } from "react-use-cart";
+import { CartIcon } from "./ui/SvgLibrary";
+import { formatCurrency } from "./lib/utils";
 import {
     Badge,
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@heroui/react";
-import CartItem from "./CartItem";
-import { CartIcon } from "./ui/SvgLibrary";
 
 export default function Cart() {
-    const { items, isEmpty, totalItems, cartTotal } = useCart()
-    const [totalQuantity, setTotalQuantity] = useState(0)
+    const [isOpen, setIsOpen] = useState(false);
+    const { items, isEmpty } = useCart();
+    const totalQuantity = items.length;
+    const total = items.reduce((sum, item) => {
+        const base = Math.round(Number(item.price ?? 0) * 100);
+        const protection = Math.round(Number(item.protectionPrice ?? 0) * 100);
+        return sum + base + protection;
+    }, 0) / 100;
+    const pathname = usePathname();
     useEffect(() => {
-        setTotalQuantity(totalItems)
-    }, [totalItems])
-
+        setIsOpen(false);
+    }, [pathname]);
     return (
-        <Popover placement={"bottom-end"} shouldBlockScroll={true} classNames={{
-            trigger: ["min-w-0 rounded-full p-2"],
-            content: ["rounded-lg border border-foreground bg-background text-foreground text-lg lg:text-sm px-4 py-6", "flex flex-row", "h-[70dvh] w-[80dvw] sm:w-[60dvw] xl:w-[25dvw]"],
-        }}>
-            <Badge isInvisible={isEmpty} content={totalQuantity} className="text-sm min-w-6 tracking-tight bg-foreground text-background pr-px pl-px sm:pl-0 pt-px">
+        <Popover
+            isOpen={isOpen}
+            onOpenChange={setIsOpen}
+            placement={"bottom-end"}
+            shouldBlockScroll={true}
+            classNames={{
+                trigger: ["min-w-0 p-2 bg-primary hover:bg-primary-muted transition-all text-background"],
+                content: ["border border-foreground bg-background text-foreground text-lg lg:text-sm px-4 py-6", "flex flex-row", "h-[80dvh] w-[80dvw] sm:w-[60dvw] md:w-[50dvw] lg:w-[40dvw] 2xl:w-[30dvw]"],
+            }}>
+            <Badge isInvisible={isEmpty} content={totalQuantity} className="text-sm min-w-6 tracking-tight border border-foreground bg-background-muted text-foreground pr-px pl-px sm:pl-0 pt-px">
                 <PopoverTrigger>
-                    <div className="flex items-center justify-center bg-foreground text-background">
+                    <div>
                         <CartIcon width={25} height={25} />
                     </div>
                 </PopoverTrigger>
             </Badge>
             <PopoverContent>
                 <div className="h-full w-full flex flex-col">
-                    <p className="text-lg font-medium">Your cart: {totalQuantity} items</p>
+                    <p className="text-lg font-medium px-2">Your cart: {totalQuantity} items</p>
                     <div className="my-4 border-y flex flex-col border-foreground items-start w-full overflow-y-auto no-scrollbar flex-1">
                         {!isEmpty ? items.map((it, index) => (
                             <CartItem key={index} item={it} />
@@ -42,9 +55,10 @@ export default function Cart() {
                             </div>
                         }
                     </div>
+                    <p className="mb-4"> Estimated Subtotal: {formatCurrency(total)} </p>
                     <Link
                         href="/checkout"
-                        className="w-full text-center text-lg px-4 py-2 rounded-lg bg-foreground text-background transition-all duration-300 hover:shadow-[0_0_8px_theme(colors.foreground)]"
+                        className="w-full text-center text-lg px-4 py-2 bg-primary hover:bg-primary-muted transition-all text-background"
                     >
                         View Cart & Checkout
                     </Link>

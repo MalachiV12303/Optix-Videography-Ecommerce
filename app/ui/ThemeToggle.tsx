@@ -32,10 +32,10 @@ export default function ThemeToggle() {
       onClick={toggleTheme}
       aria-label="Toggle theme"
       className="
-        rounded-full
         p-2
-        transition-colors
-        bg-foreground
+        transition-all
+        bg-primary
+        hover:bg-primary-muted
         text-background
       "
     >

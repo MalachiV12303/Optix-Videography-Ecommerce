@@ -6,17 +6,23 @@ type ItemType = (Camera | Lense | Aerial) & {
   imageUrl?: string | null;
 };
 
+type CartItemType = ItemType & {
+  originalId: ItemType["id"];
+  protection?: "2yr" | "3yr" | null;
+  protectionPrice?: number;
+};
+
 type ContextType = {
-  open: (item: ItemType) => void;
+  open: (item: CartItemType) => void;
   close: () => void;
-  item: ItemType | null;
+  item: CartItemType | null;
 };
 
 const AddToCartModalContext = createContext<ContextType | null>(null);
 
 export function AddToCartProvider({ children }: { children: ReactNode }) {
-  const [item, setItem] = useState<ItemType | null>(null);
-  const open = (item: ItemType) => setItem(item);
+  const [item, setItem] = useState<CartItemType | null>(null);
+  const open = (item: CartItemType) => setItem(item);
   const close = () => setItem(null);
 
   return (

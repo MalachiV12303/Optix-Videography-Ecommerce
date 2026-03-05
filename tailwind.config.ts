@@ -15,9 +15,10 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "background-muted": "var(--background-muted)",
         "foreground-muted": "var(--foreground-muted)",
         primary: "var(--primary)",
-        secondary: "var(--secondary)",
+        "primary-muted": "var(--primary-muted)",
       },
       fontFamily: {
         sans: ["var(--font-manrope)", "system-ui", "sans-serif"],

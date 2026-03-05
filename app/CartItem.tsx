@@ -29,10 +29,30 @@ export default function CartItem({ item }: { item: Item }) {
             <div className="flex flex-col items-end h-full">
                 <div className="flex flex-col justify-between h-full">
                     <div>
-                        <p className="font-bold text-end">  ${item.quantity ? formatCurrency(item.price * item.quantity) : formatCurrency(item.price)}</p>
-                        <p className="text-end">{item.quantity} in cart</p>
+                        {(() => {
+                            const quantity = item.quantity ?? 1
+                            const baseTotal = item.price * quantity
+                            const protectionTotal = (item.protectionPrice ?? 0) * quantity
+                            const grandTotal = baseTotal + protectionTotal
+
+                            return (
+                                <>
+                                    <p className="font-bold text-end">
+                                        ${formatCurrency(grandTotal)}
+                                    </p>
+
+                                    {item.protection && (
+                                        <p className="text-xs text-end text-foreground-muted">
+                                            {item.protection === "2yr"
+                                                ? "2 Year Protection"
+                                                : "3 Year Protection"}
+                                        </p>
+                                    )}
+                                </>
+                            )
+                        })()}
                     </div>
-                    <button className="text-sm text-foreground underline flex items-center hover:text-foreground-muted" onClick={() => (updateItemQuantity(item.id, item.quantity ? item.quantity - 1 : 0))}><Trash2 className="size-4 inline mr-1" />Remove</button>
+                    <button className="text-sm text-foreground underline flex items-center hover:text-foreground-muted justify-end" onClick={() => (updateItemQuantity(item.id, item.quantity ? item.quantity - 1 : 0))}><Trash2 className="size-4 inline mr-1" />Remove</button>
                 </div>
             </div>
         </div>

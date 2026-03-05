@@ -228,16 +228,13 @@ function FilterSet({
   wrapperClassname?: string;
 }) {
   const [, setFilters] = useFilters();
-
   const isBinary = filters?.length === 2;
-
   function handleChange(values: string[]) {
     if (isBinary && values.length > 1) {
       const lastSelected = values.find(v => !param.includes(v)) ?? values[0];
       setFilters({ [p]: [lastSelected] });
       return;
     }
-
     setFilters({ [p]: values });
   }
 
@@ -252,7 +249,7 @@ function FilterSet({
       onValueChange={handleChange}
     >
       {filters?.map((fil) => (
-        <Checkbox classNames={{ wrapper: "before:border before:border-foreground" }} radius="none" key={fil} value={fil}>
+        <Checkbox classNames={{ wrapper: "before:border before:border-foreground", icon: "text-background" }} radius="none" key={fil} value={fil}>
           {fil}
           {text && <span className={`${textClassname ?? ""}`}>{text}</span>}
         </Checkbox>

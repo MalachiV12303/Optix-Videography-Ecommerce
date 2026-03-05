@@ -1,16 +1,6 @@
 "use client";
 import { createContext, useContext, useState, ReactNode } from "react";
-import { Camera, Lense, Aerial } from "@/app/lib/db/schema";
-
-type ItemType = (Camera | Lense | Aerial) & {
-  imageUrl?: string | null;
-};
-
-type CartItemType = ItemType & {
-  originalId: ItemType["id"];
-  protection?: "2yr" | "3yr" | null;
-  protectionPrice?: number;
-};
+import { CartItemType } from "../lib/types";
 
 type ContextType = {
   open: (item: CartItemType) => void;

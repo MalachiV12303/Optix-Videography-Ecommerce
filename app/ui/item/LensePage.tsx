@@ -1,18 +1,31 @@
 "use client";
 import Image from 'next/image';
 import React from 'react';
-import { useCart } from 'react-use-cart';
 import { notFound } from 'next/navigation';
 import { ListBlobResultBlob } from '@vercel/blob';
 import { Lense } from '@/app/lib/db/schema';
 import { CanonLogo, Checkmark, NikonLogo, PanasonicLogo, SonyLogo } from '../SvgLibrary';
+import { useTypedCart } from '@/app/lib/cart/useTypedCart';
+import { CartItemType } from '@/app/lib/types';
 
-export function LensePage({ len, image }: { len: Lense, image: ListBlobResultBlob | null }) {
-    const { addItem } = useCart()
+export function LensePage({ item, image }: { item: Lense, image: ListBlobResultBlob | null }) {
+    const { addItem } = useTypedCart()
     const [isOpen, setIsOpen] = React.useState(false);
-    if (len === undefined) {
+    if (item === undefined) {
         return notFound();
     }
+    const category = "cam";
+    const cartItem: CartItemType = {
+        id: `${item.id}-${Date.now()}-${Math.random()}`,
+        originalId: item.id,
+        itemtype: category,
+        brand: item.brand,
+        name: item.name,
+        price: item.price ?? 0,
+        imageUrl: image?.url ?? null,
+        protection: null,
+        protectionPrice: 0,
+      };
 
     return (
         <section className="h-[calc(100vh-5rem)] sm:h-[calc(100vh-6rem)] flex flex-col md:flex-row md:items-center">
@@ -32,7 +45,7 @@ export function LensePage({ len, image }: { len: Lense, image: ListBlobResultBlo
                                 <Image
                                     fill
                                     src={image.url}
-                                    alt={"Image of " + len.brand + " " + len.name}
+                                    alt={"Image of " + item.brand + " " + item.name}
                                     className="object-contain sm:p-24" /> :
                                 <div className='flex h-full items-center justify-center'>
                                     <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1} stroke='currentColor' className='size-6'>
@@ -46,7 +59,7 @@ export function LensePage({ len, image }: { len: Lense, image: ListBlobResultBlo
 
                 <div className="bg-background flex flex-col p-4 border-1 border-foreground w-full md:w-[50%] lg:w-[40%]">
                     {(() => {
-                        switch (len.brand) {
+                        switch (item.brand) {
                             case 'Nikon':
                                 return <NikonLogo width={35} height={35} />;
                             case 'Canon':
@@ -60,9 +73,9 @@ export function LensePage({ len, image }: { len: Lense, image: ListBlobResultBlo
                         }
                     })()}
                     <div className="flex flex-col gap-2 text-nowrap w-full items-center md:items-start">
-                        <span className="text-2xl font-semibold text-wrap">{len.brand} {len.name} {len.type === "DSLR" ? "Digital Camera" : "Mirrorless Camera"}</span>
+                        <span className="text-2xl font-semibold text-wrap">{item.brand} {item.name} {item.type === "DSLR" ? "Digital Camera" : "Mirrorless Camera"}</span>
                         <p className="text-foreground-muted">
-                            ID#: {len.id}
+                            ID#: {item.id}
                         </p>
 
                         <div className="text-sm my-4">
@@ -71,9 +84,9 @@ export function LensePage({ len, image }: { len: Lense, image: ListBlobResultBlo
                         </div>
 
                         <div className="flex w-full justify-between">
-                            <p className="text-3xl font-bold">${len.price}</p>
+                            <p className="text-3xl font-bold">${item.price}</p>
                             <button onClick={() => {
-                                addItem(len);
+                                addItem(cartItem);
                                 setIsOpen(!isOpen);
                             }} className="rounded-full bg-primary/90 text-foreground px-4 py-2 hover:bg-foreground hover:text-background transition">Add To Cart</button>
                         </div>
@@ -81,14 +94,14 @@ export function LensePage({ len, image }: { len: Lense, image: ListBlobResultBlo
                         <div className="flex flex-col">
                             <span className="font-bold px-4 py-2 text-lg border-b-1 border-foreground">details</span>
                             <div className="py-2 px-4 text-wrap">
-                                <span>minimum focal length: {len.minfl}mm</span>
+                                <span>minimum focal length: {item.minfl}mm</span>
                                 <br />
-                                <span>maximum focal length: {len.maxfl}mm</span>
+                                <span>maximum focal length: {item.maxfl}mm</span>
                                 <br />
-                                <span>maximum aperture: {len.maxap}</span>
+                                <span>maximum aperture: {item.maxap}</span>
                             </div>
                             <span className="font-bold px-4 py-2 text-lg border-b-1 border-foreground">compatible with</span>
-                            <div className='flex gap-2'>mount type: {len.mount?.map((lentype, index) => (<div key={index}>{lentype}</div>))}
+                            <div className='flex gap-2'>mount type: {item.mount?.map((lentype, index) => (<div key={index}>{lentype}</div>))}
                             </div>
                         </div>
                     </div>

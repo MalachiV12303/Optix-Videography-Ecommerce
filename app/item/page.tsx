@@ -9,7 +9,6 @@ type PageProps = {
 };
 
 export default async function Page({ searchParams }: PageProps) {
-  // initializes the nuqs cache for the request
   const normalized = searchParamsCache.parse(await searchParams);
   const { id, category } = normalized;
   console.log("category is", category);
@@ -26,13 +25,13 @@ export default async function Page({ searchParams }: PageProps) {
     const cam = await fetchCameraById(id);
     console.log("cam is " + cam)
     if (!cam) return <div className="h-screen flex items-center justify-center">Camera Not found</div>;
-    return <CameraPage cam={cam} image={findImage(cam.id)} />;
+    return <CameraPage item={cam} image={findImage(cam.id)} />;
   }
   else if (category === "len") {
     console.log("id is " + id);
     const len = await fetchLenseById(id);
     if (!len) return <div className="h-screen flex items-center justify-center">Lens Not found</div>;
-    return <LensePage len={len} image={findImage(len.id)} />;
+    return <LensePage item={len} image={findImage(len.id)} />;
   }
   return <div className="h-screen">Unsupported item</div>;
 };

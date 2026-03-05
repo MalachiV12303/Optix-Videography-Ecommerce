@@ -1,15 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Item, useCart } from "react-use-cart";
 import { Trash2 } from "lucide-react";
-import { formatCurrency, getItemCat } from "./lib/utils";
+import { formatCurrency } from "./lib/utils";
+import { CartItemType } from "./lib/types";
+import { useTypedCart } from "./lib/cart/useTypedCart";
 
-export default function CartItem({ item }: { item: Item }) {
-    const { updateItemQuantity } = useCart()
-    const params = new URLSearchParams()
-    params.set("id", item.id.toString())
-    params.set("itemtype", getItemCat(item))
-
+export default function CartItem({ item }: { item: CartItemType }) {
+    const { updateItemQuantity } = useTypedCart();
+    const href = `/item?id=${item.originalId}&itemtype=${item.itemtype}`;
+    const quantity = item.quantity ?? 1;
     return (
         <div className="w-full px-2 py-4 flex items-start gap-4 border-b border-foreground">
             {item.imageUrl && (
@@ -24,20 +23,20 @@ export default function CartItem({ item }: { item: Item }) {
                 </div>
             )}
             <div className="flex-1 pt-1">
-                <Link className="text-base uppercase hover:underline" href={`/item?${params}`}>{item.brand} - {item.name}</Link>
+                <Link className="text-base uppercase hover:underline" 
+                    href={href}>{item.brand} - {item.name}</Link>
             </div>
             <div className="flex flex-col items-end h-full">
-                <div className="flex flex-col justify-between h-full">
+                <div className="flex flex-col h-full items-end">
                     <div>
                         {(() => {
-                            const quantity = item.quantity ?? 1
                             const baseTotal = item.price * quantity
                             const protectionTotal = (item.protectionPrice ?? 0) * quantity
                             const grandTotal = baseTotal + protectionTotal
 
                             return (
                                 <>
-                                    <p className="font-bold text-end">
+                                    <p className="font-bold text-end text-base">
                                         ${formatCurrency(grandTotal)}
                                     </p>
 
@@ -52,7 +51,10 @@ export default function CartItem({ item }: { item: Item }) {
                             )
                         })()}
                     </div>
-                    <button className="text-sm text-foreground underline flex items-center hover:text-foreground-muted justify-end" onClick={() => (updateItemQuantity(item.id, item.quantity ? item.quantity - 1 : 0))}><Trash2 className="size-4 inline mr-1" />Remove</button>
+                    <p className="text-foreground-muted text-sm text-end">Quantity: {quantity}</p>
+                    <div className="flex-1 flex flex-col justify-end">
+                        <button className="mt-4 w-min text-sm text-foreground underline flex items-center hover:text-foreground-muted justify-end" onClick={() => (updateItemQuantity(item.id, item.quantity ? item.quantity - 1 : 0))}><Trash2 className="size-4 inline mr-1" />Remove</button>
+                    </div>
                 </div>
             </div>
         </div>

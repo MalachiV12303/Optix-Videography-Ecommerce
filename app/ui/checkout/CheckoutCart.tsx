@@ -1,12 +1,14 @@
 "use client";
 import CartItem from "@/app/CartItem";
 import { useEffect, useState } from "react";
-import { useCart } from "react-use-cart";
 import { formatCurrency } from "@/app/lib/utils";
+import { CartItemType } from "@/app/lib/types";
+import { useTypedCart } from "@/app/lib/cart/useTypedCart";
 
 export function CheckoutCart() {
-    const { items, isEmpty, totalItems } = useCart();
-    const total = items.reduce((sum, item) => {
+    const { items, isEmpty, totalItems } = useTypedCart();
+    const cartItems = items as CartItemType[];
+    const total = cartItems.reduce((sum, item) => {
         const base = Math.round(Number(item.price ?? 0) * 100);
         const protection = Math.round(Number(item.protectionPrice ?? 0) * 100);
         return sum + base + protection;
@@ -19,7 +21,7 @@ export function CheckoutCart() {
         <div className="bg-background relative flex flex-col max-h-[80dvh] h-full border border-foreground px-2">
             <p className="py-4 px-4 text-lg">Order summary ({totalItems} {totalItems === 1 ? "item" : "items"})</p>
             <div className="overflow-auto no-scrollbar flex-1 flex flex-col divide-foreground">
-                {!isEmpty ? items.map((it, index) => (
+                {!isEmpty ? cartItems.map((it, index) => (
                     <CartItem key={index} item={it}></CartItem>
                 )) :
                     <div className="h-48 w-full flex justify-center items-center col-span-3 sm:col-span-3 xl:col-span-3">no items in your cart...</div>}

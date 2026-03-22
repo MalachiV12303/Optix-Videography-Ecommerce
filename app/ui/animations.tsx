@@ -1,5 +1,5 @@
 "use client";
-import styles from '@/app/ui/animations.module.css';
+import styles from "@ui/animations.module.css";
 import Marquee from "react-fast-marquee";
 
 export function LoadingAnim() {

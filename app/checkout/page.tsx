@@ -1,53 +1,74 @@
 "use client";
-import { useEffect, useState } from 'react';
-import { Button, Spinner } from '@heroui/react';
-import { CheckoutCart } from '@ui/checkout/CheckoutCart';
+import { useEffect, useState } from "react";
+import { useTypedCart } from "@lib/cart/useTypedCart";
+import { formatCurrency } from "@lib/utils";
+import CheckoutItem from "@ui/checkout/CheckoutItem";
 
 export default function Page() {
     //render cart information without ssr errors
     const [isClient, setIsClient] = useState(false)
-    const [visible, setVisible] = useState(false)
+    const { items, isEmpty, totalItems } = useTypedCart();
+    const total = items.reduce((sum, item) => {
+        const base = Math.round(Number(item.price ?? 0) * 100);
+        const protection = Math.round(Number(item.protectionPrice ?? 0) * 100);
+        return sum + base + protection;
+    }, 0) / 100;
     useEffect(() => {
         setIsClient(true)
-    }, [])
+    }, []);
     return (
-        <section className='relative max-w-[1500px] flex md:flex-row flex-col mx-auto md:py-12 gap-8 px-4 pb-12'>
-            <div className='relative md:hidden'>{isClient ? <CheckoutCart /> : <Spinner />}</div>
-            <div className='md:w-2/3 sm:overflow-auto no-scrollbar'>
-                <p className='py-4 px-4 text-2xl border-b'>Delivery</p>
-                <form className='grid grid-cols-2 gap-y-4 gap-x-4 py-8 px-4'>
-                    <label className='flex flex-col col-span-2'><span>your email </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='your.email@outlook.com' type='text' /></label>
-                    <label className='flex flex-col'><span>first name </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='Gordon' type='text' /></label>
-                    <label className='flex flex-col'><span>last name </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='Lucis Caelum' type='text' /></label>
-                    <label className='flex flex-col col-span-2'><span>company (optional) </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='Aperture' type='text' /></label>
-                    <label className='flex flex-col'><span>country </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='Accordo' type='text' /></label>
-                    <label className='flex flex-col'><span>address </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='2200 Cypress Grove' type='text' /></label>
-                    <label className='flex flex-col'><span>address ext. </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='Apt. 09' type='text' /></label>
-                    <label className='flex flex-col'><span>city </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='Altissia' type='text' /></label>
-                    <label className='flex flex-col'><span>state / province </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='Insomnia' type='text' /></label>
-                    <label className='flex flex-col'><span>zip / postal </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='D9333' type='text' /></label>
-                </form>
-                <p className='py-4 px-4 text-2xl border-b'>Payment</p>
-                <form className='grid grid-cols-2 gap-y-4 gap-x-4 py-8 px-4'>
-                    <label className='flex flex-col col-span-2'><span>Card Number </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='1818-0907-4837-6003' type='text' /></label>
-                    <label className='flex flex-col'><span>CVV </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='222' type='text' /></label>
-                    <label className='flex flex-col'><span>Expiration </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='10/2099' type='text' /></label>
-                    <label className='flex flex-col col-span-2'><span>Name on Card </span><input disabled className='checkoutInput w-full placeholder:text-foreground' placeholder='Noct Caelum' type='text' /></label>
-                </form>
-                <div className='px-8 py-2 flex items-center justify-between w-full'>
-                    <Button variant='light' className='bg-background rounded-full uppercase font-bold' onPress={() => {
-                        if (!visible) {
-                            setVisible(true)
-                        } else {
-                            window.open('https://github.com/MalachiV12303/gleam', '_blank');
-                        }
-                    }}>
-                        {visible ? 'GITHUB' : 'PLACE ORDER'}
-                    </Button>
-                    {visible ? <span className='text-end font-bold text-red-500'> mock videography market project by malachi valle</span> : null}
+        <>
+            <h1 className="text-2xl text-center md:text-start">My Cart ({totalItems} {totalItems === 1 ? "item" : "items"})</h1>
+            <section className="mt-8 flex xl:flex-row flex-col min-h-screen">
+                <div className="xl:w-2/3">
+                    {!isEmpty ? items.map((item, index) => (
+                        <CheckoutItem key={index} item={item} />
+                    )) :
+                        <div className="text-xl w-full flex h-full my-auto justify-center">
+                            <p>Empty Cart...</p>
+                        </div>
+                    }
                 </div>
-            </div>
-            <div className='hidden md:inline-block min-h-[80dvh] md:w-1/3'>{isClient ? <CheckoutCart /> : <Spinner />}</div>
-        </section>
+                <div className="min-h-[60dvh] xl:w-1/3">
+                    <div className="py-2 sticky top-12 flex flex-col border border-foreground px-6">
+                        <p className="py-4 text-xl font-semibold tracking-wider uppercase border-b border-foreground">Order Summary</p>
+                        <div className="w-full flex mt-4">
+                            <span>Subtotal ( {totalItems} {totalItems === 1 ? "item" : "items"} ) </span>
+                            <span className="ml-auto font-semibold">${isClient ? formatCurrency(total) : null}</span>
+                        </div>
+                        <div className="w-full flex mt-4">
+                            <span>Est. shipping</span>
+                            <span className="ml-auto font-semibold">FREE Standard Shipping</span>
+                        </div>
+                        <div className="w-full flex my-4">
+                            <span>Est. Taxes & Fees</span>
+                            <span className="ml-auto font-semibold">${isClient ? formatCurrency(total * 0.07) : null}</span>
+                        </div>
+
+                        <div className="py-4 text-xl w-full flex border-y border-foreground">
+                            <span className="font-semibold">Estimated Total</span>
+                            <span className="ml-auto font-semibold">${isClient ? formatCurrency(total * 1.07) : null}</span>
+                        </div>
+
+                        <div className="my-4 text-lg w-full flex">
+                            <input
+                                type="text"
+                                id="promo-code"
+                                placeholder="Enter promo code"
+                                className="flex-1 px-4 py-2 bg-background border border-foreground focus:ring-2 focus:ring-primary focus:outline-none"
+                            />
+                            <button className="ml-2 px-4 bg-primary hover:bg-primary-muted text-background transition-all">Apply</button>
+                        </div>
+
+                        <div className="my-4 text-lg w-full flex flex-col gap-4">
+                            <button className="w-full py-4 bg-primary hover:bg-primary-muted text-background transition-all">Checkout</button>
+                            <button className="w-full py-4 hover:text-foreground-muted hover:border-foreground-muted transition-all text-foreground border border-foreground">Pay with PayPal</button>
+                            <button className="w-full py-4 hover:text-foreground-muted hover:border-foreground-muted transition-all text-foreground border border-foreground">Pay with Gold Bars</button>
+                            <button className="w-full py-4 hover:text-foreground-muted hover:border-foreground-muted transition-all text-foreground border border-foreground">Pay with Crypto</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </>
     )
 };

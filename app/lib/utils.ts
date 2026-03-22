@@ -1,6 +1,5 @@
-import { Item } from 'react-use-cart';
-import { Aerial, Camera, Lense } from './db/schema';
-import { list } from '@vercel/blob';
+import { Item } from "react-use-cart";
+import { Aerial, Camera, Lense } from "./db/schema";
 
 export const formatCurrency = (amount: number) => {
   return (amount * 1).toLocaleString('en-US', {
@@ -22,10 +21,11 @@ export const transition = {
   bounce: 0.2
 }
 
-export async function getAllImages() {
-  const blobs = await list();
-  return blobs.blobs;
-};
+//Removed 3/22/26 to reduce Advanced Calls
+// export async function getAllImages() {
+//   const blobs = await list();
+//   return blobs.blobs;
+// };
 
 export const filtermap = new Map([
   ['cameratypes', ['DSLR', 'Mirrorless']],

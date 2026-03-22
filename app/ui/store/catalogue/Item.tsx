@@ -1,21 +1,17 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { Camera, Lense, Aerial } from "@/app/lib/db/schema";
-import { formatCurrency, isCamera, isLense } from "@/app/lib/utils";
-import { ListBlobResultBlob } from "@vercel/blob";
+import { Camera, Lense, Aerial } from "@lib/db/schema";
+import { formatCurrency, isCamera, isLense } from "@lib/utils";
 import { useAddToCartModal } from "@/app/context/AddToCartModalContext";
 import { Plus } from "lucide-react";
-import { CartItemType } from "@/app/lib/types";
-import { useTypedCart } from "@/app/lib/cart/useTypedCart";
-import { createCartItem } from "@/app/lib/cart/createCartItem";
+import { useTypedCart } from "@lib/cart/useTypedCart";
+import { createCartItem } from "@lib/cart/createCartItem";
 
 export function Item({
   item,
-  image,
 }: {
   item: Camera | Lense | Aerial;
-  image: ListBlobResultBlob | null;
 }) {
   const { open } = useAddToCartModal();
   const { items } = useTypedCart();
@@ -32,14 +28,15 @@ export function Item({
       ? "len"
       : "aer";
   params.set("category", category);
-
+  const image = {
+    url: `${process.env.NEXT_PUBLIC_BLOB_BASE_URL}/items/${item.id}.webp`
+  };
   return (
     <div className="group relative h-full flex flex-col gap-6 px-2 sm:px-6 py-8 border-b border-foreground-muted bg-background/40 transition">
       <Link
         href={`/item?${params}`}
         className="relative w-full md:w-64 aspect-square shrink-0"
       >
-        {image ? (
           <Image
             src={image.url}
             alt={`Image of ${item.brand} ${item.name}`}
@@ -48,10 +45,7 @@ export function Item({
             className="object-contain p-4"
             priority={false}
           />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center text-foreground-muted">
-          </div>
-        )}
+
       </Link>
       <div className="flex-1">
         <Link

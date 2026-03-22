@@ -3,9 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useAddToCartModal } from "@/app/context/AddToCartModalContext";
-import { formatCurrency } from "@/app/lib/utils";
-import { useTypedCart } from "../lib/cart/useTypedCart";
-import { createCartItem } from "../lib/cart/createCartItem";
+import { formatCurrency } from "@lib/utils";
+import { useTypedCart } from "@lib/cart/useTypedCart";
+import { createCartItem } from "@lib/cart/createCartItem";
 
 export default function AddToCartModal() {
   const { item, close } = useAddToCartModal();
@@ -143,4 +143,4 @@ export default function AddToCartModal() {
       </div>
     </div>
   );
-}
+};

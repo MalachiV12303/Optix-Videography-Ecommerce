@@ -1,4 +1,3 @@
-// app/lib/filters/normalize.ts
 import { RawStoreFilters, StoreFilters, StoreCategory } from "./types";
 
 const isCategory = (v: string): v is StoreCategory =>

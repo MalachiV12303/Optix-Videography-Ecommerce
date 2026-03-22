@@ -1,8 +1,6 @@
-import { list } from "@vercel/blob";
 import { searchParamsCache } from "@lib/searchParams";
-import { fetchCameraById, fetchLenseById } from "@lib/db/queries";
-import { CameraPage } from "@ui/item/CameraPage";
-import { LensePage } from "@ui/item/LensePage";
+import { fetchCameraById, fetchLenseById, fetchAerialById } from "@lib/db/queries";
+import ItemPage from "@ui/item/ItemPage";
 
 type PageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
@@ -11,27 +9,33 @@ type PageProps = {
 export default async function Page({ searchParams }: PageProps) {
   const normalized = searchParamsCache.parse(await searchParams);
   const { id, category } = normalized;
-  console.log("category is", category);
 
   if (!id || !category) {
-    return <div className="h-screen">Invalid item</div>;
+    return <div className="h-screen flex items-center justify-center">Invalid item</div>;
   }
 
-  const blobs = await list();
-  const findImage = (itemId: string) =>
-    blobs.blobs.find((b) => b.pathname.includes(itemId)) ?? null;
+  const image = {
+    url: `${process.env.NEXT_PUBLIC_BLOB_BASE_URL}/items/${id}.webp`
+  };
+  console.log("Image URL:", image.url);
 
   if (category === "cam") {
-    const cam = await fetchCameraById(id);
-    console.log("cam is " + cam)
-    if (!cam) return <div className="h-screen flex items-center justify-center">Camera Not found</div>;
-    return <CameraPage item={cam} image={findImage(cam.id)} />;
+    const item = await fetchCameraById(id);
+    if (!item) return <div className="h-screen flex items-center justify-center">Camera Not Found</div>;
+    return <ItemPage item={item} category="cam" image={image} />;
   }
-  else if (category === "len") {
-    console.log("id is " + id);
-    const len = await fetchLenseById(id);
-    if (!len) return <div className="h-screen flex items-center justify-center">Lens Not found</div>;
-    return <LensePage item={len} image={findImage(len.id)} />;
+
+  if (category === "len") {
+    const item = await fetchLenseById(id);
+    if (!item) return <div className="h-screen flex items-center justify-center">Lens Not Found</div>;
+    return <ItemPage item={item} category="len" image={image} />;
   }
-  return <div className="h-screen">Unsupported item</div>;
+
+  if (category === "aer") {
+    const item = await fetchAerialById(id);
+    if (!item) return <div className="h-screen flex items-center justify-center">Aerial Not Found</div>;
+    return <ItemPage item={item} category="aer" image={image} />;
+  }
+
+  return <div className="h-screen flex items-center justify-center">Unsupported Item</div>;
 };

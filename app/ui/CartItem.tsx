@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Trash2 } from "lucide-react";
-import { formatCurrency } from "./lib/utils";
-import { CartItemType } from "./lib/types";
-import { useTypedCart } from "./lib/cart/useTypedCart";
+import { formatCurrency } from "@lib/utils";
+import { CartItemType } from "@lib/types";
+import { useTypedCart } from "@lib/cart/useTypedCart";
 
 export default function CartItem({ item }: { item: CartItemType }) {
     const { updateItemQuantity } = useTypedCart();
@@ -23,7 +23,7 @@ export default function CartItem({ item }: { item: CartItemType }) {
                 </div>
             )}
             <div className="flex-1 pt-1">
-                <Link className="text-base uppercase hover:underline" 
+                <Link className="text-base uppercase hover:underline"
                     href={href}>{item.brand} - {item.name}</Link>
             </div>
             <div className="flex flex-col items-end h-full">
@@ -36,7 +36,7 @@ export default function CartItem({ item }: { item: CartItemType }) {
 
                             return (
                                 <>
-                                    <p className="font-bold text-end text-base">
+                                    <p className="font-semibold text-end text-base">
                                         ${formatCurrency(grandTotal)}
                                     </p>
 

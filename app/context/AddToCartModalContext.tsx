@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useState, ReactNode } from "react";
-import { CartItemType } from "../lib/types";
+import { CartItemType } from "@lib/types";
 
 type ContextType = {
   open: (item: CartItemType) => void;

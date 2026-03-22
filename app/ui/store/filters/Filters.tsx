@@ -1,7 +1,7 @@
 "use client";
-import { useFilters } from "@/app/lib/searchParams";
-import { filtermap } from "@/app/lib/utils";
-import PriceSlider from "./PriceSlider";
+import { useFilters } from "@lib/searchParams";
+import { filtermap } from "@lib/utils";
+import PriceSlider from "@ui/store/filters/PriceSlider";
 import {
   Accordion,
   AccordionItem,
@@ -243,7 +243,7 @@ function FilterSet({
       aria-label={p}
       value={param}
       classNames={{
-        base: `pt-2 pb-4 ${containerClassname ?? ""}`,
+        base: `pt-2 pb-2 ${containerClassname ?? ""}`,
         wrapper: `${wrapperClassname ?? ""}`,
       }}
       onValueChange={handleChange}

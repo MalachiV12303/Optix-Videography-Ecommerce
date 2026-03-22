@@ -1,7 +1,7 @@
-import './globals.css';
-import type { Metadata } from 'next';
-import { Gilda_Display, Manrope } from 'next/font/google';
-import ClientShell from '@ui/ClientShell';
+import "./globals.css";
+import type { Metadata } from "next";
+import { Gilda_Display, Manrope } from "next/font/google";
+import ClientShell from "@ui/ClientShell";
 
 const sans = Manrope({
   variable: "--font-manrope",
@@ -11,7 +11,7 @@ const sans = Manrope({
 const mono = Gilda_Display({
   weight: "400",
   variable: "--font-gilda",
-  subsets: ['latin'],
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable} scroll-smooth`}>
-      <body className="antialiased transition-colors pt-20 sm:pt-24 ">
+      <body className="antialiased transition-colors">
         <ClientShell>{children}</ClientShell>
       </body>
     </html>

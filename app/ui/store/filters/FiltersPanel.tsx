@@ -1,6 +1,5 @@
 "use client";
 import { Filters } from "@ui/store/filters/Filters";
-import { FilterChips } from "@ui/store/filters/FilterChips";
 import { motion } from "framer-motion";
 import {
   Button,

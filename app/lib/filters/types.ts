@@ -1,5 +1,3 @@
-// app/lib/filters/types.ts
-
 export type StoreCategory = "cam" | "len" | "aer";
 
 export type RawStoreFilters = {

@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useQueryState } from "nuqs";
-import { searchParams, useFilters } from "../../lib/searchParams";
+import { defaultFilters, searchParams, useFilters } from "@lib/searchParams";
 
 export default function StoreButton({
   buttonText,
@@ -25,7 +25,7 @@ export default function StoreButton({
     <button
       type="button"
       onClick={() => {
-        setFilters({});
+        setFilters(defaultFilters);
         setCategory(category);
         scrollToSection("storeContent");
       }}

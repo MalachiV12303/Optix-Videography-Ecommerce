@@ -1,17 +1,17 @@
 "use client";
 import Link from "next/link";
-import CartItem from "./CartItem";
+import CartItem from "@ui/CartItem";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { CartIcon } from "./ui/SvgLibrary";
-import { formatCurrency } from "./lib/utils";
+import { CartIcon } from "@ui/SvgLibrary";
+import { formatCurrency } from "@lib/utils";
 import {
     Badge,
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@heroui/react";
-import { useTypedCart } from "./lib/cart/useTypedCart";
+import { useTypedCart } from "@lib/cart/useTypedCart";
 
 export default function Cart() {
     const [isOpen, setIsOpen] = useState(false);

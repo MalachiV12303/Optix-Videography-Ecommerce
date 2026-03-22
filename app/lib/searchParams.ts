@@ -1,12 +1,12 @@
-import { useQueryStates } from 'nuqs';
+import { useQueryStates } from "nuqs";
 import {
   createParser,
   createSearchParamsCache,
   createSerializer,
   parseAsArrayOf,
   parseAsString
-} from 'nuqs/server';
-// import from 'nuqs/server' to avoid the "use client" directive
+} from "nuqs/server";
+// import from nuqs/server to avoid the "use client" directive
 
 type SliderValue = [number, number];
 
@@ -73,25 +73,25 @@ export const searchParamsCache = createSearchParamsCache({
   altitude: parseAsArrayOf(parseAsString).withDefault([]),
 })
 
-
 export function useFilters() {
   return useQueryStates({
-    search: searchParams.search.withOptions({shallow: false}),
-    type: searchParams.type.withOptions({shallow:false}),
-    brand: searchParams.brand.withOptions({shallow:false}),
-    price: searchParams.price.withOptions({shallow:false}),
-    res: searchParams.res.withOptions({shallow:false}),
-    shutter: searchParams.shutter.withOptions({shallow:false}),
-    mgp: searchParams.mgp.withOptions({shallow:false}),
-    minfl: searchParams.minfl.withOptions({shallow:false}),
-    maxfl: searchParams.maxfl.withOptions({shallow:false}),
-    maxap: searchParams.maxap.withOptions({shallow:false}),
-    mount: searchParams.mount.withOptions({shallow:false}),
-    time: searchParams.time.withOptions({shallow:false}),
-    distance: searchParams.distance.withOptions({shallow:false}),
-    altitude: searchParams.altitude.withOptions({shallow:false}),
-  })
-};
+    category: searchParams.category.withOptions({ shallow: false }),
+    search: searchParams.search.withOptions({ shallow: false }),
+    type: searchParams.type.withOptions({ shallow:false }),
+    brand: searchParams.brand.withOptions({ shallow:false }),
+    price: searchParams.price.withOptions({ shallow:false }),
+    res: searchParams.res.withOptions({ shallow:false }),
+    shutter: searchParams.shutter.withOptions({ shallow:false }),
+    mgp: searchParams.mgp.withOptions({ shallow:false }),
+    minfl: searchParams.minfl.withOptions({ shallow:false }),
+    maxfl: searchParams.maxfl.withOptions({ shallow:false }),
+    maxap: searchParams.maxap.withOptions({ shallow:false }),
+    mount: searchParams.mount.withOptions({ shallow:false }),
+    time: searchParams.time.withOptions({ shallow:false }),
+    distance: searchParams.distance.withOptions({ shallow:false }),
+    altitude: searchParams.altitude.withOptions({ shallow:false }),
+  });
+}
 
 export function useItemInfo() {
   return useQueryStates({
@@ -101,3 +101,19 @@ export function useItemInfo() {
 };
 
 export const serialize = createSerializer(searchParams)
+
+export const defaultFilters = {
+  type: [],
+  brand: [],
+  price: [0, 2500] as [number, number],
+  res: [],
+  shutter: [],
+  mgp: [],
+  minfl: [],
+  maxfl: [],
+  maxap: [],
+  mount: [],
+  time: [],
+  distance: [],
+  altitude: [],
+};

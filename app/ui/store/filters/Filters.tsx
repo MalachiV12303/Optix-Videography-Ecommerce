@@ -134,6 +134,14 @@ function LenseFilters() {
         />
       </AccordionItem>
 
+      <AccordionItem key="mount" title={`mount ${mount.length || ""}`}>
+        <FilterSet
+          filters={filtermap.get("mount")}
+          param={mount}
+          p="mount"
+        />
+      </AccordionItem>
+
       <AccordionItem key="maxap" title={`maxap ${maxap.length || ""}`}>
         <FilterSet
           wrapperClassname="grid grid-cols-2"
@@ -163,13 +171,6 @@ function LenseFilters() {
         />
       </AccordionItem>
 
-      <AccordionItem key="mount" title={`mount ${mount.length || ""}`}>
-        <FilterSet
-          filters={filtermap.get("mount")}
-          param={mount}
-          p="mount"
-        />
-      </AccordionItem>
     </Accordion>
   );
 };

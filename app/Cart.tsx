@@ -42,7 +42,7 @@ export default function Cart() {
                 trigger: ["min-w-0 p-2 bg-primary hover:bg-primary-muted transition-all text-background"],
                 content: ["border border-foreground bg-background text-foreground text-lg lg:text-sm px-4 py-6", "flex flex-row", "h-[80dvh] w-[80dvw] sm:w-[60dvw] md:w-[50dvw] lg:w-[40dvw] 2xl:w-[30dvw]"],
             }}>
-            <Badge isInvisible={isEmpty} content={totalQuantity} className="text-sm min-w-6 tracking-tight border border-foreground bg-background-muted text-foreground pr-px pl-px sm:pl-0 pt-px">
+            <Badge isInvisible={isEmpty} content={totalQuantity} className="text-sm min-w-6 tracking-tight border border-foreground bg-background text-foreground pr-px pl-px sm:pl-0 pt-px">
                 <PopoverTrigger>
                     <div>
                         <CartIcon width={25} height={25} />

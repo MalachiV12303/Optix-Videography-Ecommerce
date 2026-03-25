@@ -32,10 +32,10 @@ export function Item({
     url: `${process.env.NEXT_PUBLIC_BLOB_BASE_URL}/items/${item.id}.webp`
   };
   return (
-    <div className="group relative h-full flex flex-col gap-6 px-2 sm:px-6 py-8 border-b border-foreground-muted bg-background/40 transition">
+    <div className="group relative h-full flex flex-col gap-6 px-6 py-8 border border-foreground-muted bg-background transition">
       <Link
         href={`/item?${params}`}
-        className="relative w-full md:w-64 aspect-square shrink-0"
+        className="relative self-center w-full md:w-64 aspect-square shrink-0"
       >
           <Image
             src={image.url}

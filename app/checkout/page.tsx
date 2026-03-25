@@ -18,14 +18,17 @@ export default function Page() {
     }, []);
     return (
         <>
-            <h1 className="text-2xl text-center md:text-start">My Cart ({totalItems} {totalItems === 1 ? "item" : "items"})</h1>
-            <section className="mt-8 flex xl:flex-row flex-col min-h-screen">
+            <h1 className="text-2xl text-center md:text-start uppercase font-semibold border-b border-foreground py-4">Cart ({totalItems} {totalItems === 1 ? "item" : "items"})</h1>
+            <section className="mt-8 flex xl:flex-row flex-col">
                 <div className="xl:w-2/3">
                     {!isEmpty ? items.map((item, index) => (
                         <CheckoutItem key={index} item={item} />
                     )) :
-                        <div className="text-xl w-full flex h-full my-auto justify-center">
-                            <p>Empty Cart...</p>
+                        <div className="flex flex-col gap-4 w-full min-h-72 px-8 py-6 border-b border-foreground">
+                                <p className="font-semibold uppercase hover:underline text-2xl text-end md:text-start">
+                                    Empty Cart
+                                </p>
+                                <p className="text-foreground-muted">Looks like you haven't added anything to your cart yet.</p>
                         </div>
                     }
                 </div>
@@ -62,9 +65,8 @@ export default function Page() {
 
                         <div className="my-4 text-lg w-full flex flex-col gap-4">
                             <button className="w-full py-4 bg-primary hover:bg-primary-muted text-background transition-all">Checkout</button>
-                            <button className="w-full py-4 hover:text-foreground-muted hover:border-foreground-muted transition-all text-foreground border border-foreground">Pay with PayPal</button>
-                            <button className="w-full py-4 hover:text-foreground-muted hover:border-foreground-muted transition-all text-foreground border border-foreground">Pay with Gold Bars</button>
-                            <button className="w-full py-4 hover:text-foreground-muted hover:border-foreground-muted transition-all text-foreground border border-foreground">Pay with Crypto</button>
+                            <button className="bg-background w-full py-4 hover:text-foreground-muted hover:border-foreground-muted transition-all text-foreground border border-foreground">Pay with PayPal</button>
+                            <button className="bg-background w-full py-4 hover:text-foreground-muted hover:border-foreground-muted transition-all text-foreground border border-foreground">Pay with Crypto</button>
                         </div>
                     </div>
                 </div>

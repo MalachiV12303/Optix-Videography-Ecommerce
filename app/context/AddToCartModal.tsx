@@ -106,10 +106,10 @@ export default function AddToCartModal() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <button
               onClick={() => handleSelect("2yr")}
-              className={`border p-4 text-left transition-all duration-300 ${
+              className={`border border-foreground p-4 text-left transition-all duration-300 ${
                 selectedPlan === "2yr"
-                  ? "border-primary bg-primary/10"
-                  : "border-foreground hover:border-primary"
+                  ? "border-primary bg-primary text-background"
+                  : "border-foreground hover:bg-primary hover:border-transparent hover:text-background"
               }`}
             >
               <div className="flex justify-between items-center">
@@ -119,10 +119,10 @@ export default function AddToCartModal() {
             </button>
             <button
               onClick={() => handleSelect("3yr")}
-              className={`border p-4 text-left transition-all duration-300 ${
+              className={`border border-foreground p-4 text-left transition-all duration-300 ${
                 selectedPlan === "3yr"
-                  ? "border-primary bg-primary/10"
-                  : "border-foreground hover:border-primary"
+                  ? "border-primary bg-primary text-background"
+                  : "border-foreground hover:bg-primary hover:border-transparent hover:text-background"
               }`}
             >
               <div className="flex justify-between items-center">

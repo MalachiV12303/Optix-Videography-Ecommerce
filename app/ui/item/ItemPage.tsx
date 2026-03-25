@@ -37,8 +37,8 @@ export default function ItemPage({ item, category, image }: ItemProps) {
 
     return (
         <section className="flex flex-col">
-            <div className="py-4 container">Home / {(item as any).brand} {(item as any).name}</div>
-            <div className="container flex gap-8 items-start mb-16">
+            {/* <div className="py-4 container">Home / {(item as any).brand} {(item as any).name}</div> */}
+            <div className="container flex gap-8 items-start mb-16 mt-8">
                 <div className="flex-1 border border-foreground h-[70vh] flex items-center justify-center p-32">
                     {image ? (
                         <div className="relative w-full h-full">

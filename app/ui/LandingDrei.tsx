@@ -41,6 +41,7 @@ export default function LandingDrei() {
         width: "100%",
         pointerEvents: "none",
         background: "transparent",
+        zIndex: -5,
       }}
     >
       <Suspense fallback={null}>

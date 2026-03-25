@@ -4,7 +4,7 @@ import { Item } from "@ui/store/catalogue/Item";
 
 export function ItemsPanel({ items }: { items: Camera[] | Lense[] | Aerial[]}) {
   return (
-    <ul className="group/list w-full grid grid-cols-2 md:grid-cols-3 lg:pl-4 py-4 gap-y-4 gap-x-2">
+    <ul className="group/list w-full grid grid-cols-2 md:grid-cols-3 lg:pl-4 pt-4 gap-y-4 gap-x-4">
       {items && items.length !== 0 ? items.map((item) => {
         return (
           <li key={item.id}>

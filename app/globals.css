@@ -8,8 +8,8 @@
   --foreground: #181818;
   --foreground-muted: #757575;
 
-  --primary: #1fb81f;
-  --primary-muted: #1a9e1a;
+  --primary: #1f5cb8;
+  --primary-muted: #1a539e;
   --font-sans: var(--font-manrope);
   --font-mono: var(--font-gilda);
   --heroui-background: var(--background);
@@ -18,18 +18,19 @@
   --heroui-content2: var(--primary-muted);
 }
 
-.dark {
-  --background: #060606;
-  --background-muted: #0a0a0a;
-  --foreground: #ededed;
-  --foreground-muted: rgb(194, 194, 194);
-  
-  --primary: #dbcf26;
-  --primary-muted: #c9bd17;
-  --heroui-background: var(--background);
-  --heroui-foreground: var(--foreground);
-  --heroui-content1: var(--background);
-  --heroui-content2: var(--primary-muted);
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #060606;
+    --background-muted: #0e0e0e;
+    --foreground: #ededed;
+    --foreground-muted: rgb(194, 194, 194);
+    --primary: #dbcf26;
+    --primary-muted: #c9bd17;
+    --heroui-background: var(--background);
+    --heroui-foreground: var(--foreground);
+    --heroui-content1: var(--background);
+    --heroui-content2: var(--primary-muted);
+  }
 }
 
 @layer base {

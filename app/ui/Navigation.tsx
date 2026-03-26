@@ -15,7 +15,7 @@ export default function Navigation() {
                 <Link href="/" className="text-4xl font-mono">
                     GLEAM
                 </Link>
-                <Searchbar />
+                {/* <Searchbar /> */}
                 <div className="ml-auto flex items-center gap-4">
                     <span className="hidden">
                         {/* <ThemeToggle /> */}

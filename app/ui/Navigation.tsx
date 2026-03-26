@@ -153,7 +153,7 @@ function CategoryMenu({
             document
                 .getElementById("storeContent")
                 ?.scrollIntoView({ behavior: "smooth" });
-        }, 50);
+        }, 150);
     };
     return (
         <div className="group uppercase">

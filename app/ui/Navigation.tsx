@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import ThemeToggle from "@ui/ThemeToggle";
 import Searchbar from "@ui/Searchbar";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
@@ -10,12 +9,12 @@ const Cart = dynamic(() => import("../Cart"), { ssr: false });
 
 export default function Navigation() {
     return (
-        <nav className="bg-background-muted text-foreground z-50 w-full sm:px-0">
+        <nav className="bg-background-muted text-foreground z-50 w-full sm:px-0 border-b border-foreground">
             <div className="h-20 sm:h-24 container flex items-center gap-12 w-full">
                 <Link href="/" className="text-4xl font-mono">
                     GLEAM
                 </Link>
-                {/* <Searchbar /> */}
+                <Searchbar />
                 <div className="ml-auto flex items-center gap-4">
                     <span className="hidden">
                         {/* <ThemeToggle /> */}

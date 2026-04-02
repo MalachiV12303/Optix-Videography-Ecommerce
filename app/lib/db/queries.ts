@@ -55,11 +55,93 @@ const brandFilter = (itemtype: string, brands: string[]): Filter => {
         : undefined;
 };
 
+const normalize = (str: string) =>
+  str.toLowerCase().replace(/\s+/g, '');
 
 const searchFilter = (itemtype: string, search: string) => {
-  if (search.length === 0)
-    return undefined
-  return itemtype === 'cam' ? or(ilike(cameras.name, `%${search}%`), ilike(cameras.type, `%${search}%`), ilike(cameras.brand, `%${search}%`)) : undefined
+  if (!search || search.length === 0) return undefined;
+
+  const q = normalize(search);
+
+  const like = (col: any) =>
+    sql`LOWER(REPLACE(${col}, ' ', '')) LIKE ${`%${q}%`}`;
+
+  const numberMatch = Number(search);
+  const isNumber = !isNaN(numberMatch);
+
+  return itemtype === 'cam'
+    ? or(
+        like(cameras.name),
+        like(cameras.type),
+        like(cameras.brand),
+        isNumber ? eq(cameras.res, numberMatch) : undefined
+      )
+    : itemtype === 'len'
+    ? or(
+        like(lenses.name),
+        like(lenses.type),
+        like(lenses.brand)
+      )
+    : itemtype === 'aer'
+    ? or(
+        like(aerial.name),
+        like(aerial.brand),
+        isNumber ? eq(aerial.res, numberMatch) : undefined,
+        sql`EXISTS (
+          SELECT 1 FROM unnest(${aerial.type}) t
+          WHERE LOWER(REPLACE(t, ' ', '')) LIKE ${`%${q}%`}
+        )`
+      )
+    : undefined;
+};
+
+export async function searchAllProducts(query: string) {
+  if (!query) return [];
+
+  const q = `%${query}%`;
+
+  const cams = await db
+    .select({
+      id: cameras.id,
+      name: cameras.name,
+      category: sql<string>`'cam'`,
+    })
+    .from(cameras)
+    .where(or(
+      ilike(cameras.name, q),
+      ilike(cameras.brand, q),
+      ilike(cameras.type, q)
+    ))
+    .limit(5);
+
+  const lens = await db
+    .select({
+      id: lenses.id,
+      name: lenses.name,
+      category: sql<string>`'len'`,
+    })
+    .from(lenses)
+    .where(or(
+      ilike(lenses.name, q),
+      ilike(lenses.brand, q),
+      ilike(lenses.type, q)
+    ))
+    .limit(5);
+
+  const aer = await db
+    .select({
+      id: aerial.id,
+      name: aerial.name,
+      category: sql<string>`'aer'`,
+    })
+    .from(aerial)
+    .where(or(
+      ilike(aerial.name, q),
+      ilike(aerial.brand, q)
+    ))
+    .limit(5);
+
+  return [...cams, ...lens, ...aer].slice(0, 8);
 }
 
 const resFilter = (itemtype: string, res: string[]): Filter => {

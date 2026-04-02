@@ -43,7 +43,6 @@ export const filtermap = new Map([
   ['focallengths', ['0-10', '10-17', '18-25', '26-49', '50-69', '70-99', '100-169', '170-499']],
   ['apertures', ['f/1', 'f/1.2', 'f/1.4', 'f/1.6', 'f/1.8', 'f/2', 'f/2.5', 'f/2.8', 'f/3.5', 'f/4', 'f/4.5', 'f/5', 'f/5.6', 'f/6.3']],
   ['mount', ['Canon EF', 'Nikon DX', 'Nikon FX', 'Sony E-Mount', 'Leica L-Mount']],
-
 ]);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

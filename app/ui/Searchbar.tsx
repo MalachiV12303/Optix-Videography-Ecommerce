@@ -6,7 +6,7 @@ import { filterMap } from "@lib/utils";
 
 type Suggestion =
     | { type: "product"; label: string; id: string; category: string }
-    | { type: "filter"; label: string; display: string; category: string; param: string };
+    | { type: "filter"; label: string; value: string; display: string; category: string; param: string };
 const normalize = (str: string) => str.toLowerCase().replace(/\s+/g, "");
 const MAX_SUGGESTIONS = 11;
 const categoryText: Record<string, string> = {
@@ -39,7 +39,6 @@ export default function Searchbar() {
     const [search, setSearch] = useState("");
     const [focused, setFocused] = useState(false);
     const [products, setProducts] = useState<Suggestion[]>([]);
-
     useEffect(() => {
         if (!search) {
             setProducts([]);
@@ -67,16 +66,17 @@ export default function Searchbar() {
         const results: Suggestion[] = [];
 
         for (const { category, param, values } of filterMap) {
-            for (const value of values) {
-                if (!normalize(value).includes(q)) continue;
+            for (const opt of values) {
+                if (!normalize(opt.label).includes(q)) continue;
 
-                const key = `${value}-${category}-${param}`;
+                const key = `${opt.value}-${category}-${param}`;
                 if (seen.has(key)) continue;
                 seen.add(key);
 
                 results.push({
                     type: "filter",
-                    label: value,
+                    label: opt.label,
+                    value: opt.value,
                     display: categoryLabel(category, param),
                     category,
                     param,
@@ -96,7 +96,6 @@ export default function Searchbar() {
             const params = new URLSearchParams();
             params.set("id", s.id);
             params.set("category", s.category);
-
             router.push(`/item?${params.toString()}`);
             return;
         }
@@ -104,30 +103,17 @@ export default function Searchbar() {
         setTimeout(() => {
             setFilters({
                 category: s.category,
-                [s.param]: [String(s.label)],
+                [s.param]: [s.value],
             } as any);
-            document
-                .getElementById("storeContent")
-                ?.scrollIntoView({ behavior: "smooth" });
+            document.getElementById("storeContent")?.scrollIntoView({ behavior: "smooth" });
         }, 150);
     };
 
     return (
-        <div className="relative hidden sm:flex flex-col min-w-96 h-12">
+        <div className="relative hidden sm:flex flex-col min-w-[23rem] h-12">
             <div className="flex gap-2 items-center bg-background-muted px-2 h-full">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2}
-                    stroke="currentColor"
-                    className="size-5"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                    />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                 </svg>
 
                 <input
@@ -140,14 +126,11 @@ export default function Searchbar() {
                     onChange={(e) => setSearch(e.target.value)}
                 />
             </div>
-            <div className={`absolute top-full w-full bg-background-muted border-b border-x border-foreground shadow-lg z-50 overflow-hidden transition-all duration-200 ease-out
-                    ${focused
-                    ? "max-h-[80vh] opacity-100 translate-y-0"
-                    : "max-h-0 opacity-0 -translate-y-2 pointer-events-none"
-                }`}>
+            <div className={`absolute top-full w-full bg-background-muted border-b border-foreground-muted shadow-lg z-50 overflow-hidden transition-all duration-200 ease-out
+                ${focused ? "max-h-[80vh] opacity-100 translate-y-0" : "max-h-0 opacity-0 -translate-y-2 pointer-events-none"}`}>
                 {focused && (
                     suggestions.length === 0 ? (
-                        <div className="pointer-events-none border-t border-foreground px-3 py-3 text-sm text-foreground-muted">
+                        <div className="pointer-events-none border-t border-foreground-muted px-3 py-3 text-sm text-foreground">
                             No items match your search...
                         </div>
                     ) : (
@@ -158,8 +141,7 @@ export default function Searchbar() {
                                 className="group w-full text-left px-3 py-3 flex justify-between items-center border-t border-foreground"
                             >
                                 <span className="group-hover:underline mr-4">{s.label}</span>
-
-                                <span className="text-sm text-foreground-muted ">
+                                <span className="text-sm text-foreground-muted">
                                     {s.type === "filter"
                                         ? "in " + s.display
                                         : categoryText[s.category] ?? s.category}

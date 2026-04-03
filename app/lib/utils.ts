@@ -25,74 +25,163 @@ export const filterMap = [
   {
     category: "cam",
     param: "type",
-    values: ["DSLR", "Mirrorless"],
+    values: [
+      { label: "Digital SLR", value: "DSLR" },
+      { label: "Mirrorless", value: "Mirrorless" }
+    ],
   },
   {
     category: "cam",
     param: "brand",
-    values: ["Canon", "Nikon", "Sony", "Panasonic"],
+    values: [
+      { label: "Canon", value: "Canon" },
+      { label: "Nikon", value: "Nikon" },
+      { label: "Sony", value: "Sony" },
+      { label: "Panasonic", value: "Panasonic" }
+    ],
   },
   {
     category: "cam",
     param: "shutter",
-    values: ["1/4000 to 30 sec", "1/8000 to 30 sec", "1/8000 to 60 sec", "1/16000 to 60 sec"],
+    values: [
+      { label: "1/4000 to 30 sec", value: "1/4000 to 30 sec" },
+      { label: "1/8000 to 30 sec", value: "1/8000 to 30 sec" },
+      { label: "1/8000 to 60 sec", value: "1/8000 to 60 sec" },
+      { label: "1/16000 to 60 sec", value: "1/16000 to 60 sec" }
+    ],
   },
   {
     category: "cam",
     param: "res",
-    values: ["1080", "2160", "6144"],
+    values: [
+      { label: "1080", value: "1080" },
+      { label: "4K 2160", value: "2160" },
+      { label: "8K 6144", value: "6144" }
+    ],
   },
   {
     category: "cam",
     param: "mgp",
-    values: ["18.1", "20.9", "24.1", "24.2", "26.2", "32.5", "45.7"],
+    values: [
+      { label: "18.1 Megapixels", value: "18.1" },
+      { label: "20.9 Megapixels", value: "20.9" },
+      { label: "24.1 Megapixels", value: "24.1" },
+      { label: "24.2 Megapixels", value: "24.2" },
+      { label: "26.2 Megapixels", value: "26.2" },
+      { label: "32.5 Megapixels", value: "32.5" },
+      { label: "45.7 Megapixels", value: "45.7" }
+    ],
   },
   {
     category: "cam",
     param: "mount",
-    values: ["Canon EF", "Canon EF-S", "Nikon Z", "Nikon DX", "Nikon FX", "Sony E-Mount", "Leica L-Mount"],
+    values: [
+      { label: "Canon EF", value: "Canon EF" },
+      { label: "Canon EF-S", value: "Canon EF-S" },
+      { label: "Nikon Z", value: "Nikon Z" },
+      { label: "Nikon DX", value: "Nikon DX" },
+      { label: "Nikon FX", value: "Nikon FX" },
+      { label: "Sony E-Mount", value: "Sony E-Mount" },
+      { label: "Leica L-Mount", value: "Leica L-Mount" }
+    ],
   },
   {
     category: "len",
     param: "type",
-    values: ["Telephoto Zoom", "Telephoto Prime", "Standard Zoom", "Standard Prime", "Wide Angle Prime"],
+    values: [
+      { label: "Telephoto Zoom", value: "Telephoto Zoom" },
+      { label: "Telephoto Prime", value: "Telephoto Prime" },
+      { label: "Standard Zoom", value: "Standard Zoom" },
+      { label: "Standard Prime", value: "Standard Prime" },
+      { label: "Wide Angle Prime", value: "Wide Angle Prime" }
+    ],
   },
   {
     category: "len",
     param: "brand",
-    values: ["Canon", "Nikon", "Sony", "Panasonic", "Sigma", "Tamron"],
+    values: [
+      { label: "Canon", value: "Canon" },
+      { label: "Nikon", value: "Nikon" },
+      { label: "Sony", value: "Sony" },
+      { label: "Panasonic", value: "Panasonic" },
+      { label: "Sigma", value: "Sigma" },
+      { label: "Tamron", value: "Tamron" }
+    ],
   },
   {
     category: "len",
     param: "maxap",
-    values: ["f/1.4", "f/1.8", "f/2.8", "f/4", "f/29"],
+    values: [
+      { label: "f/1.4", value: "f/1.4" },
+      { label: "f/1.8", value: "f/1.8" },
+      { label: "f/2.8", value: "f/2.8" },
+      { label: "f/4", value: "f/4" },
+      { label: "f/29", value: "f/29" }
+    ],
   },
   {
     category: "len",
     param: "minfl",
-    values: ["0-10", "10-17", "18-25", "26-49", "50-69", "70-99", "100-169", "170-499"],
+    values: [
+      { label: "0-10", value: "0-10" },
+      { label: "10-17", value: "10-17" },
+      { label: "18-25", value: "18-25" },
+      { label: "26-49", value: "26-49" },
+      { label: "50-69", value: "50-69" },
+      { label: "70-99", value: "70-99" },
+      { label: "100-169", value: "100-169" },
+      { label: "170-499", value: "170-499" }
+    ],
   },
   {
     category: "len",
     param: "maxfl",
-    values: ["0-10", "10-17", "18-25", "26-49", "50-69", "70-99", "100-169", "170-499"],
+    values: [
+      { label: "0-10", value: "0-10" },
+      { label: "10-17", value: "10-17" },
+      { label: "18-25", value: "18-25" },
+      { label: "26-49", value: "26-49" },
+      { label: "50-69", value: "50-69" },
+      { label: "70-99", value: "70-99" },
+      { label: "100-169", value: "100-169" },
+      { label: "170-499", value: "170-499" }
+    ],
   },
   {
     category: "len",
     param: "mount",
-    values: ["Canon EF", "Canon EF-S", "Nikon Z", "Nikon DX", "Nikon FX", "Sony E-Mount", "Leica L-Mount"],
+    values: [
+      { label: "Canon EF", value: "Canon EF" },
+      { label: "Canon EF-S", value: "Canon EF-S" },
+      { label: "Nikon Z", value: "Nikon Z" },
+      { label: "Nikon DX", value: "Nikon DX" },
+      { label: "Nikon FX", value: "Nikon FX" },
+      { label: "Sony E-Mount", value: "Sony E-Mount" },
+      { label: "Leica L-Mount", value: "Leica L-Mount" }
+    ],
   },
   {
     category: "aer",
     param: "type",
-    values: ["App-Controlled", "Remote Control"],
+    values: [
+      { label: "App-Controlled", value: "App-Controlled" },
+      { label: "Remote Control", value: "Remote Control" }
+    ],
   },
   {
     category: "aer",
     param: "brand",
-    values: ["DJI", "Snaptain", "Contixo"],
+    values: [
+      { label: "DJI", value: "DJI" },
+      { label: "Snaptain", value: "Snaptain" },
+      { label: "Contixo", value: "Contixo" }
+    ],
   }
 ];
+
+export function getCategoryFilters(category: string) {
+  return filterMap.filter((f) => f.category === category);
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isCamera(obj: any): obj is Camera {

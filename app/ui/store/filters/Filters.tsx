@@ -14,7 +14,7 @@ export function Filters({ it }: { it: string }) {
   if (it === "len") return <LenseFilters />;
   if (it === "aer") return <AerialFilters />;
   return null;
-};
+}
 
 function getFilterValues(category: string, param: string) {
   return filterMap.find(
@@ -33,187 +33,89 @@ function CameraFilters() {
   const [{ type, brand, res, shutter, mgp, mount }] = useFilters();
 
   return (
-    <Accordion
-      className="px-0"
-      itemClasses={accordionItemClasses}
-      selectionMode="multiple"
-      showDivider={false}
-      isCompact
-      defaultExpandedKeys={[
-        "price",
-        "type",
-        "brand",
-        "res",
-      ]}
-    >
+    <Accordion className="px-0" itemClasses={accordionItemClasses} selectionMode="multiple" showDivider={false} isCompact defaultExpandedKeys={["price","type","brand","res"]}>
       <AccordionItem key="price" title="price">
         <PriceSlider min={0} max={2500} />
       </AccordionItem>
 
-      <AccordionItem
-        key="type"
-        title={`type ${type.length || ""}`}
-      >
-        <FilterSet filters={getFilterValues("cam", "type")} param={type} p="type" />
+      <AccordionItem key="type" title={`type ${type.length || ""}`}>
+        <FilterSet filters={getFilterValues("cam","type")} param={type} p="type" />
       </AccordionItem>
 
-      <AccordionItem
-        key="brand"
-        title={`brand ${brand.length || ""}`}
-      >
-        <FilterSet filters={getFilterValues("cam", "brand")} param={brand} p="brand" />
+      <AccordionItem key="brand" title={`brand ${brand.length || ""}`}>
+        <FilterSet filters={getFilterValues("cam","brand")} param={brand} p="brand" />
       </AccordionItem>
 
-      <AccordionItem
-        key="res"
-        title={`res ${res.length || ""}`}
-      >
-        <FilterSet
-          filters={getFilterValues("cam", "res")}
-          param={res}
-          p="res"
-          text="p"
-        />
+      <AccordionItem key="res" title={`res ${res.length || ""}`}>
+        <FilterSet filters={getFilterValues("cam","res")} param={res} p="res" text="p" />
       </AccordionItem>
 
-      <AccordionItem
-        key="shutter"
-        title={`shutter ${shutter.length || ""}`}
-      >
-        <FilterSet
-          filters={getFilterValues("cam", "shutter")}
-          param={shutter}
-          p="shutter"
-        />
+      <AccordionItem key="shutter" title={`shutter ${shutter.length || ""}`}>
+        <FilterSet filters={getFilterValues("cam","shutter")} param={shutter} p="shutter" />
       </AccordionItem>
 
-      <AccordionItem
-        key="megapixels"
-        title={`eff. mgp ${mgp.length || ""}`}
-      >
-        <FilterSet
-          filters={getFilterValues("cam", "mgp")}
-          param={mgp}
-          p="mgp"
-          text=" megapixels"
-        />
+      <AccordionItem key="megapixels" title={`eff. mgp ${mgp.length || ""}`}>
+        <FilterSet filters={getFilterValues("cam","mgp")} param={mgp} p="mgp" text=" megapixels" />
       </AccordionItem>
 
       <AccordionItem key="mount" title={`mount ${mount.length || ""}`}>
-        <FilterSet
-          filters={getFilterValues("len", "mount")}
-          param={mount}
-          p="mount"
-        />
+        <FilterSet filters={getFilterValues("len","mount")} param={mount} p="mount" />
       </AccordionItem>
     </Accordion>
   );
-};
+}
 
 function LenseFilters() {
   const [{ type, brand, minfl, maxfl, maxap, mount }] = useFilters();
 
   return (
-    <Accordion
-      className="px-0"
-      itemClasses={accordionItemClasses}
-      selectionMode="multiple"
-      showDivider={false}
-      isCompact
-      defaultExpandedKeys={[
-        "price",
-        "type",
-        "mount",
-      ]}
-    >
+    <Accordion className="px-0" itemClasses={accordionItemClasses} selectionMode="multiple" showDivider={false} isCompact defaultExpandedKeys={["price","type","mount"]}>
       <AccordionItem key="price" title="price">
         <PriceSlider min={0} max={2500}/>
       </AccordionItem>
 
       <AccordionItem key="type" title={`type ${type.length || ""}`}>
-        <FilterSet filters={getFilterValues("len", "type")} param={type} p="type" />
+        <FilterSet filters={getFilterValues("len","type")} param={type} p="type" />
       </AccordionItem>
 
       <AccordionItem key="brand" title={`brand ${brand.length || ""}`}>
-        <FilterSet
-          filters={getFilterValues("len", "brand")}
-          param={brand}
-          p="brand"
-        />
+        <FilterSet filters={getFilterValues("len","brand")} param={brand} p="brand" />
       </AccordionItem>
 
       <AccordionItem key="mount" title={`mount ${mount.length || ""}`}>
-        <FilterSet
-          filters={getFilterValues("len", "mount")}
-          param={mount}
-          p="mount"
-        />
+        <FilterSet filters={getFilterValues("len","mount")} param={mount} p="mount" />
       </AccordionItem>
 
       <AccordionItem key="maxap" title={`maxap ${maxap.length || ""}`}>
-        <FilterSet
-          wrapperClassname="grid grid-cols-2"
-          filters={getFilterValues("len", "maxap")}
-          param={maxap}
-          p="maxap"
-        />
+        <FilterSet wrapperClassname="grid grid-cols-2" filters={getFilterValues("len","maxap")} param={maxap} p="maxap" />
       </AccordionItem>
 
       <AccordionItem key="minfl" title={`minfl ${minfl.length || ""}`}>
-        <FilterSet
-          filters={getFilterValues("len", "minfl")}
-          param={minfl}
-          p="minfl"
-          text="mm"
-          textClassname="text-xs"
-        />
+        <FilterSet filters={getFilterValues("len","minfl")} param={minfl} p="minfl" text="mm" textClassname="text-xs" />
       </AccordionItem>
 
       <AccordionItem key="maxfl" title={`maxfl ${maxfl.length || ""}`}>
-        <FilterSet
-          filters={getFilterValues("len", "maxfl")}
-          param={maxfl}
-          p="maxfl"
-          text="mm"
-          textClassname="text-xs"
-        />
+        <FilterSet filters={getFilterValues("len","maxfl")} param={maxfl} p="maxfl" text="mm" textClassname="text-xs" />
       </AccordionItem>
-
     </Accordion>
   );
-};
+}
 
 function AerialFilters() {
   const [{ type, brand }] = useFilters();
 
   return (
-    <Accordion
-      className="px-0"
-      itemClasses={accordionItemClasses}
-      selectionMode="multiple"
-      showDivider={false}
-      isCompact
-      defaultExpandedKeys={[
-        "price",
-        "type",
-        "brand",
-      ]}
-    >
+    <Accordion className="px-0" itemClasses={accordionItemClasses} selectionMode="multiple" showDivider={false} isCompact defaultExpandedKeys={["price","type","brand"]}>
       <AccordionItem key="price" title="price">
         <PriceSlider min={0} max={2500}/>
       </AccordionItem>
 
       <AccordionItem key="type" title={`type ${type.length || ""}`}>
-        <FilterSet filters={getFilterValues("aer", "type")} param={type} p="type" />
+        <FilterSet filters={getFilterValues("aer","type")} param={type} p="type" />
       </AccordionItem>
 
       <AccordionItem key="brand" title={`brand ${brand.length || ""}`}>
-        <FilterSet
-          containerClassname="grid grid-cols-2"
-          filters={getFilterValues("aer", "brand")}
-          param={brand}
-          p="brand"
-        />
+        <FilterSet containerClassname="grid grid-cols-2" filters={getFilterValues("aer","brand")} param={brand} p="brand" />
       </AccordionItem>
     </Accordion>
   );
@@ -228,7 +130,7 @@ function FilterSet({
   containerClassname,
   wrapperClassname,
 }: {
-  filters?: string[];
+  filters?: { label: string; value: string }[];
   param: string[];
   p: string;
   text?: string;
@@ -238,6 +140,7 @@ function FilterSet({
 }) {
   const [, setFilters] = useFilters();
   const isBinary = filters?.length === 2;
+
   function handleChange(values: string[]) {
     if (isBinary && values.length > 1) {
       const lastSelected = values.find(v => !param.includes(v)) ?? values[0];
@@ -258,11 +161,16 @@ function FilterSet({
       onValueChange={handleChange}
     >
       {filters?.map((fil) => (
-        <Checkbox classNames={{ wrapper: "before:border before:border-foreground", icon: "text-background" }} radius="none" key={fil} value={fil}>
-          {fil}
-          {text && <span className={`${textClassname ?? ""}`}>{text}</span>}
+        <Checkbox
+          classNames={{ wrapper: "before:border before:border-foreground", icon: "text-background" }}
+          radius="none"
+          key={fil.value}
+          value={fil.value}
+        >
+          {fil.label}
+          {text && <span className={textClassname ?? ""}>{text}</span>}
         </Checkbox>
       ))}
     </CheckboxGroup>
   );
-};
+}

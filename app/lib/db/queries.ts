@@ -133,7 +133,7 @@ export async function searchAllProducts(query: string) {
     .select({
       id: cameras.id,
       name: cameras.name,
-      category: sql<string>`"cam"`,
+      category: sql<string>`'cam'`, //these need to be '' and cannot be "", causes issue with drizzle-orm and postgres driver
     })
     .from(cameras)
     .where(or(
@@ -145,7 +145,7 @@ export async function searchAllProducts(query: string) {
     .select({
       id: lenses.id,
       name: lenses.name,
-      category: sql<string>`"len"`,
+      category: sql<string>`'len'`,
     })
     .from(lenses)
     .where(or(
@@ -157,7 +157,7 @@ export async function searchAllProducts(query: string) {
     .select({
       id: aerial.id,
       name: aerial.name,
-      category: sql<string>`"aer"`,
+      category: sql<string>`'aer'`,
     })
     .from(aerial)
     .where(or(
@@ -171,7 +171,6 @@ export async function searchAllProducts(query: string) {
 export async function fetchCameras(filters: StoreFilters) {
   const {
     category,
-    search,
     type,
     brand,
     price,

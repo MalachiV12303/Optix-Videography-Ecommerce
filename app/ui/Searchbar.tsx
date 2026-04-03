@@ -1,24 +1,41 @@
 "use client";
 import { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useQueryStates } from "nuqs";
-import { searchParams, useFilters } from "@lib/searchParams";
-import { filtermap } from "@lib/utils";
-
-const normalize = (str: string) =>
-    str.toLowerCase().replace(/\s+/g, "");
-
-const MAX_SUGGESTIONS = 8;
+import { useFilters } from "@lib/searchParams";
+import { filterMap } from "@lib/utils";
 
 type Suggestion =
     | { type: "product"; label: string; id: string; category: string }
-    | { type: "filter"; label: string; key: string };
+    | { type: "filter"; label: string; display: string; category: string; param: string };
+const normalize = (str: string) => str.toLowerCase().replace(/\s+/g, "");
+const MAX_SUGGESTIONS = 12;
+const categoryText: Record<string, string> = {
+    cam: "Camera",
+    len: "Lense",
+    aer: "Aerial",
+};
+const categoryLabel = (category: string, param: string) => {
+    const map: Record<string, string> = {
+        cam: "Camera",
+        len: "Lense",
+        aer: "Aerial",
+    };
+    const paramMap: Record<string, string> = {
+        type: "Types",
+        brand: "Brands",
+        res: "Resolutions",
+        shutter: "Shutter Speeds",
+        mgp: "Megapixels",
+        mount: "Mounts",
+        maxap: "Max Aperture",
+        minfl: "Min Focal Length",
+        maxfl: "Max Focal Length",
+    };
+    return `${map[category] ?? category} ${paramMap[param] ?? param}`;
+};
 
 export default function Searchbar() {
     const router = useRouter();
-
-    const [params, setParams] = useQueryStates(searchParams);
-
     const [search, setSearch] = useState("");
     const [focused, setFocused] = useState(false);
     const [products, setProducts] = useState<Suggestion[]>([]);
@@ -28,11 +45,9 @@ export default function Searchbar() {
             setProducts([]);
             return;
         }
-
         const fetchProducts = async () => {
             const res = await fetch(`/api/search?q=${search}`);
             const data = await res.json();
-
             setProducts(
                 data.map((item: any) => ({
                     type: "product",
@@ -42,28 +57,32 @@ export default function Searchbar() {
                 }))
             );
         };
-
         fetchProducts();
     }, [search]);
 
     const filterSuggestions = useMemo(() => {
         if (!search) return [];
-
         const q = normalize(search);
+        const seen = new Set<string>();
         const results: Suggestion[] = [];
 
-        for (const [key, values] of filtermap.entries()) {
+        for (const { category, param, values } of filterMap) {
             for (const value of values) {
-                if (normalize(value).includes(q)) {
-                    results.push({
-                        type: "filter",
-                        label: value,
-                        key,
-                    });
-                }
+                if (!normalize(value).includes(q)) continue;
+
+                const key = `${value}-${category}-${param}`;
+                if (seen.has(key)) continue;
+                seen.add(key);
+
+                results.push({
+                    type: "filter",
+                    label: value,
+                    display: categoryLabel(category, param),
+                    category,
+                    param,
+                });
             }
         }
-
         return results;
     }, [search]);
 
@@ -72,7 +91,6 @@ export default function Searchbar() {
     }, [products, filterSuggestions]);
 
     const [, setFilters] = useFilters();
-
     const handleSelect = (s: Suggestion) => {
         if (s.type === "product") {
             const params = new URLSearchParams();
@@ -82,40 +100,12 @@ export default function Searchbar() {
             router.push(`/item?${params.toString()}`);
             return;
         }
-
-        const keyMap: Record<string, string> = {
-            cameratypes: "type",
-            camerabrands: "brand",
-            lensetypes: "type",
-            lensebrands: "brand",
-            aerialtypes: "type",
-            aerialbrands: "brand",
-            resolutions: "res",
-            shutterspeeds: "shutter",
-            megapixels: "mgp",
-            apertures: "maxap",
-            focallengths: "minfl",
-            mount: "mount",
-        };
-
-        const filterKey = keyMap[s.key];
-        if (!filterKey) return;
-
         router.push("/");
-
         setTimeout(() => {
             setFilters({
-                category: filterKey.startsWith("cam")
-                    ? "cam"
-                    : filterKey.startsWith("len")
-                        ? "len"
-                        : filterKey.startsWith("aer")
-                            ? "aer"
-                            : undefined,
-
-                [filterKey]: [String(s.label)],
+                category: s.category,
+                [s.param]: [String(s.label)],
             } as any);
-
             document
                 .getElementById("storeContent")
                 ?.scrollIntoView({ behavior: "smooth" });
@@ -123,7 +113,7 @@ export default function Searchbar() {
     };
 
     return (
-        <div className="relative hidden sm:flex flex-col">
+        <div className="relative hidden sm:flex flex-col min-w-80">
             <div className="flex gap-2 items-center border-b border-foreground">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -151,22 +141,31 @@ export default function Searchbar() {
                 />
             </div>
 
-            {focused && suggestions.length > 0 && (
-                <div className="absolute top-full mt-2 w-full bg-background border border-foreground/20 rounded-md shadow-lg z-50">
-                    {suggestions.map((s, i) => (
-                        <button
-                            key={i}
-                            onClick={() => handleSelect(s)}
-                            className="w-full text-left px-3 py-2 hover:bg-foreground/10 flex justify-between"
-                        >
-                            <span>{s.label}</span>
-                            <span className="text-xs opacity-60">
-                                {s.type === "product" ? "item" : "filter"}
-                            </span>
-                        </button>
-                    ))}
+            {focused && (
+                <div className="absolute top-full mt-2 w-full bg-background-muted border-x border-t border-foreground shadow-lg z-50">
+                    {suggestions.length === 0 ? (
+                        <div className="px-3 py-3 text-sm text-foreground-muted border-b border-foreground">
+                            No items match your search...
+                        </div>
+                    ) : (
+                        suggestions.map((s, i) => (
+                            <button
+                                key={i}
+                                onClick={() => handleSelect(s)}
+                                className="w-full text-left px-3 py-2 flex justify-between items-center border-b border-foreground"
+                            >
+                                <span>{s.label}</span>
+
+                                <span className="text-sm text-foreground-muted">
+                                    {s.type === "filter"
+                                        ? "in " + s.display
+                                        : categoryText[s.category] ?? s.category}
+                                </span>
+                            </button>
+                        ))
+                    )}
                 </div>
             )}
         </div>
     );
-}
+};

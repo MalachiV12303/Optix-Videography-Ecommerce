@@ -1,6 +1,6 @@
 "use client";
 import { useFilters } from "@lib/searchParams";
-import { filtermap } from "@lib/utils";
+import { filterMap } from "@lib/utils";
 import PriceSlider from "@ui/store/filters/PriceSlider";
 import {
   Accordion,
@@ -16,6 +16,12 @@ export function Filters({ it }: { it: string }) {
   return null;
 };
 
+function getFilterValues(category: string, param: string) {
+  return filterMap.find(
+    (f) => f.category === category && f.param === param
+  )?.values;
+}
+
 const accordionItemClasses = {
   content: "px-4",
   indicator: "text-foreground",
@@ -24,7 +30,7 @@ const accordionItemClasses = {
 };
 
 function CameraFilters() {
-  const [{ type, brand, res, shutter, mgp }] = useFilters();
+  const [{ type, brand, res, shutter, mgp, mount }] = useFilters();
 
   return (
     <Accordion
@@ -38,8 +44,6 @@ function CameraFilters() {
         "type",
         "brand",
         "res",
-        "shutter",
-        "megapixels",
       ]}
     >
       <AccordionItem key="price" title="price">
@@ -50,14 +54,14 @@ function CameraFilters() {
         key="type"
         title={`type ${type.length || ""}`}
       >
-        <FilterSet filters={filtermap.get("cameratypes")} param={type} p="type" />
+        <FilterSet filters={getFilterValues("cam", "type")} param={type} p="type" />
       </AccordionItem>
 
       <AccordionItem
         key="brand"
         title={`brand ${brand.length || ""}`}
       >
-        <FilterSet filters={filtermap.get("camerabrands")} param={brand} p="brand" />
+        <FilterSet filters={getFilterValues("cam", "brand")} param={brand} p="brand" />
       </AccordionItem>
 
       <AccordionItem
@@ -65,7 +69,7 @@ function CameraFilters() {
         title={`res ${res.length || ""}`}
       >
         <FilterSet
-          filters={filtermap.get("resolutions")}
+          filters={getFilterValues("cam", "res")}
           param={res}
           p="res"
           text="p"
@@ -77,7 +81,7 @@ function CameraFilters() {
         title={`shutter ${shutter.length || ""}`}
       >
         <FilterSet
-          filters={filtermap.get("shutterspeeds")}
+          filters={getFilterValues("cam", "shutter")}
           param={shutter}
           p="shutter"
         />
@@ -88,10 +92,18 @@ function CameraFilters() {
         title={`eff. mgp ${mgp.length || ""}`}
       >
         <FilterSet
-          filters={filtermap.get("megapixels")}
+          filters={getFilterValues("cam", "mgp")}
           param={mgp}
           p="mgp"
           text=" megapixels"
+        />
+      </AccordionItem>
+
+      <AccordionItem key="mount" title={`mount ${mount.length || ""}`}>
+        <FilterSet
+          filters={getFilterValues("len", "mount")}
+          param={mount}
+          p="mount"
         />
       </AccordionItem>
     </Accordion>
@@ -111,10 +123,6 @@ function LenseFilters() {
       defaultExpandedKeys={[
         "price",
         "type",
-        "brand",
-        "maxap",
-        "minfl",
-        "maxfl",
         "mount",
       ]}
     >
@@ -123,12 +131,12 @@ function LenseFilters() {
       </AccordionItem>
 
       <AccordionItem key="type" title={`type ${type.length || ""}`}>
-        <FilterSet filters={filtermap.get("lensetypes")} param={type} p="type" />
+        <FilterSet filters={getFilterValues("len", "type")} param={type} p="type" />
       </AccordionItem>
 
       <AccordionItem key="brand" title={`brand ${brand.length || ""}`}>
         <FilterSet
-          filters={filtermap.get("lensebrands")}
+          filters={getFilterValues("len", "brand")}
           param={brand}
           p="brand"
         />
@@ -136,7 +144,7 @@ function LenseFilters() {
 
       <AccordionItem key="mount" title={`mount ${mount.length || ""}`}>
         <FilterSet
-          filters={filtermap.get("mount")}
+          filters={getFilterValues("len", "mount")}
           param={mount}
           p="mount"
         />
@@ -145,7 +153,7 @@ function LenseFilters() {
       <AccordionItem key="maxap" title={`maxap ${maxap.length || ""}`}>
         <FilterSet
           wrapperClassname="grid grid-cols-2"
-          filters={filtermap.get("apertures")}
+          filters={getFilterValues("len", "maxap")}
           param={maxap}
           p="maxap"
         />
@@ -153,7 +161,7 @@ function LenseFilters() {
 
       <AccordionItem key="minfl" title={`minfl ${minfl.length || ""}`}>
         <FilterSet
-          filters={filtermap.get("focallengths")}
+          filters={getFilterValues("len", "minfl")}
           param={minfl}
           p="minfl"
           text="mm"
@@ -163,7 +171,7 @@ function LenseFilters() {
 
       <AccordionItem key="maxfl" title={`maxfl ${maxfl.length || ""}`}>
         <FilterSet
-          filters={filtermap.get("focallengths")}
+          filters={getFilterValues("len", "maxfl")}
           param={maxfl}
           p="maxfl"
           text="mm"
@@ -196,13 +204,13 @@ function AerialFilters() {
       </AccordionItem>
 
       <AccordionItem key="type" title={`type ${type.length || ""}`}>
-        <FilterSet filters={filtermap.get("aerialtypes")} param={type} p="type" />
+        <FilterSet filters={getFilterValues("aer", "type")} param={type} p="type" />
       </AccordionItem>
 
       <AccordionItem key="brand" title={`brand ${brand.length || ""}`}>
         <FilterSet
           containerClassname="grid grid-cols-2"
-          filters={filtermap.get("aerialbrands")}
+          filters={getFilterValues("aer", "brand")}
           param={brand}
           p="brand"
         />

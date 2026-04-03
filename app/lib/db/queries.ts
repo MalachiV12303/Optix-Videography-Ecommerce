@@ -1,15 +1,15 @@
-import { db } from './drizzle';
-import { eq, and, between, inArray, ilike, or, arrayOverlaps } from 'drizzle-orm';
-import { aerial, cameras, lenses } from './schema';
-import { sql } from 'drizzle-orm';
-import type { SQL } from 'drizzle-orm';
-import { StoreFilters } from '../filters/types';
+import { db } from "./drizzle";
+import { eq, and, between, inArray, ilike, or, arrayOverlaps } from "drizzle-orm";
+import { aerial, cameras, lenses } from "./schema";
+import { sql } from "drizzle-orm";
+import type { SQL } from "drizzle-orm";
+import { StoreFilters } from "../filters/types";
 
 type Filter = SQL | undefined;
 type SliderValue = number | [number, number];
 
 const DEFAULT_MIN_PRICE = 0;
-const DEFAULT_MAX_PRICE = 3000;
+const DEFAULT_MAX_PRICE = 2500;
 
 const priceFilter = (itemtype: string, price: SliderValue): Filter => {
   if (!Array.isArray(price)) return undefined;
@@ -20,80 +20,109 @@ const priceFilter = (itemtype: string, price: SliderValue): Filter => {
     return undefined;
   }
 
-  return itemtype === 'cam'
+  return itemtype === "cam"
     ? between(sql<number>`${cameras.price}`, min, max)
-    : itemtype === 'len'
+    : itemtype === "len"
       ? between(sql<number>`${lenses.price}`, min, max)
-      : itemtype === 'aer'
+      : itemtype === "aer"
         ? between(sql<number>`${aerial.price}`, min, max)
         : undefined;
 };
 
-
-
 const typeFilter = (itemtype: string, types: string[]): Filter => {
   if (types.length === 0) return undefined;
-  return itemtype === 'cam'
+  return itemtype === "cam"
     ? inArray(cameras.type, types)
-    : itemtype === 'len'
+    : itemtype === "len"
       ? inArray(lenses.type, types)
-      : itemtype === 'aer'
+      : itemtype === "aer"
         ? arrayOverlaps(aerial.type, types)
         : undefined;
 };
 
-
 const brandFilter = (itemtype: string, brands: string[]): Filter => {
   if (brands.length === 0) return undefined;
 
-  return itemtype === 'cam'
+  return itemtype === "cam"
     ? inArray(cameras.brand, brands)
-    : itemtype === 'len'
+    : itemtype === "len"
       ? inArray(lenses.brand, brands)
-      : itemtype === 'aer'
+      : itemtype === "aer"
         ? inArray(aerial.brand, brands)
         : undefined;
 };
 
-const normalize = (str: string) =>
-  str.toLowerCase().replace(/\s+/g, '');
+const resFilter = (itemtype: string, res: string[]): Filter => {
+  if (res.length === 0) return undefined;
 
-const searchFilter = (itemtype: string, search: string) => {
-  if (!search || search.length === 0) return undefined;
+  const values = res.map(Number);
 
-  const q = normalize(search);
-
-  const like = (col: any) =>
-    sql`LOWER(REPLACE(${col}, ' ', '')) LIKE ${`%${q}%`}`;
-
-  const numberMatch = Number(search);
-  const isNumber = !isNaN(numberMatch);
-
-  return itemtype === 'cam'
-    ? or(
-        like(cameras.name),
-        like(cameras.type),
-        like(cameras.brand),
-        isNumber ? eq(cameras.res, numberMatch) : undefined
-      )
-    : itemtype === 'len'
-    ? or(
-        like(lenses.name),
-        like(lenses.type),
-        like(lenses.brand)
-      )
-    : itemtype === 'aer'
-    ? or(
-        like(aerial.name),
-        like(aerial.brand),
-        isNumber ? eq(aerial.res, numberMatch) : undefined,
-        sql`EXISTS (
-          SELECT 1 FROM unnest(${aerial.type}) t
-          WHERE LOWER(REPLACE(t, ' ', '')) LIKE ${`%${q}%`}
-        )`
-      )
-    : undefined;
+  return itemtype === "cam"
+    ? inArray(cameras.res, values)
+    : itemtype === "aer"
+      ? inArray(aerial.res, values)
+      : undefined;
 };
+
+const shutterFilter = (itemtype: string, shutters: string[]) => {
+  if (shutters.length === 0)
+    return undefined
+  return itemtype === "cam" ? inArray(cameras.shutter, shutters) : undefined
+}
+
+const megapixelFilter = (itemtype: string, megapixels: string[]) => {
+  if (megapixels.length === 0)
+    return undefined
+  return itemtype === "cam" ? inArray(cameras.megapixels, megapixels) : undefined
+}
+
+const maxapFilter = (itemtype: string, maxap: string[]) => {
+  if (maxap.length === 0)
+    return undefined
+  //using .map because i was having issue using parseAsInt in searchParamsCache, values were null and number[] had no length
+  return itemtype === "len" ? inArray(lenses.maxap, maxap) : undefined
+}
+
+const mountFilter = (itemtype: string, mounts: string[]): Filter => {
+  if (mounts.length === 0) return undefined;
+  return itemtype === "cam"
+    ? arrayOverlaps(cameras.mount, mounts)
+    : itemtype === "len"
+      ? arrayOverlaps(lenses.mount, mounts)
+      : undefined;
+};
+
+const minflFilter = (itemtype: string, minfl: string[]) => {
+  const arr = [];
+  const min = [];
+  const max = [];
+  for (let i = 0; i < minfl.length; i++) {
+    arr.push(minfl[i].toString().split("-"));
+  }
+  for (let x = 0; x < arr.length; x++) {
+    min.push(parseFloat(arr[x][0]))
+    max.push(parseFloat(arr[x][1]))
+  }
+  if (minfl.length === 0)
+    return undefined
+  return itemtype === "len" ? between(lenses.minfl, Math.min(...min), Math.max(...min)) : undefined
+}
+
+const maxflFilter = (itemtype: string, maxfl: string[]) => {
+  const arr = [];
+  const min = [];
+  const max = [];
+  for (let i = 0; i < maxfl.length; i++) {
+    arr.push(maxfl[i].toString().split("-"));
+  }
+  for (let x = 0; x < arr.length; x++) {
+    min.push(parseFloat(arr[x][0]))
+    max.push(parseFloat(arr[x][1]))
+  }
+  if (maxfl.length === 0)
+    return undefined
+  return itemtype === "len" ? between(lenses.maxfl, Math.min(...min), Math.max(...min)) : undefined
+}
 
 export async function searchAllProducts(query: string) {
   if (!query) return [];
@@ -104,13 +133,11 @@ export async function searchAllProducts(query: string) {
     .select({
       id: cameras.id,
       name: cameras.name,
-      category: sql<string>`'cam'`,
+      category: sql<string>`"cam"`,
     })
     .from(cameras)
     .where(or(
       ilike(cameras.name, q),
-      ilike(cameras.brand, q),
-      ilike(cameras.type, q)
     ))
     .limit(5);
 
@@ -118,13 +145,11 @@ export async function searchAllProducts(query: string) {
     .select({
       id: lenses.id,
       name: lenses.name,
-      category: sql<string>`'len'`,
+      category: sql<string>`"len"`,
     })
     .from(lenses)
     .where(or(
       ilike(lenses.name, q),
-      ilike(lenses.brand, q),
-      ilike(lenses.type, q)
     ))
     .limit(5);
 
@@ -132,89 +157,15 @@ export async function searchAllProducts(query: string) {
     .select({
       id: aerial.id,
       name: aerial.name,
-      category: sql<string>`'aer'`,
+      category: sql<string>`"aer"`,
     })
     .from(aerial)
     .where(or(
       ilike(aerial.name, q),
-      ilike(aerial.brand, q)
     ))
     .limit(5);
 
   return [...cams, ...lens, ...aer].slice(0, 8);
-}
-
-const resFilter = (itemtype: string, res: string[]): Filter => {
-  if (res.length === 0) return undefined;
-
-  const values = res.map(Number);
-
-  return itemtype === 'cam'
-    ? inArray(cameras.res, values)
-    : itemtype === 'aer'
-      ? inArray(aerial.res, values)
-      : undefined;
-};
-
-
-const shutterFilter = (itemtype: string, shutters: string[]) => {
-  if (shutters.length === 0)
-    return undefined
-  return itemtype === 'cam' ? inArray(cameras.shutter, shutters) : undefined
-}
-
-const megapixelFilter = (itemtype: string, megapixels: string[]) => {
-  if (megapixels.length === 0)
-    return undefined
-  return itemtype === 'cam' ? inArray(cameras.megapixels, megapixels) : undefined
-}
-
-const maxapFilter = (itemtype: string, maxap: string[]) => {
-  if (maxap.length === 0)
-    return undefined
-  //using .map because i was having issue using parseAsInt in searchParamsCache, values were null and number[] had no length
-  return itemtype === 'len' ? inArray(lenses.maxap, maxap) : undefined
-}
-
-const mountFilter = (itemtype: string, mounts: string[]): Filter => {
-  if (mounts.length === 0) return undefined;
-
-  return itemtype === 'len'
-    ? arrayOverlaps(lenses.mount, mounts)
-    : undefined;
-};
-
-
-const minflFilter = (itemtype: string, minfl: string[]) => {
-  const arr = [];
-  const min = [];
-  const max = [];
-  for (let i = 0; i < minfl.length; i++) {
-    arr.push(minfl[i].toString().split('-'));
-  }
-  for (let x = 0; x < arr.length; x++) {
-    min.push(parseFloat(arr[x][0]))
-    max.push(parseFloat(arr[x][1]))
-  }
-  if (minfl.length === 0)
-    return undefined
-  return itemtype === 'len' ? between(lenses.minfl, Math.min(...min), Math.max(...min)) : undefined
-}
-
-const maxflFilter = (itemtype: string, maxfl: string[]) => {
-  const arr = [];
-  const min = [];
-  const max = [];
-  for (let i = 0; i < maxfl.length; i++) {
-    arr.push(maxfl[i].toString().split('-'));
-  }
-  for (let x = 0; x < arr.length; x++) {
-    min.push(parseFloat(arr[x][0]))
-    max.push(parseFloat(arr[x][1]))
-  }
-  if (maxfl.length === 0)
-    return undefined
-  return itemtype === 'len' ? between(lenses.maxfl, Math.min(...min), Math.max(...min)) : undefined
 }
 
 export async function fetchCameras(filters: StoreFilters) {
@@ -227,6 +178,7 @@ export async function fetchCameras(filters: StoreFilters) {
     res,
     shutter,
     mgp,
+    mount,
   } = filters;
   const whereClause = and(
     brandFilter(category, brand),
@@ -235,7 +187,7 @@ export async function fetchCameras(filters: StoreFilters) {
     resFilter(category, res),
     shutterFilter(category, shutter),
     megapixelFilter(category, mgp),
-    searchFilter(category, search),
+    mountFilter(category, mount),
   );
   return db.select().from(cameras).where(whereClause);
 }

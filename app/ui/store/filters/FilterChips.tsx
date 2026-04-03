@@ -3,11 +3,10 @@ import { useQueryState } from "nuqs";
 import { searchParams, useFilters } from "@lib/searchParams";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { serialize } from "@lib/searchParams";
 type Size = "sm" | "md" | "lg";
 
 export function FilterChips({ sz = "sm" }: { sz?: Size }) {
-  const [{ type, brand, res, shutter, mgp, maxap, minfl, maxfl }, setFilters] =
+  const [{ type, brand, res, shutter, mgp, maxap, minfl, maxfl, mount }, setFilters] =
     useFilters();
 
   const [search, setSearch] = useQueryState(
@@ -15,7 +14,6 @@ export function FilterChips({ sz = "sm" }: { sz?: Size }) {
     searchParams.search.withOptions({ shallow: false })
   );
 
-  // 🔥 Normalize everything to arrays
   const normalize = (val: string | string[] | null | undefined) => {
     if (!val) return [];
     return Array.isArray(val) ? val : [val];
@@ -30,6 +28,7 @@ export function FilterChips({ sz = "sm" }: { sz?: Size }) {
     normalize(maxap),
     normalize(minfl),
     normalize(maxfl),
+    normalize(mount),
   ];
 
   const filterKeys = [
@@ -41,6 +40,7 @@ export function FilterChips({ sz = "sm" }: { sz?: Size }) {
     "maxap",
     "minfl",
     "maxfl",
+    "mount",
   ];
 
   const handleClose = (key: string, value: string, index: number) => {
@@ -99,4 +99,4 @@ export function FilterChips({ sz = "sm" }: { sz?: Size }) {
       </AnimatePresence>
     </motion.div>
   );
-}
+};

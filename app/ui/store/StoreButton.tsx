@@ -44,8 +44,8 @@ export default function StoreButton({
         className="object-cover"
         priority={false}
       />
-      <div className="absolute inset-0 bg-black/30" />
-      <span className="relative z-10 flex h-full w-full items-center justify-center font-mono text-2xl sm:text-3xl font-bold uppercase text-white">
+      <div className="absolute inset-0 bg-black/40" />
+      <span className="hover:scale-105 transition-transform relative z-10 flex h-full w-full items-center justify-center font-mono text-2xl sm:text-3xl font-bold uppercase text-white">
         {buttonText}
       </span>
     </button>

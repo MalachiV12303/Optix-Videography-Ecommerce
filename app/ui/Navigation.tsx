@@ -14,7 +14,6 @@ export default function Navigation() {
                 <Link href="/" className="text-4xl font-mono">
                     GLEAM
                 </Link>
-                <Searchbar />
                 <div className="ml-auto flex items-center gap-4">
                     <span className="hidden">
                         {/* <ThemeToggle /> */}
@@ -23,7 +22,7 @@ export default function Navigation() {
                 </div>
             </div>
             <div className="relative border-background">
-                <div className="flex gap-6 md:gap-12 container">
+                <div className="flex gap-6 md:gap-12 container items-end">
                     <CategoryMenu
                         label="Cameras"
                         category="cam"
@@ -112,6 +111,9 @@ export default function Navigation() {
                             },
                         ]}
                     />
+                    <span className="ml-auto">
+                        <Searchbar />
+                    </span>
                     {/* <Link
                     href={{ pathname: "/", query: { category: "acc" } }}
                     className="underline decoration-transparent hover:decoration-foreground underline-offset-4 transition-all"

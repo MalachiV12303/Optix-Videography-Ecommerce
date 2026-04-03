@@ -8,7 +8,7 @@ type Suggestion =
     | { type: "product"; label: string; id: string; category: string }
     | { type: "filter"; label: string; display: string; category: string; param: string };
 const normalize = (str: string) => str.toLowerCase().replace(/\s+/g, "");
-const MAX_SUGGESTIONS = 12;
+const MAX_SUGGESTIONS = 11;
 const categoryText: Record<string, string> = {
     cam: "Camera",
     len: "Lense",
@@ -113,15 +113,15 @@ export default function Searchbar() {
     };
 
     return (
-        <div className="relative hidden sm:flex flex-col min-w-80">
-            <div className="flex gap-2 items-center border-b border-foreground">
+        <div className="relative hidden sm:flex flex-col min-w-96 h-12">
+            <div className="flex gap-2 items-center bg-background-muted px-2 h-full">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={2}
                     stroke="currentColor"
-                    className="size-4"
+                    className="size-5"
                 >
                     <path
                         strokeLinecap="round"
@@ -133,18 +133,21 @@ export default function Searchbar() {
                 <input
                     spellCheck={false}
                     value={search}
-                    placeholder="search for products..."
-                    className="py-2 placeholder:text-foreground bg-transparent outline-none w-full"
+                    placeholder="search..."
+                    className="py-2 placeholder:text-foreground placeholder:tracking-wide uppercase bg-transparent outline-none w-full"
                     onFocus={() => setFocused(true)}
                     onBlur={() => setTimeout(() => setFocused(false), 150)}
                     onChange={(e) => setSearch(e.target.value)}
                 />
             </div>
-
-            {focused && (
-                <div className="absolute top-full mt-2 w-full bg-background-muted border-x border-t border-foreground shadow-lg z-50">
-                    {suggestions.length === 0 ? (
-                        <div className="px-3 py-3 text-sm text-foreground-muted border-b border-foreground">
+            <div className={`absolute top-full w-full bg-background-muted border-b border-x border-foreground shadow-lg z-50 overflow-hidden transition-all duration-200 ease-out
+                    ${focused
+                    ? "max-h-[80vh] opacity-100 translate-y-0"
+                    : "max-h-0 opacity-0 -translate-y-2 pointer-events-none"
+                }`}>
+                {focused && (
+                    suggestions.length === 0 ? (
+                        <div className="pointer-events-none border-t border-foreground px-3 py-3 text-sm text-foreground-muted">
                             No items match your search...
                         </div>
                     ) : (
@@ -152,20 +155,20 @@ export default function Searchbar() {
                             <button
                                 key={i}
                                 onClick={() => handleSelect(s)}
-                                className="w-full text-left px-3 py-2 flex justify-between items-center border-b border-foreground"
+                                className="group w-full text-left px-3 py-3 flex justify-between items-center border-t border-foreground"
                             >
-                                <span>{s.label}</span>
+                                <span className="group-hover:underline mr-4">{s.label}</span>
 
-                                <span className="text-sm text-foreground-muted">
+                                <span className="text-sm text-foreground-muted ">
                                     {s.type === "filter"
                                         ? "in " + s.display
                                         : categoryText[s.category] ?? s.category}
                                 </span>
                             </button>
                         ))
-                    )}
-                </div>
-            )}
+                    )
+                )}
+            </div>
         </div>
     );
 };

@@ -32,7 +32,7 @@ export default function Page() {
                         </div>
                     }
                 </div>
-                <div className="min-h-[60dvh] xl:w-1/3">
+                <div className="min-h-[60dvh] xl:w-1/3 mt-8">
                     <div className="py-2 sticky top-12 flex flex-col border border-foreground px-6">
                         <p className="py-4 text-xl font-semibold tracking-wider uppercase border-b border-foreground">Order Summary</p>
                         <div className="w-full flex mt-4">

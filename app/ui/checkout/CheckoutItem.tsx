@@ -10,10 +10,10 @@ export default function CheckoutItem({ item }: { item: CartItemType }) {
     const href = `/item?id=${item.originalId}&itemtype=${item.itemtype}`;
     const quantity = item.quantity ?? 1;
     return (
-        <div className="w-full min-h-72 px-10 py-6 flex  items-start gap-8 border-b border-foreground">
+        <div className="w-full min-h-72 px-10 pb-8 lg:py-6 flex items-start gap-8 border-b border-foreground">
             <div className="md:p-4">
                 {item.imageUrl && (
-                    <div className="relative w-32 h-32 md:w-48 md:h-48 shrink-0">
+                    <div className="relative w-24 h-32 md:w-48 md:h-48 shrink-0">
                         <Image
                             src={item.imageUrl}
                             alt={`image of ${item.name} ${item.type}`}
@@ -26,7 +26,7 @@ export default function CheckoutItem({ item }: { item: CartItemType }) {
             </div>
 
             <div className="flex-1 flex flex-col gap-4 items-end md:items-start">
-                <Link className="font-semibold uppercase hover:underline text-2xl text-end md:text-start" href={href}>
+                <Link className="font-semibold uppercase hover:underline text-xl lg:text-2xl text-end md:text-start" href={href}>
                     {item.brand} - {item.name}
                 </Link>
                 <p className="text-foreground-muted">Quantity: {quantity}</p>
@@ -54,7 +54,6 @@ export default function CheckoutItem({ item }: { item: CartItemType }) {
                             )
                         })()}
                     </div>
-                    <p className="mt-2 text-end">In Stock</p>
                     <div className="flex-1 flex flex-col items-end">
                         <button className="mt-8 w-min text-lg text-foreground underline flex items-center hover:text-primary transition-all justify-end" onClick={() => (updateItemQuantity(item.id, item.quantity ? item.quantity - 1 : 0))}><Trash2 className="size-4 inline mr-1" />Remove</button>
                     </div>

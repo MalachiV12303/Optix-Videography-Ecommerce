@@ -52,7 +52,7 @@ export default function FiltersPanel({
         {/* <div className="w-full py-4 overflow-auto no-scrollbar">
           <FilterChips sz="lg" />
         </div> */}
-        <div className="text-xl w-full lowercase overflow-x-hidden">
+        <div className="text-xl w-full overflow-x-hidden">
           <Filters it={itemtype} />
         </div>
       </PopoverContent>

@@ -77,7 +77,6 @@ export function FilterChips({ sz = "sm" }: { sz?: Size }) {
             <X size={14} className="group-hover:scale-125 transition-transform duration-200" />
           </motion.button>
         )}
-
         {filterValues.map((values, index) =>
           values.map((value) => (
             <motion.button

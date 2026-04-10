@@ -7,7 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@heroui/react";
-import { SlidersHorizontal } from "lucide-react";
+import { FilterIcon, SlidersHorizontal } from "lucide-react";
 
 type Props = {
   itemtype: string;
@@ -40,14 +40,14 @@ export default function FiltersPanel({
       <PopoverTrigger asChild>
         <Button
           variant="light"
-          className="h-8 rounded-full font-semibold bg-transparent text-foreground"
+          className="h-8 border border-foreground font-semibold bg-transparent text-foreground"
         >
-          <SlidersHorizontal size={25} className="mr-1" />
+          <FilterIcon size={22} />
         </Button>
       </PopoverTrigger>
 
       <PopoverContent
-        className={`${contentClassname ?? ""} px-4 relative max-h-[75dvh] bg-background border border-foreground mt-4 rounded-lg`}
+        className={`${contentClassname ?? ""} px-0 min-w-[65dvw] relative max-h-[75dvh] bg-background border border-foreground `}
       >
         {/* <div className="w-full py-4 overflow-auto no-scrollbar">
           <FilterChips sz="lg" />

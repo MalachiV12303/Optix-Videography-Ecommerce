@@ -42,7 +42,7 @@ export function Item({
             alt={`Image of ${item.brand} ${item.name}`}
             fill
             sizes="(max-width: 768px) 100vw, 256px"
-            className="object-contain p-4"
+            className="object-contain p-0 md:p-8 xl:p-4"
             priority={false}
           />
 

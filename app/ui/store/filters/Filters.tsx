@@ -55,7 +55,7 @@ function CameraFilters() {
       </AccordionItem>
 
       <AccordionItem key="megapixels" title={`eff. mgp ${mgp.length || ""}`}>
-        <FilterSet filters={getFilterValues("cam","mgp")} param={mgp} p="mgp" text=" megapixels" />
+        <FilterSet filters={getFilterValues("cam","mgp")} param={mgp} p="mgp" />
       </AccordionItem>
 
       <AccordionItem key="mount" title={`mount ${mount.length || ""}`}>

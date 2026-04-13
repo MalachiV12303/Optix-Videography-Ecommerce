@@ -32,7 +32,7 @@ export function Item({
     url: `${process.env.NEXT_PUBLIC_BLOB_BASE_URL}/items/${item.id}.webp`
   };
   return (
-    <div className="group relative h-full flex flex-col gap-6 px-6 py-8 border border-foreground-muted bg-background transition">
+    <div className="group relative h-full flex flex-col gap-6 px-2 py-3 sm:px-6 sm:py-8 border border-foreground-muted bg-background transition">
       <Link
         href={`/item?${params}`}
         className="relative self-center w-full md:w-64 aspect-square shrink-0"
@@ -42,7 +42,7 @@ export function Item({
             alt={`Image of ${item.brand} ${item.name}`}
             fill
             sizes="(max-width: 768px) 100vw, 256px"
-            className="object-contain p-0 md:p-8 xl:p-4"
+            className="object-contain p-1 md:p-8 xl:p-4"
             priority={false}
           />
 
@@ -50,7 +50,7 @@ export function Item({
       <div className="flex-1">
         <Link
           href={`/item?${params}`}
-          className="block text-lg sm:text-2xl font-semibold hover:underline"
+          className="block text-base sm:text-2xl font-semibold hover:underline"
         >
           {item.brand} {item.name}{" "}
           {isCamera(item)
@@ -59,7 +59,7 @@ export function Item({
               : "Mirrorless Camera"
             : null}
         </Link>
-        <p className="text-2xl mt-2">${formattedValue}</p>
+        <p className="text-lg sm:text-2xl mt-2">${formattedValue}</p>
         {/* {!isLense(item) && (
           <p className="hidden md:block mt-4 text-base">
             {item.description}

@@ -34,8 +34,8 @@ export async function Store({ searchParams }: PageProps) {
 
       <section id="storeContent">
         <div className="grid grid-cols-9">
-          <div className="col-span-9 sticky top-0 z-40 bg-background border-b border-foreground">
-            <div className="grid grid-cols-9 items-center py-2">
+          <div className="col-span-9 sticky top-0 pt-2 z-40 bg-background border-b border-foreground">
+            <div className="grid grid-cols-9 items-center">
               <div className="col-span-7 lg:col-span-2 pl-4 py-2">
                 <span className="text-xl text-nowrap">
                   {count === 0 ? "0 found..." : `${count} items found`}

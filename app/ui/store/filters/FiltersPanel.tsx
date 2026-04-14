@@ -40,7 +40,7 @@ export default function FiltersPanel({
       <PopoverTrigger asChild>
         <Button
           variant="light"
-          className="h-8 border border-foreground font-semibold bg-transparent text-foreground"
+          className="h-8 font-semibold bg-primary text-background"
         >
           <FilterIcon size={22} />
         </Button>

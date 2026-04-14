@@ -15,7 +15,7 @@ const mono = Gilda_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Gleam | Videography Market ",
+  title: "Optix | Videography Market ",
   description: "Mock Videography Marketplace",
 };
 

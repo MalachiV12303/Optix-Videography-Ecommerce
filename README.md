@@ -1,5 +1,5 @@
-## Gleam Store - Mock Videography Market (Full-Stack Development)  
-https://gleamstore.vercel.app  
+## Optix Store - Mock Videography Market (Full-Stack Development)  
+https://optixstore.vercel.app  
 ### Demonstrates understanding of the following technologies/concepts:  
 - Responsive Design  
 - HTML and CSS  

@@ -26,42 +26,36 @@ export async function Store({ searchParams }: PageProps) {
 
   return (
     <div className="w-full min-h-screen mb-24">
-      <section className="w-full flex flex-col md:flex-row py-12 gap-4 lg:gap-8">
+      <section className="flex flex-col md:flex-row py-12 gap-4 lg:gap-8">
         <StoreButton buttonText="cameras" category="cam" imgSrc="/cameraButton.jpg" />
         <StoreButton buttonText="lenses" category="len" imgSrc="/lenseButton.jpg" />
         <StoreButton buttonText="aerial" category="aer" imgSrc="/droneButton.jpg" />
       </section>
 
-      <section id="storeContent">
-        <div className="grid grid-cols-9">
-          <div className="col-span-9 sticky top-0 pt-2 z-40 bg-background border-b border-foreground">
-            <div className="grid grid-cols-9 items-center">
-              <div className="col-span-7 lg:col-span-2 pl-4 py-2">
-                <span className="text-xl text-nowrap">
-                  {count === 0 ? "0 found..." : `${count} items found`}
-                </span>
-              </div>
-              <div className="hidden lg:flex lg:pl-4 col-span-7 items-center">
-                <FilterChips sz="md" />
-              </div>
-              <div className="ml-auto flex lg:hidden pr-4">
-                <FiltersPanel
-                  contentClassname="w-full"
-                  itemtype={filters.category}
-                  type="mobile"
-                />
-              </div>
-            </div>
+      <section id="storeContent" className="grid grid-cols-9">
+        <div className="col-span-9 sticky top-0 z-40 bg-background border-b border-foreground flex items-center px-4 py-2">
+          <span className="text-xl whitespace-nowrap">
+            {count === 0 ? "0 found..." : `${count} items found`}
+          </span>
+          <div className="hidden lg:flex ml-6 flex-1">
+            <FilterChips sz="md" />
           </div>
-          <div className="hidden lg:block col-span-2 border-r border-foreground">
-            <div className="sticky top-[60px]">
-              <FiltersPanel itemtype={filters.category} type="desktop" />
-            </div>
-          </div>
-          <div className="col-span-9 lg:col-span-7">
-            <ItemsPanel items={items} />
+          <div className="ml-auto lg:hidden">
+            <FiltersPanel
+              contentClassname="w-full"
+              itemtype={filters.category}
+              type="mobile"
+            />
           </div>
         </div>
+        <aside className="hidden lg:block col-span-2 border-r border-foreground">
+          <div className="sticky top-10 p-2">
+            <FiltersPanel itemtype={filters.category} type="desktop" />
+          </div>
+        </aside>
+        <main className="col-span-9 lg:col-span-7">
+          <ItemsPanel items={items} />
+        </main>
       </section>
     </div>
   );

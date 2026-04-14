@@ -25,7 +25,7 @@ export default function Page() {
                         <CheckoutItem key={index} item={item} />
                     )) :
                         <div className="flex flex-col gap-4 w-full min-h-72 px-8 py-6 border-b border-foreground">
-                                <p className="font-semibold uppercase hover:underline text-2xl text-end md:text-start">
+                                <p className="font-semibold uppercase hover:underline text-2xl text-start">
                                     Empty Cart
                                 </p>
                                 <p className="text-foreground-muted">Looks like you haven't added anything to your cart yet.</p>
@@ -58,7 +58,7 @@ export default function Page() {
                                 type="text"
                                 id="promo-code"
                                 placeholder="Enter promo code"
-                                className="flex-1 px-4 py-2 bg-background border border-foreground focus:ring-2 focus:ring-primary focus:outline-none"
+                                className="min-w-0 flex-1 px-4 py-2 bg-background border border-foreground focus:ring-2 focus:ring-primary focus:outline-none"
                             />
                             <button className="ml-2 px-4 bg-primary hover:bg-primary-muted text-background transition-all">Apply</button>
                         </div>

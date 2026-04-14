@@ -32,7 +32,7 @@ export function Item({
     url: `${process.env.NEXT_PUBLIC_BLOB_BASE_URL}/items/${item.id}.webp`
   };
   return (
-    <div className="group relative h-full flex flex-col gap-6 px-2 py-3 sm:px-6 sm:py-8 border border-foreground-muted bg-background transition">
+    <div className="group relative h-full flex flex-col gap-6 px-3 py-3 sm:px-6 sm:py-8 border border-foreground-muted bg-background transition">
       <Link
         href={`/item?${params}`}
         className="relative self-center w-full md:w-64 aspect-square shrink-0"
@@ -72,7 +72,7 @@ export function Item({
             <Link
               scroll
               href="/checkout"
-              className="text-nowrap flex-1 text-center bg-primary hover:bg-primary-muted sm:text-lg px-4 py-2 transition-all duration-300"
+              className="uppercase font-semibold text-nowrap flex-1 text-center bg-primary hover:bg-primary-muted sm:text-lg px-4 py-2 transition-all duration-300"
             >
               View in Cart
             </Link>
@@ -99,7 +99,7 @@ export function Item({
           </div>
         ) : (
           <button
-            className="sm:text-lg w-full bg-primary hover:bg-primary-muted text-background mt-8 sm:mt-0 px-4 py-2 transition-all duration-300"
+            className="uppercase sm:text-lg w-full bg-primary hover:bg-primary-muted text-background mt-8 sm:mt-0 px-4 py-2 transition-all duration-300"
             onClick={() => {
               open(
                 createCartItem({

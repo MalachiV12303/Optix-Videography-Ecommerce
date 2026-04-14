@@ -94,7 +94,7 @@ function LandingScene({ props, foreground }: { props?: ThreeElements["mesh"], fo
       <mesh {...props} scale={scale} ref={textRef}>
         <Center>
           <Text3D font={"/Cinzel_Regular.json"}>
-            gleam
+            OPTIX
             <meshStandardMaterial color={foreground} />
           </Text3D>
         </Center>

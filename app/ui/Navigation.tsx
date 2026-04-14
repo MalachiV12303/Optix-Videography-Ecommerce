@@ -12,8 +12,8 @@ export default function Navigation() {
     return (
         <nav className="bg-background-muted text-foreground z-50 w-full sm:px-0 border-b border-foreground">
             <div className="h-20 sm:h-24 container flex items-center gap-12 w-full">
-                <Link href="/" className="text-4xl font-mono">
-                    GLEAM
+                <Link href="/" className="text-3xl sm:text-4xl font-mono">
+                    OPTIX
                 </Link>
                 <div className="ml-auto flex items-center gap-4">
                     <span className="hidden"></span>

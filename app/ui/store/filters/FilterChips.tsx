@@ -1,52 +1,59 @@
 "use client";
-import { useQueryState } from "nuqs";
-import { searchParams, useFilters } from "@lib/searchParams";
+import { useMemo } from "react";
+import { useFilters } from "@lib/searchParams";
+import { filterMap } from "@lib/utils";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+
 type Size = "sm" | "md" | "lg";
 
-export function FilterChips({ sz = "sm" }: { sz?: Size }) {
-  const [{ type, brand, res, shutter, mgp, maxap, minfl, maxfl, mount }, setFilters] =
-    useFilters();
-
-  const [search, setSearch] = useQueryState(
-    "search",
-    searchParams.search.withOptions({ shallow: false })
+const isStringArrayOrString = (
+  val: unknown
+): val is string | string[] | null | undefined => {
+  return (
+    val == null ||
+    typeof val === "string" ||
+    (Array.isArray(val) && typeof val[0] === "string")
   );
+};
 
-  const normalize = (val: string | string[] | null | undefined) => {
+export function FilterChips({ sz = "sm" }: { sz?: Size }) {
+  const [filters, setFilters] = useFilters();
+
+  const excluded = new Set(["category", "price", "search", "id"]);
+
+  const normalize = (
+    val: string | string[] | null | undefined
+  ): string[] => {
     if (!val) return [];
     return Array.isArray(val) ? val : [val];
   };
 
-  const filterValues = [
-    normalize(type),
-    normalize(brand),
-    normalize(res),
-    normalize(shutter),
-    normalize(mgp),
-    normalize(maxap),
-    normalize(minfl),
-    normalize(maxfl),
-    normalize(mount),
-  ];
-
-  const filterKeys = [
-    "type",
-    "brand",
-    "res",
-    "shutter",
-    "mgp",
-    "maxap",
-    "minfl",
-    "maxfl",
-    "mount",
-  ];
-
-  const handleClose = (key: string, value: string, index: number) => {
-    setFilters({
-      [key]: filterValues[index].filter((item) => item !== value),
+  const lookup = useMemo(() => {
+    const map = new Map<string, string>();
+    filterMap.forEach((f) => {
+      f.values.forEach((v) => {
+        map.set(`${f.param}:${v.value}`, v.label);
+      });
     });
+    return map;
+  }, []);
+
+  const getLabel = (param: string, value: string) => {
+    return lookup.get(`${param}:${value}`) ?? value;
+  };
+
+  const handleClose = (param: string, value: string) => {
+    const raw = filters[param as keyof typeof filters];
+
+    if (Array.isArray(raw)) {
+      setFilters({
+        [param]: raw.filter((v) => v !== value),
+      });
+      return;
+    }
+
+    setFilters({ [param]: null });
   };
 
   const sizeStyles = {
@@ -61,40 +68,28 @@ export function FilterChips({ sz = "sm" }: { sz?: Size }) {
   return (
     <motion.div layout className="flex flex-wrap lowercase gap-2 my-auto">
       <AnimatePresence>
-        {search && (
-          <motion.button
-            key="search-chip"
-            layout
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.2 }}
-            type="button"
-            onClick={() => setSearch(null)}
-            className={`${chipBase} ${sizeStyles[sz]}`}
-          >
-            <span>search: {search}</span>
-            <X size={14} className="group-hover:scale-125 transition-transform duration-200" />
-          </motion.button>
-        )}
-        {filterValues.map((values, index) =>
-          values.map((value) => (
-            <motion.button
-              key={filterKeys[index] + value}
-              layout
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.2 }}
-              type="button"
-              onClick={() => handleClose(filterKeys[index], value, index)}
-              className={`${chipBase} ${sizeStyles[sz]}`}
-            >
-              <span>{value}</span>
-              <X size={14} className="group-hover:scale-125 transition-transform duration-200" />
-            </motion.button>
-          ))
-        )}
+        {Object.entries(filters)
+          .filter(([param]) => !excluded.has(param))
+          .flatMap(([param, raw]) => {
+            if (!isStringArrayOrString(raw)) return [];
+
+            return normalize(raw).map((value) => (
+              <motion.button
+                key={param + value}
+                layout
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.2 }}
+                type="button"
+                onClick={() => handleClose(param, value)}
+                className={`${chipBase} ${sizeStyles[sz]}`}
+              >
+                <span>{getLabel(param, value)}</span>
+                <X size={14} className="group-hover:scale-125 transition-transform duration-200" />
+              </motion.button>
+            ));
+          })}
       </AnimatePresence>
     </motion.div>
   );

@@ -88,17 +88,17 @@ export default function ItemPage({ item, category, image }: ItemProps) {
             </div>
 
             <div className="border-t border-foreground">
-                <div className="sticky top-0 z-40 bg-background-muted border-b border-foreground backdrop-blur">
+                <div className="sticky top-0 z-40 bg-background border-b border-foreground backdrop-blur">
                     <div className="container flex gap-8 py-4 text-lg">
                         <a href="#overview" className="hover:underline">Overview</a>
                         <a href="#specs" className="hover:underline">Specifications</a>
-                        <a href="#compatibility" className="hover:underline">Compatibility</a>
+                        {/* <a href="#compatibility" className="hover:underline">Compatibility</a> */}
                         <a href="#reviews" className="hover:underline">Reviews</a>
                         <a href="#support" className="hover:underline">Support</a>
                     </div>
                 </div>
 
-                <section id="overview" className="container py-24">
+                <section id="overview" className="container py-16">
                     <h2 className="text-3xl font-semibold mb-6">Overview</h2>
                     <div className="grid md:grid-cols-2 gap-12 items-start">
                         <div className="space-y-4 text-foreground-muted leading-relaxed">
@@ -143,9 +143,9 @@ export default function ItemPage({ item, category, image }: ItemProps) {
                             )}
                         </div>
 
-                        <div className="bg-background-muted border border-foreground p-6 space-y-4">
+                        <div className="bg-background border border-foreground p-6 space-y-4">
                             <h3 className="font-semibold text-lg">Key Highlights</h3>
-                            <ul className="space-y-2 text-sm">
+                            <ul className="space-y-2">
                                 {category === "cam" && (
                                     <>
                                         <li>• High-resolution {(item as Camera).megapixels}MP image sensor</li>
@@ -178,7 +178,7 @@ export default function ItemPage({ item, category, image }: ItemProps) {
                     </div>
                 </section>
 
-                <section id="specs" className="container py-24 border-t border-foreground">
+                <section id="specs" className="container py-16 border-t border-foreground">
                     <h2 className="text-3xl font-semibold mb-10">Specifications</h2>
                     <div className="grid md:grid-cols-2 gap-x-16 gap-y-8 text-sm">
                         <Spec label="Brand" value={(item as any).brand} />
@@ -207,16 +207,17 @@ export default function ItemPage({ item, category, image }: ItemProps) {
                     </div>
                 </section>
 
-                <section id="reviews" className="container py-24 border-t border-foreground">
+                <section id="reviews" className="container py-16 border-t border-foreground">
                     <h2 className="text-3xl font-semibold mb-10">Customer Reviews</h2>
-                    <div className="space-y-8 max-w-3xl">
-                        <Review name="Alex M." rating={5} text="Excellent product quality and performance." />
+                    <div className="grid grid-cols-2 gap-8">
+                        <Review name="Skai W." rating={5} text="Excellent product quality and performance." />
                         <Review name="Jordan R." rating={4} text="Very solid and reliable. Minor improvements possible." />
-                        <Review name="Taylor K." rating={5} text="Professional results and easy to use." />
+                        <Review name="Alice F." rating={5} text="Professional results and easy to use." />
+                        <Review name="Taylor K." rating={5} text="Exactly what I wanted." />
                     </div>
                 </section>
 
-                <section id="support" className="container py-24 border-t border-foreground mb-24">
+                <section id="support" className="container py-16 border-t border-foreground mb-24">
                     <h2 className="text-3xl font-semibold mb-10">Support</h2>
                     <div className="grid md:grid-cols-3 gap-8 text-sm">
                         <SupportCard title="Warranty" text="Standard 1-year manufacturer warranty." />
@@ -240,12 +241,12 @@ function Spec({ label, value }: { label: string; value: string | number }) {
 
 function Review({ name, rating, text }: { name: string; rating: number; text: string }) {
     return (
-        <div className="border border-foreground p-6 space-y-3">
+        <div className="border border-foreground p-6 space-y-3 group">
             <div className="flex justify-between items-center">
                 <span className="font-semibold">{name}</span>
                 <span className="text-sm">{"★".repeat(rating)}{"☆".repeat(5 - rating)}</span>
             </div>
-            <p className="text-foreground-muted">{text}</p>
+            <p className="text-foreground-muted group-hover:text-foreground transition-colors">{text}</p>
         </div>
     );
 };
@@ -253,7 +254,7 @@ function Review({ name, rating, text }: { name: string; rating: number; text: st
 function SupportCard({ title, text }: { title: string; text: string }) {
     return (
         <div className="border border-foreground p-6 space-y-2">
-            <h3 className="font-semibold">{title}</h3>
+            <h3 className="font-semibold hover:underline cursor-pointer">{title}</h3>
             <p className="text-foreground-muted">{text}</p>
         </div>
     );

@@ -24,7 +24,7 @@ export default function Navigation() {
                 <div className="flex gap-6 md:gap-12 container items-end">
                     <CategoryMenu label="Cameras" category="cam" params={["brand","res","type"]} />
                     <CategoryMenu label="Lenses" category="len" params={["brand","type","mount"]} />
-                    <CategoryMenu label="Aerial" category="aer" params={["brand"]} />
+                    <CategoryMenu label="Aerial" category="aer" params={["brand", "type", "distance", "altitude"]} />
                     <span className="ml-auto">
                         <Searchbar />
                     </span>

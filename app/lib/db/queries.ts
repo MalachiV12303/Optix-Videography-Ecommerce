@@ -11,6 +11,21 @@ type SliderValue = number | [number, number];
 const DEFAULT_MIN_PRICE = 0;
 const DEFAULT_MAX_PRICE = 2500;
 
+const parseRange = (values: string[]) => {
+  if (values.length === 0) return null;
+  const mins: number[] = [];
+  const maxs: number[] = [];
+  for (const val of values) {
+    const [min, max] = val.split("-").map(Number);
+    mins.push(min);
+    maxs.push(max);
+  }
+  return {
+    min: Math.min(...mins),
+    max: Math.max(...maxs),
+  };
+};
+
 const priceFilter = (itemtype: string, price: SliderValue): Filter => {
   if (!Array.isArray(price)) return undefined;
 
@@ -124,6 +139,33 @@ const maxflFilter = (itemtype: string, maxfl: string[]) => {
   return itemtype === "len" ? between(lenses.maxfl, Math.min(...min), Math.max(...min)) : undefined
 }
 
+const distanceFilter = (itemtype: string, distance: string[]): Filter => {
+  const range = parseRange(distance);
+  if (!range) return undefined;
+
+  return itemtype === "aer"
+    ? between(aerial.distance, range.min, range.max)
+    : undefined;
+}
+
+const altitudeFilter = (itemtype: string, altitude: string[]): Filter => {
+  const range = parseRange(altitude);
+  if (!range) return undefined;
+
+  return itemtype === "aer"
+    ? between(aerial.altitude, range.min, range.max)
+    : undefined;
+}
+
+const timeFilter = (itemtype: string, time: string[]): Filter => {
+  const range = parseRange(time);
+  if (!range) return undefined;
+
+  return itemtype === "aer"
+    ? between(aerial.time, range.min, range.max)
+    : undefined;
+}
+
 export async function searchAllProducts(query: string) {
   if (!query) return [];
 
@@ -206,12 +248,15 @@ export async function fetchLenses(filters: StoreFilters) {
 }
 
 export async function fetchAerial(filters: StoreFilters) {
-  const { type, brand, price, category } = filters;
+  const { type, brand, price, category, res } = filters;
   const whereClause = and(
     brandFilter(category, brand),
     typeFilter(category, type),
     priceFilter(category, price),
-
+    resFilter(category, res),
+    distanceFilter(category, filters.distance),
+    altitudeFilter(category, filters.altitude),
+    timeFilter(category, filters.time),
   );
   return db.select().from(aerial).where(whereClause);
 }

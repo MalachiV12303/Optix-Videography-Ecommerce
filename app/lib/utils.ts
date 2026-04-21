@@ -174,7 +174,43 @@ export const filterMap = [
     values: [
       { label: "DJI", value: "DJI" },
       { label: "Snaptain", value: "Snaptain" },
-      { label: "Contixo", value: "Contixo" }
+      { label: "Contixo", value: "Contixo" },
+      { label: "SKYROVER", value: "SKYROVER" }
+    ],
+  },
+  {
+    category: "aer",
+    param: "altitude",
+    values: [
+      { label: "1000- meters", value: "0-1000" },
+      { label: "1000-1500 meters", value: "1000-1500" },
+      { label: "1500-2000 meters", value: "1500-2000" },
+      { label: "2000-2500 meters", value: "2000-2500" },
+      { label: "2500-3000 meters", value: "2500-3000" },
+      { label: "3000+ meters", value: "3000-10000" }
+    ],
+  },
+  {
+    category: "aer",
+    param: "time",
+    values: [
+      { label: "15- minutes", value: "0-15" },
+      { label: "15-20 minutes", value: "15-20" },
+      { label: "20-25 minutes", value: "20-25" },
+      { label: "25-30 minutes", value: "25-30" },
+      { label: "30-40 minutes", value: "30-40" },
+      { label: "40+ minutes", value: "40-1000" }
+    ],
+  },
+  {
+    category: "aer",
+    param: "distance",
+    values: [
+      { label: "Less than 2 miles", value: "0-2" },
+      { label: "2-4 miles", value: "2-4" },
+      { label: "4-6 miles", value: "4-6" },
+      { label: "8-10 miles", value: "8-10" },
+      { label: "10+ miles", value: "10-1000" }
     ],
   }
 ];

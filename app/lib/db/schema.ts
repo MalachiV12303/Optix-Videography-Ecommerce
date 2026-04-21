@@ -40,9 +40,9 @@ export const aerial = pgTable("aerial", {
 	brand: varchar({ length: 20 }).notNull(),
 	price: numeric({ precision: 19, scale:  2 }).$type<number>().notNull(),
 	description: text(),
-	time: varchar({ length: 20 }).notNull(),
+	time: integer().notNull(),
 	res: integer().default(0).notNull(),
-	distance: varchar({ length: 20 }).notNull(),
-	altitude: varchar({ length: 20 }).notNull(),
+	distance: numeric({ precision: 4, scale:  2 }).$type<number>().notNull(),
+	altitude: integer().notNull(),
 	type: text().array(),
 });

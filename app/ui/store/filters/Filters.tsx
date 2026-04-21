@@ -102,10 +102,10 @@ function LenseFilters() {
 }
 
 function AerialFilters() {
-  const [{ type, brand }] = useFilters();
+  const [{ type, brand, distance, altitude, time }] = useFilters();
 
   return (
-    <Accordion className="px-0" itemClasses={accordionItemClasses} selectionMode="multiple" showDivider={false} isCompact defaultExpandedKeys={["price","type","brand"]}>
+    <Accordion className="px-0" itemClasses={accordionItemClasses} selectionMode="multiple" showDivider={false} isCompact defaultExpandedKeys={["price","type","brand", "distance"]}>
       <AccordionItem key="price" title="price">
         <PriceSlider min={0} max={2500}/>
       </AccordionItem>
@@ -116,6 +116,18 @@ function AerialFilters() {
 
       <AccordionItem key="brand" title={`brand ${brand.length || ""}`}>
         <FilterSet containerClassname="grid grid-cols-2" filters={getFilterValues("aer","brand")} param={brand} p="brand" />
+      </AccordionItem>
+
+      <AccordionItem key="distance" title={`distance ${distance.length || ""}`}>
+        <FilterSet filters={getFilterValues("aer","distance")} param={distance} p="distance" />
+      </AccordionItem>
+
+      <AccordionItem key="altitude" title={`altitude ${altitude.length || ""}`}>
+        <FilterSet filters={getFilterValues("aer","altitude")} param={altitude} p="altitude" />
+      </AccordionItem>
+
+      <AccordionItem key="time" title={`time ${time.length || ""}`}>
+        <FilterSet filters={getFilterValues("aer","time")} param={time} p="time" />
       </AccordionItem>
     </Accordion>
   );

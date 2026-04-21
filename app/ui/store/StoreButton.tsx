@@ -35,6 +35,9 @@ export default function StoreButton({
         md:aspect-[16/5]
         lg:aspect-[6/1]
         grayscale
+        hover:grayscale-0
+        transition-all
+        group
       "
     >
       <Image
@@ -42,11 +45,11 @@ export default function StoreButton({
         alt={buttonText}
         fill
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        className="object-cover"
+        className="object-cover group-hover:scale-105 transition-transform"
         priority={false}
       />
       <div className="absolute inset-0 bg-black/40" />
-      <span className="hover:scale-105 transition-transform relative z-10 flex h-full w-full items-center justify-center font-mono text-2xl sm:text-3xl font-semibold uppercase text-white">
+      <span className="transition-transform relative z-10 flex h-full w-full items-center justify-center text-2xl sm:text-3xl font-mono font-semibold uppercase text-white">
         {buttonText}
       </span>
     </button>

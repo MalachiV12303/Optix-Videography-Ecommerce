@@ -38,8 +38,8 @@ export default function ItemPage({ item, category, image }: ItemProps) {
     return (
         <section className="flex flex-col">
             {/* <div className="py-4 container">Home / {(item as any).brand} {(item as any).name}</div> */}
-            <div className="container flex gap-8 items-start mb-16 mt-8">
-                <div className="flex-1 border border-foreground h-[70vh] flex items-center justify-center p-32">
+            <div className="container flex flex-col sm:flex-row gap-8 items-start mb-16 mt-8">
+                <div className="sm:flex-1 border border-foreground w-full h-[35vh] sm:h-[50vh] md:h-[70vh] flex items-center justify-center p-8 lg:p-32">
                     {image ? (
                         <div className="relative w-full h-full">
                             <Image
@@ -54,7 +54,7 @@ export default function ItemPage({ item, category, image }: ItemProps) {
                     )}
                 </div>
 
-                <div className="w-full md:w-[45%] lg:w-[35%] sticky top-24">
+                <div className="w-full sm:w-[45%] lg:w-[35%] sticky top-24">
                     <div className="border border-foreground p-6 flex flex-col gap-4">
                         {isCamera && (() => {
                             switch ((item as Camera).brand) {
@@ -73,7 +73,7 @@ export default function ItemPage({ item, category, image }: ItemProps) {
                                 <Checkmark className="ml-2 inline-block" width={12} height={12} />
                             </span>
                         </div>
-                        <div className="flex justify-between items-center">
+                        <div className="flex flex-col gap-2 md:gap-0 md:flex-row md:justify-between md:items-center">
                             <p className="text-3xl font-semibold">${(item as any).price}</p>
                             <button
                                 onClick={() => open(cartItem)}

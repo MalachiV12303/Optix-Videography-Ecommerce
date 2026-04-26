@@ -2,9 +2,10 @@
 import Link from "next/link";
 import Searchbar from "@ui/Searchbar";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { defaultFilters, useFilters } from "../lib/searchParams";
 import { getCategoryFilters } from "@lib/utils";
+import { useEffect, useRef } from "react";
 
 const Cart = dynamic(() => import("../Cart"), { ssr: false });
 
@@ -22,8 +23,8 @@ export default function Navigation() {
             </div>
             <div className="relative border-background">
                 <div className="flex gap-6 md:gap-12 container items-end">
-                    <CategoryMenu label="Cameras" category="cam" params={["brand","res","type"]} />
-                    <CategoryMenu label="Lenses" category="len" params={["brand","type","mount"]} />
+                    <CategoryMenu label="Cameras" category="cam" params={["brand", "res", "type"]} />
+                    <CategoryMenu label="Lenses" category="len" params={["brand", "type", "mount"]} />
                     <CategoryMenu label="Aerial" category="aer" params={["brand", "type", "distance", "altitude"]} />
                     <span className="ml-auto">
                         <Searchbar />
@@ -45,24 +46,63 @@ function CategoryMenu({
 }) {
     const router = useRouter();
     const [, setFilters] = useFilters();
+    const pathname = usePathname();
 
     const filters = getCategoryFilters(category).filter(f =>
         params.includes(f.param)
     );
+    
+    const pendingFilterRef = useRef<null | {
+        category: string;
+        filter: string;
+        value: string;
+    }>(null);
+
     const handleClick = (filter: string, value: string) => {
+        const payload = {
+            category,
+            filter,
+            value,
+        };
+        if (pathname === "/") {
+            setFilters({
+                category,
+                ...defaultFilters,
+                [filter]: [value],
+            });
+            document
+                .getElementById("storeContent")
+                ?.scrollIntoView({ behavior: "smooth" });
+
+            return;
+        }
+        // navigating from another page → defer until route change
+        pendingFilterRef.current = payload;
         router.push("/");
-        setTimeout(() => {
+    };
+    useEffect(() => {
+        if (pathname !== "/") return;
+        if (!pendingFilterRef.current) return;
+
+        const { category, filter, value } = pendingFilterRef.current;
+
+        const timeout = setTimeout(() => {
             setFilters({
                 category,
                 ...defaultFilters,
                 [filter]: [value],
             });
 
-            document
-                .getElementById("storeContent")
-                ?.scrollIntoView({ behavior: "smooth" });
-        }, 150);
-    };
+            requestAnimationFrame(() => {
+                document
+                    .getElementById("storeContent")
+                    ?.scrollIntoView({ behavior: "smooth" });
+            });
+
+            pendingFilterRef.current = null;
+        }, 50); // small buffer for render completion
+        return () => clearTimeout(timeout);
+    }, [pathname]);
     return (
         <div className="group uppercase">
             <div className="h-12 flex items-center">

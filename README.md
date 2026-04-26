@@ -6,7 +6,7 @@ A full-stack mock ecommerce platform for cameras, lenses, and drones. Built to p
 
 ## Key Features
 - Product listings backed by PostgreSQL and managed with Drizzle ORM  
-- Debounced search to efficiently filter products  [See File](/app/ui/SearchBar.tsx)
+- Debounced search to efficiently filter products  [See File](/app/ui/Searchbar.tsx)
 - Shopping cart state management using react-use-cart  [See File](/app/Cart.tsx)
 - Interactive 3D landing elements built with Three.js  [See File](/app/ui/LandingDrei.tsx)
 

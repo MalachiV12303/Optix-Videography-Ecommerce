@@ -73,7 +73,7 @@ function CategoryMenu({
             <div className="absolute left-0 top-full w-full opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-40">
                 <div className="bg-background-muted border-t border-foreground shadow-lg">
                     <div className="container py-6">
-                        <div className="flex gap-6 md:gap-12">
+                        <div className="flex flex-wrap gap-6 md:gap-12">
                             {filters.map((item) => (
                                 <div key={item.param} className="flex flex-col gap-4">
                                     <h2 className="font-semibold">

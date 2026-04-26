@@ -89,7 +89,7 @@ export default function ItemPage({ item, category, image }: ItemProps) {
 
             <div className="border-t border-foreground">
                 <div className="sticky top-0 z-40 bg-background border-b border-foreground backdrop-blur">
-                    <div className="container flex gap-8 py-4 text-lg">
+                    <div className="container flex flex-wrap items-center gap-8 py-4 text-lg">
                         <a href="#overview" className="hover:underline">Overview</a>
                         <a href="#specs" className="hover:underline">Specifications</a>
                         {/* <a href="#compatibility" className="hover:underline">Compatibility</a> */}

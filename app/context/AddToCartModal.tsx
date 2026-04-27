@@ -62,10 +62,13 @@ export default function AddToCartModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm pointer-events-none"
-      />
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      onPointerDown={(e) => {
+        if (e.target === e.currentTarget) handleClose();
+      }}
+    >
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm pointer-events-none" />
       <div className="border-foreground relative z-10 pointer-events-auto w-[90%] max-w-[45rem] rounded-lg bg-background px-8 py-8 shadow-2xl animate-in fade-in zoom-in-95">
         <button
           onClick={handleClose}
@@ -118,6 +121,7 @@ export default function AddToCartModal() {
                 <span>${formatCurrency(protection2yr)}</span>
               </div>
             </button>
+            
             <button
               onPointerUp={() => handleSelect("3yr")}
               className={`border border-foreground p-4 text-left transition-all duration-150 active:scale-[0.97] active:bg-primary-muted ${

@@ -64,13 +64,13 @@ export default function AddToCartModal() {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-        onClick={handleClose}
+        className="absolute inset-0 bg-black/40 backdrop-blur-sm pointer-events-none"
       />
-      <div className="border-foreground relative z-10 w-[90%] max-w-[45rem] rounded-lg bg-background px-8 py-8 shadow-2xl animate-in fade-in zoom-in-95">
+      <div className="border-foreground relative z-10 pointer-events-auto w-[90%] max-w-[45rem] rounded-lg bg-background px-8 py-8 shadow-2xl animate-in fade-in zoom-in-95">
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 text-xl hover:scale-125 transition"
+          className="absolute top-4 right-4 text-xl transition active:scale-90"
+          type="button"
         >
           ✕
         </button>
@@ -95,7 +95,7 @@ export default function AddToCartModal() {
           </div>
 
           <div className="flex-1 flex justify-end">
-            <Link onClick={handleClose} className="text-nowrap hidden sm:block h-min text-lg px-4 py-2 bg-primary hover:bg-primary-muted text-background transition-all duration-300" href="/checkout">
+            <Link onClick={handleClose} className="text-nowrap hidden sm:block h-min text-lg px-4 py-2 bg-primary hover:bg-primary-muted active:bg-primary-muted text-background transition-all duration-200 active:scale-95" href="/checkout">
               View Cart
             </Link>
           </div>
@@ -105,12 +105,13 @@ export default function AddToCartModal() {
           <p className="font-medium mb-4">Add Protection Plan?</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <button
-              onClick={() => handleSelect("2yr")}
-              className={`border border-foreground p-4 text-left transition-all duration-300 ${
+              onPointerUp={() => handleSelect("2yr")}
+              className={`border border-foreground p-4 text-left transition-all duration-150 active:scale-[0.97] active:bg-primary-muted ${
                 selectedPlan === "2yr"
-                  ? "border-primary bg-primary text-background"
+                  ? "border-primary bg-primary text-background hover:bg-primary-muted"
                   : "border-foreground hover:bg-primary hover:border-transparent hover:text-background"
               }`}
+              type="button"
             >
               <div className="flex justify-between items-center">
                 <span className="font-medium">2 Year Protection</span>
@@ -118,12 +119,13 @@ export default function AddToCartModal() {
               </div>
             </button>
             <button
-              onClick={() => handleSelect("3yr")}
-              className={`border border-foreground p-4 text-left transition-all duration-300 ${
+              onPointerUp={() => handleSelect("3yr")}
+              className={`border border-foreground p-4 text-left transition-all duration-150 active:scale-[0.97] active:bg-primary-muted ${
                 selectedPlan === "3yr"
-                  ? "border-primary bg-primary text-background"
+                  ? "border-primary bg-primary text-background hover:bg-primary-muted"
                   : "border-foreground hover:bg-primary hover:border-transparent hover:text-background"
               }`}
+              type="button"
             >
               <div className="flex justify-between items-center">
                 <span className="font-medium">3 Year Protection</span>
@@ -135,7 +137,7 @@ export default function AddToCartModal() {
 
         <Link
           onClick={handleClose}
-          className="text-nowrap mt-8 block sm:hidden h-min text-lg text-center py-2 bg-primary hover:bg-primary-muted text-background transition-all duration-300"
+          className="text-nowrap mt-8 block sm:hidden h-min text-lg text-center py-2 bg-primary hover:bg-primary-muted active:bg-primary-muted text-background transition-all duration-200 active:scale-95"
           href="/checkout"
         >
           View Cart & Checkout

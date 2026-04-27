@@ -72,13 +72,13 @@ export function Item({
             <Link
               scroll
               href="/checkout"
-              className="uppercase font-semibold text-nowrap flex-1 text-center bg-primary hover:bg-primary-muted sm:text-lg px-4 py-2 transition-all duration-300"
+              className="uppercase text-nowrap flex-1 text-center bg-primary hover:bg-primary-muted sm:text-lg px-4 py-2 transition-all duration-300"
             >
-              View in Cart
+              View Cart
             </Link>
             <button
               aria-label="Add another item"
-              className="bg-primary hover:bg-primary-muted border-l border-background text-background h-full w-10 flex items-center justify-center text-2xl font-semibold transition-all duration-300 active:scale-95"
+              className="bg-primary hover:bg-primary-muted border-l border-background text-background h-full w-10 flex items-center justify-center text-2xl transition-all duration-300 active:scale-95"
               onClick={() => {
                 open(
                   createCartItem({

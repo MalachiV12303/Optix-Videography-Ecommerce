@@ -111,8 +111,8 @@ export default function AddToCartModal() {
               onPointerUp={() => handleSelect("2yr")}
               className={`border border-foreground p-4 text-left transition-all duration-150 active:scale-[0.97] active:bg-primary-muted ${
                 selectedPlan === "2yr"
-                  ? "border-primary bg-primary text-background hover:bg-primary-muted"
-                  : "border-foreground hover:bg-primary hover:border-transparent hover:text-background"
+                  ? "border-primary bg-primary text-background sm:hover:bg-primary-muted"
+                  : "border-foreground sm:hover:bg-primary sm:hover:border-transparent sm:hover:text-background"
               }`}
               type="button"
             >
@@ -126,8 +126,8 @@ export default function AddToCartModal() {
               onPointerUp={() => handleSelect("3yr")}
               className={`border border-foreground p-4 text-left transition-all duration-150 active:scale-[0.97] active:bg-primary-muted ${
                 selectedPlan === "3yr"
-                  ? "border-primary bg-primary text-background hover:bg-primary-muted"
-                  : "border-foreground hover:bg-primary hover:border-transparent hover:text-background"
+                  ? "border-primary bg-primary text-background sm:hover:bg-primary-muted"
+                  : "border-foreground sm:hover:bg-primary sm:hover:border-transparent sm:hover:text-background"
               }`}
               type="button"
             >

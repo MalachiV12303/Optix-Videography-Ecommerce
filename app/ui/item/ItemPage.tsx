@@ -89,7 +89,7 @@ export default function ItemPage({ item, category, image }: ItemProps) {
 
             <div className="border-t border-foreground">
                 <div className="sticky top-0 z-40 bg-background border-b border-foreground backdrop-blur">
-                    <div className="container flex flex-wrap items-center gap-8 py-4 text-lg">
+                    <div className="container flex flex-wrap items-center justify-between sm:justify-start sm:gap-12 py-4 sm:text-lg">
                         <a href="#overview" className="hover:underline">Overview</a>
                         <a href="#specs" className="hover:underline">Specifications</a>
                         {/* <a href="#compatibility" className="hover:underline">Compatibility</a> */}
@@ -209,7 +209,7 @@ export default function ItemPage({ item, category, image }: ItemProps) {
 
                 <section id="reviews" className="container py-16 border-t border-foreground">
                     <h2 className="text-3xl font-semibold mb-10">Customer Reviews</h2>
-                    <div className="grid grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                         <Review name="Skai W." rating={5} text="Excellent product quality and performance." />
                         <Review name="Jordan R." rating={4} text="Very solid and reliable. Minor improvements possible." />
                         <Review name="Alice F." rating={5} text="Professional results and easy to use." />

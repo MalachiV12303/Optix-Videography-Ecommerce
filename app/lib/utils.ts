@@ -182,7 +182,6 @@ export const filterMap = [
     category: "aer",
     param: "altitude",
     values: [
-      { label: "1000- meters", value: "0-1000" },
       { label: "1000-1500 meters", value: "1000-1500" },
       { label: "1500-2000 meters", value: "1500-2000" },
       { label: "2000-2500 meters", value: "2000-2500" },

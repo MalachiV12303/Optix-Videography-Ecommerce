@@ -54,7 +54,7 @@ function CameraFilters() {
         <FilterSet filters={getFilterValues("cam","shutter")} param={shutter} p="shutter" />
       </AccordionItem>
 
-      <AccordionItem key="megapixels" title={`eff. mgp ${mgp.length || ""}`}>
+      <AccordionItem key="megapixels" title={`eff. mp ${mgp.length || ""}`}>
         <FilterSet filters={getFilterValues("cam","mgp")} param={mgp} p="mgp" />
       </AccordionItem>
 

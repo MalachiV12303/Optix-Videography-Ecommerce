@@ -26,7 +26,7 @@ export const filterMap = [
     category: "cam",
     param: "type",
     values: [
-      { label: "Digital SLR", value: "DSLR" },
+      { label: "DSLR", value: "DSLR" },
       { label: "Mirrorless", value: "Mirrorless" }
     ],
   },
@@ -63,13 +63,13 @@ export const filterMap = [
     category: "cam",
     param: "mgp",
     values: [
-      { label: "18.1 Megapixels", value: "18.1" },
-      { label: "20.9 Megapixels", value: "20.9" },
-      { label: "24.1 Megapixels", value: "24.1" },
-      { label: "24.2 Megapixels", value: "24.2" },
-      { label: "26.2 Megapixels", value: "26.2" },
-      { label: "32.5 Megapixels", value: "32.5" },
-      { label: "45.7 Megapixels", value: "45.7" }
+      { label: "18.1 MP", value: "18.1" },
+      { label: "20.9 MP", value: "20.9" },
+      { label: "24.1 MP", value: "24.1" },
+      { label: "24.2 MP", value: "24.2" },
+      { label: "26.2 MP", value: "26.2" },
+      { label: "32.5 MP", value: "32.5" },
+      { label: "45.7 MP", value: "45.7" }
     ],
   },
   {

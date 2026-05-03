@@ -10,7 +10,7 @@ export default function CheckoutItem({ item }: { item: CartItemType }) {
     const href = `/item?id=${item.originalId}&itemtype=${item.itemtype}`;
     const quantity = item.quantity ?? 1;
     return (
-        <div className="w-full min-h-72 px-10 pb-8 lg:py-6 flex items-start gap-8 border-b border-foreground">
+        <div className="w-full min-h-72 px-10 py-8 lg:py-6 flex items-start gap-8 border-b border-foreground">
             <div className="md:p-4">
                 {item.imageUrl && (
                     <div className="relative w-24 h-32 md:w-48 md:h-48 shrink-0">
@@ -29,6 +29,7 @@ export default function CheckoutItem({ item }: { item: CartItemType }) {
                 <Link className="font-semibold uppercase hover:underline text-xl lg:text-2xl text-end md:text-start" href={href}>
                     {item.brand} - {item.name}
                 </Link>
+                <p className="text-foreground-muted">{item.description}</p>
                 <p className="text-foreground-muted">Quantity: {quantity}</p>
                 <span className="border border-foreground px-4 py-2 w-min text-nowrap">
                     {item.protection === "2yr"

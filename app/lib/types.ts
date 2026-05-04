@@ -8,7 +8,6 @@ export interface CartItemType extends Item {
   itemtype: "cam" | "len" | "aer";
   brand: string;
   name: string;
-  description: string;
   price: number;
   imageUrl?: string | null;
   protection?: ProtectionPlan;
